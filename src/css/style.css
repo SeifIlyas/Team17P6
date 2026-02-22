@@ -1,0 +1,420 @@
+/* HireSpace — Soft Open Hero (Reference Style) */
+
+:root{
+  /* side glow colours */
+  --blue: rgb(166,200,255);
+  --purple: rgb(166,150,255);
+
+  --ink: rgba(20,24,38,.75);
+  --muted: rgba(20,24,38,.55);
+
+  --glass: rgba(255,255,255,.45);
+  --border: rgba(255,255,255,.70);
+
+  --radius: 24px;
+  --shadow: 0 20px 60px rgba(20,24,38,.10);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  min-height:100vh;
+  color:var(--ink);
+
+  /* stronger side glow */
+  background:
+    radial-gradient(900px 600px at 0% 20%, rgba(166,150,255,.45), transparent 60%),
+    radial-gradient(900px 600px at 100% 30%, rgba(166,200,255,.45), transparent 60%),
+    linear-gradient(135deg, #eef1f7, #e6ebf3);
+}
+
+/* page width */
+.wrap{
+  max-width: 1300px;
+  margin: 40px auto;
+  padding: 0 60px 80px;
+}
+
+/* NAV — no card */
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 10px 4px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.logoDot{
+  width: 46px;
+  height: 46px;
+
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  background: transparent;
+
+  
+  background: rgba(255,255,255,.35);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,.6);
+}
+
+
+.logoDot img{
+  width: 110%;
+  height: 110%;
+  object-fit: cover;
+  display: block;
+
+  /* colour harmonising */
+  filter: 
+    saturate(0.9)
+    hue-rotate(-8deg)
+    brightness(1.05);
+}
+
+
+
+.brandText .name{
+  font-weight:700;
+  letter-spacing:-.4px;
+}
+.brandText .tag{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:2px;
+}
+
+.nav{
+  display:flex;
+  gap:26px;
+}
+
+.nav a{
+  text-decoration:none;
+  color: rgba(20,24,38,.60);
+  font-weight:600;
+  font-size:14px;
+  transition:.15s;
+}
+.nav a:hover{
+  color: rgba(20,24,38,.85);
+}
+
+/* HERO — OPEN, NO CARD */
+.hero{
+  margin-top: 40px;
+}
+
+/* grid */
+.heroInner{
+  padding-top: 60px;
+  display:grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 40px;
+  align-items:center;
+}
+
+@media (max-width:900px){
+  .heroInner{
+    grid-template-columns:1fr;
+    gap:28px;
+  }
+}
+
+/* Title — soft, not black */
+.heroTitle{
+  font-size: 64px;
+  line-height:1.08;
+  font-weight:500;
+  letter-spacing:-0.8px;
+  color: rgba(20,24,38,.70);
+  margin-bottom: 40px;
+}
+
+/* Sub text */
+.heroSub{
+  margin-top:0px;
+  margin-bottom:40px;
+  max-width:58ch;
+  font-size:16px;
+  line-height:1.75;
+  color: rgba(20,24,38,.55);
+}
+
+/* Actions */
+.heroActions{
+  margin-top:0px;
+}
+
+/* Reference-style button */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  padding: 14px 28px;       /* bigger */
+  border-radius:999px;
+
+  background: rgba(255,255,255,.35);
+  border:1.5px solid rgba(255,255,255,.75);
+
+  color: rgba(20,24,38,.75);
+  font-weight:600;
+  font-size:15px;
+
+  cursor:pointer;
+  backdrop-filter: blur(12px);
+  box-shadow: 
+    0 8px 20px rgba(120,120,200,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  transition:.18s ease;
+}
+
+.btn:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.55);
+}
+
+/* Image area — seamless */
+.heroArt{
+  min-height: 340px;
+  border-radius: 26px;
+  background: transparent;
+  position: relative;
+  overflow: visible;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Floating base shadow */
+.heroArt::after{
+  content:"";
+  position:absolute;
+
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-46%);
+  
+
+  width: 80%;
+  height: 26px;
+
+  background: radial-gradient(
+    ellipse at center,
+    rgba(20,24,38,0.22) 0%,
+    rgba(20,24,38,0.10) 35%,
+    rgba(20,24,38,0.04) 55%,
+    transparent 70%
+  );
+
+  filter: blur(6px);
+  z-index: 0;
+}
+
+/* Hero image */
+.heroArt img{
+  position: relative;
+  z-index: 2;
+
+  width: auto;
+  height: auto;
+
+  max-width: 92%;
+  max-height: 320px;
+
+  object-fit: contain;
+  display: block;
+
+  transform: translateY(-6px);
+}
+
+/* ===== Open Admin Layout ===== */
+
+.adminWrap{
+  max-width: 1300px;
+  margin: 40px auto 100px;
+  padding: 0 80px;
+}
+
+/* Main layout */
+.adminHero{
+  margin-top: 40px;
+
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 60px;
+  align-items: center;
+}
+
+@media (max-width: 900px){
+  .adminHero{
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.adminLeft{
+  position: relative;
+  padding: 70px 60px;
+  border-radius: 42px;
+
+}
+
+
+
+.adminLeft > *{
+  position: relative;
+  z-index: 2;
+}
+
+/* Art placeholder */
+.adminArt{
+  margin-top: 40px;
+  height: 260px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.adminArt img{
+  max-width: 100%;
+  max-height: 240px;
+  object-fit: contain;
+}
+
+/* Right form */
+.adminRight{
+  padding: 40px 20px;
+  display:flex;
+  justify-content:center;
+}
+
+/* Form */
+.adminForm{
+  width: 100%;
+  max-width: 360px;
+}
+
+.adminForm h1{
+  font-size: 42px;
+  font-weight: 600;
+  letter-spacing: -.8px;
+  color: rgba(20,24,38,.68);
+}
+
+.adminForm p{
+  margin-top: 14px;
+  color: rgba(20,24,38,.48);
+  line-height: 1.7;
+}
+
+/* Fields */
+.fieldGroup{
+  margin-top: 28px;
+  display:flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.label{
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(20,24,38,.5);
+}
+
+.input{
+  width:100%;
+  padding:14px 18px;
+
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.7);
+
+  background:rgba(255,255,255,.45);
+  backdrop-filter:blur(12px);
+
+  outline:none;
+  color:rgba(20,24,38,.7);
+    box-shadow: 
+    0 8px 20px rgba(120,120,200,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+}
+
+.input::placeholder{
+  color:rgba(20,24,38,.35);
+}
+
+/* Actions */
+.formActions{
+  margin-top:26px;
+}
+
+.btnWide{
+  width:100%;
+  padding:16px 22px;
+}
+
+.helperRow{
+  margin-top:12px;
+  font-size:13px;
+  color:rgba(20,24,38,.45);
+}
+.helperRow a{
+  color:rgba(20,24,38,.6);
+  font-weight:600;
+  text-decoration:none;
+}
+.helperRow a:hover{
+  text-decoration:underline;
+}
+
+
+
+
+/* RIGHT SIDE BACKGROUND WAVE (not in a card) */
+.bgWave{
+  position: fixed;        /* stays in place */
+  top: 0;
+  right: 0;
+
+  width: 55vw;            /* right side area */
+  height: 100vh;
+
+  pointer-events: none;
+  z-index: -1;
+
+  overflow: visible;
+}
+
+.bgWave img{
+  width: 220%;
+  height: 120%;
+  object-fit: cover;
+
+  opacity: 0.9;
+  filter: blur(0.2px);
+  filter: drop-shadow(0 25px 40px rgba(120,120,200,0.15));
+
+
+  /* push it slightly off the right so it feels “coming in” */
+  transform: translate(-50%, 0%);
+  z-index: -1;
+}
+
