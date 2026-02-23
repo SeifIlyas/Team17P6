@@ -418,3 +418,249 @@ body{
   z-index: -1;
 }
 
+
+
+/* ========== Jobs page layout ========== */
+
+.pageWrap{ position: relative; z-index: 2; }
+
+.jobsPage{ max-width: 1100px; margin: 0 auto; padding: 36px 0px 80px; }
+
+.jobsHeader{ margin: 30px 0 18px; }
+.jobsTitle{ font-size: 44px; letter-spacing: -0.02em; margin: 0; }
+.jobsSub{ margin: 10px 0 0; opacity: 0.75; max-width: 720px; }
+
+.jobsSearchBar{
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr auto auto;
+  gap: 12px;
+  align-items: center;
+
+  padding: 14px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.5);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 18px 40px rgba(120,120,200,0.10);
+}
+
+.searchField{
+  display:flex; align-items:center; gap:10px;
+  padding: 12px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.7);
+}
+.searchIcon{ opacity: .55; }
+.jobsSearchBar input{
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+}
+
+.jobsSearchBar select{
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.7);
+  outline: none;
+}
+
+.btnPrimary{
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: none;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  background: linear-gradient(135deg, #a695ff, #a6c8ff);
+  box-shadow: 0 10px 25px rgba(120,120,200,0.25);
+}
+.btnPrimary:hover{ transform: translateY(-1px); }
+
+.btnGhost{
+  padding: 12px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.65);
+  cursor: pointer;
+}
+
+.wFull{ width: 100%; }
+
+.jobsLayout{
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 18px;
+  margin-top: 18px;
+  align-items: start;
+}
+
+.filtersPanel{
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.5);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 18px 40px rgba(120,120,200,0.10);
+  position: sticky;
+  top: 18px;
+}
+
+.panelTitle{ font-weight: 800; margin-bottom: 10px; }
+
+.filterBlock{ padding-top: 14px; margin-top: 14px; border-top: 1px solid rgba(255,255,255,0.45); }
+.filterLabel{ font-weight: 700; opacity: .8; margin-bottom: 10px; }
+
+.checkRow{ display:flex; gap:10px; align-items:center; margin: 10px 0; opacity: .85; }
+.checkRow input{ transform: translateY(1px); }
+
+.rangeRow{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rangeRow input{
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.65);
+  background: rgba(255,255,255,0.55);
+  outline: none;
+}
+
+.resultsPanel{
+  padding: 0;
+}
+
+.resultsTopRow{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 4px 14px;
+}
+.resultsCount{ opacity: .8; }
+.resultsControls{ display:flex; gap: 10px; align-items:center; }
+.muted{ opacity: .6; }
+
+.resultsControls select{
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.45);
+  border: 1px solid rgba(255,255,255,0.6);
+  outline: none;
+}
+
+.jobList{ display:flex; flex-direction: column; gap: 12px; }
+
+.jobCard{
+  display:grid;
+  grid-template-columns: 44px 1fr 40px;
+  gap: 14px;
+  align-items: center;
+
+  padding: 14px;
+  border-radius: 22px;
+
+  background: rgba(255,255,255,0.40);
+  border: 1px solid rgba(255,255,255,0.55);
+  backdrop-filter: blur(16px);
+
+  box-shadow: 0 18px 40px rgba(120,120,200,0.10);
+  text-decoration: none;
+  color: inherit;
+}
+
+.jobCard:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 24px 55px rgba(120,120,200,0.14);
+}
+
+.jobIcon{
+  width: 44px; height: 44px;
+  border-radius: 14px;
+  display:flex; align-items:center; justify-content:center;
+  font-weight: 900;
+  background: linear-gradient(135deg, rgba(166,149,255,0.55), rgba(166,200,255,0.55));
+  border: 1px solid rgba(255,255,255,0.6);
+}
+
+.jobTop{ display:flex; justify-content: space-between; gap: 12px; }
+.jobTitle{ font-weight: 900; font-size: 16px; }
+.jobCompany{ opacity: .75; margin-top: 3px; font-size: 13px; }
+.jobMetaRight{ opacity: .6; font-size: 13px; white-space: nowrap; }
+
+.jobBadges{ display:flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.badge{
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.45);
+  border: 1px solid rgba(255,255,255,0.65);
+  opacity: .9;
+}
+
+.jobActions{ display:flex; justify-content: flex-end; }
+.heart{ font-size: 18px; opacity: .6; }
+
+.pagination{
+  display:flex; justify-content: space-between; align-items:center;
+  margin-top: 18px;
+  padding: 10px 2px;
+}
+.pageNums{ display:flex; gap: 10px; align-items:center; }
+.pageNum{
+  width: 34px; height: 34px;
+  border-radius: 999px;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.6);
+  opacity: .8;
+}
+.pageNum.active{ opacity: 1; font-weight: 900; }
+
+.emptyState{
+  padding: 26px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.35);
+  border: 1px dashed rgba(255,255,255,0.6);
+  text-align: center;
+}
+.emptyTitle{ font-weight: 900; font-size: 18px; }
+.emptySub{ opacity: .7; margin-top: 6px; }
+
+/* Responsive */
+@media (max-width: 980px){
+  .jobsSearchBar{ grid-template-columns: 1fr; }
+  .jobsLayout{ grid-template-columns: 1fr; }
+  .filtersPanel{ position: relative; top: 0; }
+}
+
+/* shared page container */
+.container{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* top nav should not push content weirdly */
+.topNav{
+  width: 100%;
+  position: relative;
+  z-index: 3;
+}
+
+/* align header rows properly */
+.topNav .container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-top: 22px;
+}
+
+/* stop nav going off-screen on small widths */
+.navLinks{
+  display:flex;
+  gap: 22px;
+  align-items:center;
+  flex-wrap: wrap;
+}
