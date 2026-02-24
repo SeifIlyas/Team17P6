@@ -1,0 +1,126 @@
+*{ 
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  min-height:100vh;
+  color:var(--ink);
+}    
+
+:root{
+  /* side glow colours */
+  --blue: rgb(166,200,255);
+  --purple: rgb(166,150,255);
+
+  --ink: rgba(20,24,38,.75);
+  --muted: rgba(20,24,38,.55);
+
+  --glass: rgba(255,255,255,.45);
+  --border: rgba(255,255,255,.70);
+
+  --radius: 24px;
+  --shadow: 0 20px 60px rgba(20,24,38,.10);
+}
+
+.title{
+    font-size: 52px;
+    text-align: center;
+    color: var(--ink);
+    margin-bottom: 4rem 0;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.annual-plan,.monthly-plan{
+    display: grid;
+    grid-template-columns: 1fr 8fr 3fr;
+    gap: 1rem;
+    padding: 1.5rem;
+    width: 100%;
+    &:first-child{
+        border-bottom: 1px solid var(--ink); /*ink is the line between the total and plan*/
+    }
+    transition: all 0.3s ease-in-out;
+        &:hover{
+        cursor: pointer;
+        border-color: var(--blue);
+        box-shadow: 0 20px 60px var(--blue);
+        border-bottom: none;
+    }
+}
+
+.plan-title{
+    margin-bottom: 0.5rem;
+}
+
+.small{
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.annual-plan-price small{
+    display: block;
+    margin-top: 0.5rem;
+    text-align: right;
+}
+
+.plans-container{
+    width: 100%;
+    max-width: 600px;
+    flex-shrink: 0;
+}
+
+.checkout-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 400px;
+    padding: 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--glass);
+    backdrop-filter: blur(6px);
+    flex-shrink: 0;
+    .plan-type,
+    .billing,
+    .checkout-button{
+        width: 100%;
+        padding-bottom: 1rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        &:nth-child(1){
+            border-bottom: 1px solid var(--ink); /*ink is the line between the total and plan*/
+        }
+    }
+
+    .billing-period{
+        color: var(--ink);
+        display: block;
+        margin-top: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        gap: 40vh;
+    }
+    .checkout-container{
+        min-width: 80%;
+    }
+}

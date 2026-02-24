@@ -8,7 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <!--link to style.css also dont touch just change style.css-->
-<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="checkout.css">
 
 
   <title>HireSpace - Checkout</title>
@@ -16,16 +17,83 @@
 </head>
 <body>
 
-  <h1>HireSpace</h1>
-  <h2>Checkout Page</h2>
+  <div class="bgWave">
+  <img src="wave.svg" alt="">
+</div>
 
-  <p>This will be the checkout page where users can complete their payment for subscriptions to hirespace+ </p>
+<div class="adminWrap">
+  
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logoDot">
+          <img src="logo.png" alt="HireSpace logo">
+        </div>
+        <div class="brandText">
+          <div class="name">HireSpace</div>
+          <div class="tag">Job Advertisement Portal</div>
+        </div>
+      </div>
+      <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="profile.html">View Your Profile</a>
+      </div>
+    </div>
 
-  <nav>
-    <a href="index.html">Home</a> |  
-    <a href="jobs.html">Jobs</a> |
-    <a href="profile.html">view your profile</a> |
-  </nav>
+  <h1 class="title">HireSpace</h1>
+  <h2 class="title">Select a Plan</h2>
+  <main class="container">
+      <div class="plans-container">
+       <label for="annual-plan-select" class="plans annual-plan">
+        <input type="radio" 
+        name="plan-container" 
+        id="annual-plan-select"
+        class="plan-selector"
+        checked>
+        <div class="annual-plan-description">
+          <h3>Annual Plan</h3>
+          <small class="plan-description">Billed annually at £99.99/year</small>
+        </div>
+        <div class="annual-plan-price">
+          <h3 class="price">£9.99/month</h3>
+          <small> £111.99 a year</small>
+        </div>
+       </label>
+
+        <label for="monthly-plan-select" class="plans monthly-plan">
+        <input type="radio" 
+        name="plan-container" 
+        id="monthly-plan-select"
+        class="plan-selector"
+        checked>
+        <div class="annual-plan-description">
+          <h3>Monthly Plan</h3>
+          <small class="plan-description">Billed monthly at £11.99/month</small>
+        </div>
+        <div class="monthly-plan-price">
+          <h3 class="price">£11.99/month</h3>
+          <small> £143.88 a year</small>
+        </div>
+       </label>
+      </div>
+      
+      <div class="checkout-container">
+        <h3 class="plan-type">
+          <span class="plan-type-description">Annual Plan</span>
+          <span class="plan-type-amount">£111.99/year</span>
+        </h3>
+        <div class="billing">
+          <div class="billing-description">
+            <h4>Total</h4>
+            <small class="billing-period">Billed annually</small>
+          </div>
+          <h3 class="billing-amount">£111.99</h3>
+        </div>
+        <button class="btnPrimary">Checkout</button>
+      </div>
+  </main>
+  </div>
 
 </body>
 </html>
