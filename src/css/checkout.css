@@ -25,12 +25,7 @@ body{
   --shadow: 0 20px 60px rgba(20,24,38,.10);
 }
 
-.title{
-    font-size: 52px;
-    text-align: center;
-    color: var(--ink);
-    margin-bottom: 4rem 0;
-}
+.title{ font-size: 44px; letter-spacing: -0.02em; margin: 0; margin-top: 100px; }
 
 .container{
     display: flex;
@@ -38,7 +33,7 @@ body{
     justify-content: center;
     align-items: flex-start;
     gap: 2rem;
-    margin-top: 2rem;
+    margin-top: 50px;
 }
 
 .annual-plan,.monthly-plan{

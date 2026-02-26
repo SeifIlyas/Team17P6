@@ -9,22 +9,106 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <!--link to style.css also dont touch just change style.css-->
 <link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/postJob.css">
 
 
   <title>HireSpace - Post Job</title>
 </head>
 <body>
 
-  <h1>HireSpace</h1>
-  <h2>Post Job Page</h2>
+  <div class="bgWave">
+  <img src="../assets/wave.svg" alt="">
+</div>
 
-  <p>This will be the page where employers can post new job listings.</p>
+<div class="container">
+  
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logoDot">
+          <img src="../assets/logo.png" alt="HireSpace logo">
+        </div>
+        <div class="brandText">
+          <div class="name">HireSpace</div>
+          <div class="tag">Job Advertisement Portal</div>
+        </div>
+      </div>
+      <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="profile.html">View Your Profile</a>
+      </div>
+    </div>
+  </div>
 
-  <nav>
-    <a href="index.html">Home</a> |
-    <a href="jobs.html">Jobs</a> |
+  /* Form section for posting a job, includes fields for company name, location, job title, category, type, salary, description, qualifications and contact email. */
 
-  </nav>
+  <div class="container">
+      <main class="container">
+        <h2 class="title">Post Job</h2>
+      <form action="#">
+        <div class="input-box">
+          <span class="details">Company Name</span>
+          <input type="text" id="job-company" name="company-name" required>
+        </div>
+      
+        <div class="input-box">
+         <span class="details">Postcode</span>
+          <input type="text" id="job-location" name="postcode" required>
+        </div>
+
+
+          <span class="details">Job Title</span>
+          <input type="text" id="job-title" name="job-title" required>
+            
+        <div class="input-box">
+          <span class="details">Job Category</span>
+          <select id="job-category" name="job-category" required>
+            <option value="">Select Job Category</option>
+            <option value="it">IT</option>
+            <option value="healthcare">Healthcare</option>
+            <option value="education">Education</option>
+            <option value="finance">Finance</option>
+            <option value="engineering">Engineering</option>
+          </select>
+        </div>
+
+        <div class="input-box">
+          <span class="details">Job Type</span>
+          <select id="job-type" name="job-type" required>
+           <option value="">Select Job Type</option>
+           <option value="full-time">Full-Time</option>
+           <option value="part-time">Part-Time</option>
+           <option value="contract">Contract</option>
+           <option value="temporary">Temporary</option>
+           <option value="internship">Internship</option>
+          </select>
+        </div>
+      
+       <div class="input-box">
+          <span class="details">Job Salary</span>
+          <input type="text" id="job-salary" name="job-salary" required>  
+        </div>
+
+        <div class="input-box">
+          <span class="details">Job Description</span>
+          <textarea id="job-description" name="job-description" rows="5" required></textarea>
+        </div>
+
+        <div class="input-box">
+          <span class="details">Qualifications</span>
+          <textarea id="job-requirements" name="qualifications" rows="5" required></textarea>
+        </div>
+      
+        <div class="input-box">
+          <span class="details">Contact Email</span>
+          <textarea id="job-email" name="contact-email" rows="1" required></textarea>
+        </div>
+
+        <button type="submit" class="btnPrimary">Post Job</button>
+      </form>
+
+      </div>
 
 </body>
 </html>
