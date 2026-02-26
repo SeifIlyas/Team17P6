@@ -1,0 +1,123 @@
+/* postJob page styles */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px;
+}
+
+.title{ font-size: 44px; letter-spacing: -0.02em; margin: 0; margin-top: 10px; }
+
+.container{
+    max-width: none;
+    width: 90%;
+}
+.wrap{
+    width: 80%;
+    padding: 0 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+}
+.details{
+    display:block;
+    width: 100%;
+    margin: 0 auto 8px auto;
+    font-weight:700;
+    color: rgba(20,24,38,.75);
+}
+
+/* Inputs / selects / textarea share the same look */
+input[type="text"],
+input[type="date"],
+select,
+textarea{
+    width: 100%;
+    margin: 0 auto; 
+    display: block;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.06);
+    background: rgba(255,255,255,0.95);
+    outline: none;
+    color: rgba(20,24,38,.85);
+    font-size: 14px;
+    box-shadow: 0 6px 16px rgba(120,120,200,0.04);
+}
+
+select{ appearance: none; -webkit-appearance: none; -moz-appearance: none; }
+
+/* Add a subtle caret area for select to match design */
+.input-box{ position: relative; }
+.input-box select{ padding-right: 40px; }
+/* only show the decorative caret on input-boxes marked for selects */
+.input-box.input-select::after{
+    content: '';
+    position: absolute;
+    right: calc(10% + 12px);
+    top: 67%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 8px; height: 8px;
+    border-right: 2px solid rgba(20,24,38,.6);
+    border-bottom: 2px solid rgba(20,24,38,.6);
+    pointer-events: none;
+}
+
+/* Job description larger box */
+textarea{resize: vertical; }
+
+/* small responsive tweak */
+@media (max-width: 520px){
+    .container{ padding: 0 12px; }
+    .wrap{ padding: 0 18px 60px; }
+}
+
+/* Topbar/logo/nav tweaks for Post Job page (only loaded on postJob.html) */
+.topbar{
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 20px;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 4;
+    background: transparent;
+}
+
+.brand .logoDot{
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+}
+
+.brandText .name{
+    font-size: 18px;
+    font-weight: 700;
+}
+.brandText .tag{
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.nav{ gap: 20px; align-items: center; }
+.nav a{ font-size: 15px; color: rgba(20,24,38,.65); padding: 6px 8px; }
+
+@media (max-width: 900px){
+  .topbar{ padding: 10px 24px; }
+}
+
+/* Center the Post Job button to match field widths */
+.btnPrimary{
+        display: block;
+        width: 80%;
+        margin: 18px auto 0 auto;
+}
