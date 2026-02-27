@@ -14,16 +14,254 @@
 </head>
 <body>
 
-  <h1>HireSpace</h1>
-  <h2>Profile Page</h2>
+  <div class="wrap">
 
-  <p>profile page for user or employer. detailed name + bio or whatever, ratings too.</p>
+    <!--top bar and logo section with navbar below-->
+    <div class="topbar">
+      <div class="brand">
+        <div class="logoDot">
+          <img src="../assets/logo.png" alt="HireSpace logo">
+        </div>
 
-  <nav>
-    <a href="index.html">Home</a> |
-   
-    
-  </nav>
+        <div class="brandText">
+          <div class="name">HireSpace</div>
+          <div class="tag">Job Advertisement Portal</div>
+        </div>
+      </div>
+
+      <!--navigation bar buttons-->
+      <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+        <a href="profile.html" style="display:flex; align-items:center; gap:6px;">
+          <img 
+            src="../assets/profilePlaceholder.png" alt="Profile icon"style="width:16px; height:16px; border-radius:50%; object-fit:cover;">Profile</a>
+          
+      </div>
+    </div>
+
+    <!--breadcrumb-->
+    <div style="margin-top:18px; opacity:.65; font-size:14px;">
+      Home &nbsp;›&nbsp; My Profile
+    </div>
+
+    <!--PROFILE PAGE LAYOUT (uses same grid style as jobs page)-->
+    <section class="jobsLayout" style="margin-top:16px;">
+
+      <!--LEFT SIDEBAR: USER CARD-->
+      <aside class="filtersPanel">
+
+        <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px;">
+          <div style="width:92px; height:92px; border-radius:999px; overflow:hidden; border:1px solid rgba(255,255,255,0.7); background:rgba(255,255,255,0.35);">
+            <img src="../assets/profilePlaceholder.png" alt="Profile photo" style="width:100%; height:100%; object-fit:cover;">
+          </div>
+
+          <div style="font-weight:900; font-size:18px;">User</div>
+          <div class="muted" style="font-size:13px;">Software Engineer</div>
+
+          <div class="muted" style="font-size:13px; margin-top:2px;">
+            📍 Bradford, United Kingdom
+          </div>
+        </div>
+
+        <div style="margin-top:16px; display:grid; gap:10px;">
+          <button class="btnPrimary" type="button">Edit Profile</button>
+          <button class="btnGhost" type="button">Upload Resume</button>
+        </div>
+
+        <!--quick stats-->
+        <div style="margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.45);">
+          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; text-align:center;">
+            <div>
+              <div style="font-weight:900;">20</div>
+              <div class="muted" style="font-size:12px;">Applications</div>
+            </div>
+            <div>
+              <div style="font-weight:900;">6</div>
+              <div class="muted" style="font-size:12px;">Saved</div>
+            </div>
+            <div>
+              <div style="font-weight:900;">1,125</div>
+              <div class="muted" style="font-size:12px;">Views</div>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+      <!--RIGHT CONTENT-->
+      <div class="resultsPanel">
+
+        <!--TABS (reusing pill style already in CSS)-->
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
+          <span class="pageNum active" style="width:auto; padding:0 14px;">Applications</span>
+          <span class="pageNum" style="width:auto; padding:0 14px;">Saved Jobs</span>
+          <span class="pageNum" style="width:auto; padding:0 14px;">Resume</span>
+          <span class="pageNum" style="width:auto; padding:0 14px;">Settings</span>
+        </div>
+
+        <div class="panelTitle" style="margin-bottom:12px;">My Applications</div>
+
+        <!--APPLICATION LIST (reusing jobCard layout)-->
+        <div class="jobList">
+
+          <!--Card 1-->
+          <div class="jobCard" style="grid-template-columns: 60px 1fr;">
+            <div class="jobIcon" style="width:56px; height:56px;">TS</div>
+
+            <div class="jobMain">
+              <div class="jobTop">
+                <div class="jobTitleRow">
+                  <div class="jobTitle">Senior Software Engineer</div>
+                  <div class="jobCompany">TechWave Solutions • New York, NY</div>
+                </div>
+
+                <span class="badge" style="white-space:nowrap;">Applied</span>
+              </div>
+
+              <div class="jobBadges">
+                <span class="badge">React</span>
+                <span class="badge">Node.js</span>
+                <span class="badge">AWS</span>
+                <span class="badge">+2</span>
+              </div>
+
+              <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:10px;">
+                <a class="btnGhost" href="jobDetails.html?id=1" style="text-decoration:none; display:inline-flex; align-items:center;">View Job</a>
+                <button class="btnGhost" type="button">Withdraw</button>
+              </div>
+            </div>
+          </div>
+
+          <!--Card 2-->
+          <div class="jobCard" style="grid-template-columns: 60px 1fr;">
+            <div class="jobIcon" style="width:56px; height:56px;">IL</div>
+
+            <div class="jobMain">
+              <div class="jobTop">
+                <div class="jobTitleRow">
+                  <div class="jobTitle">Product Designer</div>
+                  <div class="jobCompany">Innovatech Ltd. • Remote</div>
+                </div>
+
+                <span class="badge" style="white-space:nowrap;">Interview</span>
+              </div>
+
+              <div class="jobBadges">
+                <span class="badge">Figma</span>
+                <span class="badge">UI/UX</span>
+                <span class="badge">Design Systems</span>
+                <span class="badge">+1</span>
+              </div>
+
+              <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:10px;">
+                <a class="btnGhost" href="jobDetails.html?id=2" style="text-decoration:none; display:inline-flex; align-items:center;">View Job</a>
+                <button class="btnGhost" type="button">Withdraw</button>
+              </div>
+            </div>
+          </div>
+
+          <!--Card 3-->
+          <div class="jobCard" style="grid-template-columns: 60px 1fr;">
+            <div class="jobIcon" style="width:56px; height:56px;">SE</div>
+
+            <div class="jobMain">
+              <div class="jobTop">
+                <div class="jobTitleRow">
+                  <div class="jobTitle">Project Manager</div>
+                  <div class="jobCompany">Skyline Enterprises • Austin, TX</div>
+                </div>
+
+                <span class="badge" style="white-space:nowrap;">Offer</span>
+              </div>
+
+              <div class="jobBadges">
+                <span class="badge">Agile</span>
+                <span class="badge">Scrum</span>
+                <span class="badge">Leadership</span>
+                <span class="badge">+1</span>
+              </div>
+
+              <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:10px;">
+                <a class="btnGhost" href="jobDetails.html?id=3" style="text-decoration:none; display:inline-flex; align-items:center;">View Job</a>
+                <button class="btnGhost" type="button">Withdraw</button>
+              </div>
+            </div>
+          </div>
+
+          <!--Card 4-->
+          <div class="jobCard" style="grid-template-columns: 60px 1fr;">
+            <div class="jobIcon" style="width:56px; height:56px;">CH</div>
+
+            <div class="jobMain">
+              <div class="jobTop">
+                <div class="jobTitleRow">
+                  <div class="jobTitle">Marketing Specialist</div>
+                  <div class="jobCompany">CreativeHub Agency • San Francisco</div>
+                </div>
+
+                <span class="badge" style="white-space:nowrap;">Rejected</span>
+              </div>
+
+              <div class="jobBadges">
+                <span class="badge">SEO</span>
+                <span class="badge">Content</span>
+                <span class="badge">Analytics</span>
+                <span class="badge">+1</span>
+              </div>
+
+              <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:10px;">
+                <button class="btnGhost" type="button">Remove</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!--PAGINATION-->
+        <div class="pagination">
+          <button class="btnGhost" type="button">←</button>
+          <div class="pageNums">
+            <span class="pageNum active">1</span>
+            <span class="pageNum">2</span>
+            <span class="pageNum">3</span>
+            <span class="pageNum">4</span>
+            <span class="pageNum">5</span>
+          </div>
+          <button class="btnGhost" type="button">→</button>
+        </div>
+
+        <!--JOB ALERT CTA-->
+        <div class="jobCard" style="margin-top:18px; grid-template-columns: 1fr auto;">
+          <div>
+            <div style="font-weight:900; font-size:18px;">Can’t find the right job?</div>
+            <div class="muted" style="margin-top:6px;">Create a job alert to get notified about new job matches.</div>
+          </div>
+          <button class="btnPrimary" type="button">Create Job Alert</button>
+        </div>
+
+        <!--DELETE ACCOUNT-->
+        <div class="emptyState" style="margin-top:18px; text-align:left;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span style="font-size:20px;">⚠️</span>
+            <div class="emptyTitle">Delete Your Account</div>
+          </div>
+          <div class="emptySub" style="margin-top:8px;">
+            Once you delete your account, there is no going back. All your data, applications, and profile
+            information will be permanently deleted.
+          </div>
+
+          <div style="margin-top:14px;">
+            <button class="btnPrimary" type="button">Delete Account</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
 
 </body>
 </html>
