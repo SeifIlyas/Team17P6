@@ -71,43 +71,28 @@
 
         <div class="fieldGroup">
 
-<div>
-  <div class="label">Name</div>
-  <input class="input" type="text" id="name" placeholder="Full name">
-</div>
+          <div>
+            <div class="label">Email</div>
+            <input class="input" type="email" placeholder="Email">
+          </div>
 
-<div>
-  <div class="label">Email</div>
-  <input class="input" type="email" id="email" placeholder="Email">
-</div>
-
-<div>
-  <div class="label">Password</div>
-  <input class="input" type="password" id="password" placeholder="Password">
-</div>
+          <div>
+            <div class="label">Password</div>
+            <input class="input" type="password" placeholder="Password">
+          </div>
 
           <div>
             <div class="label">Confirm Password</div>
             <input class="input" type="password" placeholder="Confirm Password">
           </div>
 
-<div>
-  <div class="label">Account type</div>
-  <select class="input" id="role">
-    <option value="JOB_SEEKER">Job Seeker</option>
-    <option value="EMPLOYER">Employer</option>
-  </select>
-</div>
-          
-
-
 
         </div>
 
         <div class="formActions">
-<button class="btn btnWide" type="button" onclick="registerUser()">
-      Register
-</button>
+          <button class="btn btnWide" type="button">
+            Sign up
+          </button>
 
          
 
@@ -118,33 +103,6 @@
   </section>
 
 </div>
-
-<script>
-async function registerUser(){
-
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const role = document.getElementById("role").value;
-
-  const res = await fetch("http://localhost:8080/api/auth/register", {
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body: JSON.stringify({ name, email, password, role })
-  });
-
-  if(res.ok){
-      alert("Account created!");
-      window.location.href = "login.html";
-  } else {
-      alert("Registration failed");
-  }
-
-}
-</script>
-
-
-
 
 </body>
 </html>
