@@ -1,0 +1,8 @@
+com/hirespace/hirespace_api/HirespaceApiApplication.class
+com/hirespace/hirespace_api/DataSeeder.class
+com/hirespace/hirespace_api/model/Job.class
+com/hirespace/hirespace_api/controller/JobController.class
+com/hirespace/hirespace_api/model/User.class
+com/hirespace/hirespace_api/controller/AuthController.class
+com/hirespace/hirespace_api/repository/UserRepository.class
+com/hirespace/hirespace_api/repository/JobRepository.class

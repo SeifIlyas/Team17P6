@@ -6,9 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HireSpace | Jobs</title>
   <link rel="stylesheet" href="../css/style.css" />
+
+
+  <script>
+const id = new URLSearchParams(window.location.search).get("id");
+
+async function loadJob(){
+  const res = await fetch(`http://localhost:8080/api/jobs/${id}`);
+  const job = await res.json();
+
+  document.getElementById("jobTitle").textContent = job.title ?? "Job";
+  document.getElementById("jobMeta").textContent = `${job.company ?? ""} • ${job.location ?? ""} • ${job.jobType ?? ""}`;
+  document.getElementById("jobDesc").textContent = job.description ?? "";
+}
+if(id) loadJob();
+</script>
+
+
 </head>
 
 <body>
+
+<h1 class="jobH1" id="jobTitle">Loading…</h1>
+<div class="jobMetaLine" id="jobMeta"></div>
+<p class="jobIntro" id="jobDesc"></p>
 
 <!--The blob wave behind the form-->
 <div class="bgWave">
