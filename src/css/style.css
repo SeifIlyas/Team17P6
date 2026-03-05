@@ -420,511 +420,247 @@ body{
 
 
 
+/* ========== Jobs page layout ========== */
 
+.pageWrap{ position: relative; z-index: 2; }
 
-/* JOB JOB JOB JOB JOB JOB JOB JOB JOB  */
+.jobsPage{ max-width: 1100px; margin: 0 auto; padding: 36px 0px 80px; }
 
+.jobsHeader{ margin: 30px 0 18px; }
+.jobsTitle{ font-size: 44px; letter-spacing: -0.02em; margin: 0; }
+.jobsSub{ margin: 10px 0 0; opacity: 0.75; max-width: 720px; }
 
-
-
-
-/* =========================
-   Jobs Page – SaaS Admin UI
-   (paste at END of jobs css)
-   ========================= */
-
-:root{
-  --bg: #f3f4f8;
-  --surface: #ffffff;
-  --surface-2: #fbfbfd;
-  --line: #e6e8f0;
-  --text: #111827;
-  --muted: #6b7280;
-
-  --accent: #5b4bd8;
-  --accent-2: #7c3aed;
-
-  --radius: 8px;
-  --radius-sm: 6px;
-
-  --shadow-sm: 0 1px 2px rgba(16,24,40,0.06);
-  --shadow-md: 0 6px 18px rgba(16,24,40,0.08);
-}
-
-/* page background */
-.pageWrap{
-  position: relative;
-  z-index: 2;
-  background: var(--bg);
-  min-height: 100vh;
-}
-
-/* main container */
-.jobsPage{
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 28px 0 80px;
-  color: var(--text);
-}
-
-/* header text */
-.jobsHeader{ margin: 18px 0 14px; }
-.jobsTitle{ font-size: 34px; letter-spacing: -0.02em; margin: 0; }
-.jobsSub{ margin: 10px 0 0; color: var(--muted); opacity: 1; max-width: 720px; }
-
-/* search bar (top controls) */
 .jobsSearchBar{
   display: grid;
   grid-template-columns: 1.6fr 1fr 1fr auto auto;
   gap: 12px;
   align-items: center;
 
-  padding: 12px;
-  border-radius: var(--radius);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-sm);
-
-  backdrop-filter: none !important;
+  padding: 14px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.5);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 18px 40px rgba(120,120,200,0.10);
 }
 
 .searchField{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  background: var(--surface-2);
-  border: 1px solid var(--line);
+  display:flex; align-items:center; gap:10px;
+  padding: 12px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.7);
 }
-.searchIcon{ opacity: .55; color: var(--muted); }
-
+.searchIcon{ opacity: .55; }
 .jobsSearchBar input{
   width: 100%;
   border: none;
   outline: none;
   background: transparent;
   font-size: 14px;
-  color: var(--text);
 }
 
 .jobsSearchBar select{
   width: 100%;
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  background: var(--surface-2);
-  border: 1px solid var(--line);
+  padding: 12px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.7);
   outline: none;
-  color: var(--text);
 }
 
-/* buttons */
 .btnPrimary{
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  background: var(--accent);
-  border: 1px solid rgba(0,0,0,0.05);
-  color: #fff;
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: none;
+  color: white;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, #a695ff, #a6c8ff);
+  box-shadow: 0 10px 25px rgba(120,120,200,0.25);
 }
-.btnPrimary:hover{ filter: brightness(1.05); transform: none; }
+.btnPrimary:hover{ transform: translateY(-1px); }
 
 .btnGhost{
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  color: var(--text);
-  font-weight: 600;
+  padding: 12px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.65);
   cursor: pointer;
 }
-.btnGhost:hover{ background: var(--surface-2); }
 
-/* =========================
-   Left sidebar (filters)
-   ========================= */
+.wFull{ width: 100%; }
 
 .jobsLayout{
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 16px;
-  margin-top: 16px;
+  grid-template-columns: 320px 1fr;
+  gap: 18px;
+  margin-top: 18px;
   align-items: start;
 }
 
 .filtersPanel{
-  padding: 16px;
-  border-radius: var(--radius);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-sm);
+  padding: 18px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.5);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 18px 40px rgba(120,120,200,0.10);
   position: sticky;
   top: 18px;
-
-  backdrop-filter: none !important;
 }
 
-.panelTitle{ font-weight: 800; margin-bottom: 10px; color: var(--text); }
+.panelTitle{ font-weight: 800; margin-bottom: 10px; }
 
-.filterBlock{
-  padding-top: 14px;
-  margin-top: 14px;
-  border-top: 1px solid var(--line);
-}
-.filterLabel{
-  font-weight: 700;
-  color: var(--muted);
-  opacity: 1;
-  margin-bottom: 10px;
-}
+.filterBlock{ padding-top: 14px; margin-top: 14px; border-top: 1px solid rgba(255,255,255,0.45); }
+.filterLabel{ font-weight: 700; opacity: .8; margin-bottom: 10px; }
 
-.checkRow{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  margin: 10px 0;
-  color: var(--text);
-  opacity: 1;
-}
+.checkRow{ display:flex; gap:10px; align-items:center; margin: 10px 0; opacity: .85; }
 .checkRow input{ transform: translateY(1px); }
 
-.rangeRow{
-  display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
+.rangeRow{ display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .rangeRow input{
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--line);
-  background: var(--surface-2);
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.65);
+  background: rgba(255,255,255,0.55);
   outline: none;
-  color: var(--text);
 }
 
-/* =========================
-   Right panel (results)
-   ========================= */
-
-.resultsPanel{ padding: 0; }
+.resultsPanel{
+  padding: 0;
+}
 
 .resultsTopRow{
   display:flex;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 2px 10px;
+  padding: 8px 4px 14px;
 }
-
-.resultsCount{ color: var(--muted); opacity: 1; }
-.muted{ color: var(--muted); opacity: 1; }
-
-.resultsControls{
-  display:flex;
-  gap: 10px;
-  align-items:center;
-}
+.resultsCount{ opacity: .8; }
+.resultsControls{ display:flex; gap: 10px; align-items:center; }
+.muted{ opacity: .6; }
 
 .resultsControls select{
-  padding: 10px 12px;
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  border: 1px solid var(--line);
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.45);
+  border: 1px solid rgba(255,255,255,0.6);
   outline: none;
-  color: var(--text);
 }
 
-/* =========================
-   Job list = table rows
-   ========================= */
-
-.jobList{
-  display:flex;
-  flex-direction: column;
-  gap: 0;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-}
+.jobList{ display:flex; flex-direction: column; gap: 12px; }
 
 .jobCard{
   display:grid;
-  grid-template-columns: 44px 1fr 140px;
+  grid-template-columns: 44px 1fr 40px;
   gap: 14px;
   align-items: center;
 
-  padding: 14px 16px;
-  border-radius: 0;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--line);
+  padding: 14px;
+  border-radius: 22px;
 
-  box-shadow: none !important;
+  background: rgba(255,255,255,0.40);
+  border: 1px solid rgba(255,255,255,0.55);
+  backdrop-filter: blur(16px);
+
+  box-shadow: 0 18px 40px rgba(120,120,200,0.10);
   text-decoration: none;
   color: inherit;
-
-  backdrop-filter: none !important;
 }
-.jobCard:last-child{ border-bottom: none; }
 
 .jobCard:hover{
-  background: #f7f7ff;
-  transform: none;
+  transform: translateY(-1px);
+  box-shadow: 0 24px 55px rgba(120,120,200,0.14);
 }
 
 .jobIcon{
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  width: 44px; height: 44px;
+  border-radius: 14px;
+  display:flex; align-items:center; justify-content:center;
   font-weight: 900;
-  background: rgba(91,75,216,0.10);
-  color: var(--accent);
-  border: 1px solid rgba(91,75,216,0.18);
+  background: linear-gradient(135deg, rgba(166,149,255,0.55), rgba(166,200,255,0.55));
+  border: 1px solid rgba(255,255,255,0.6);
 }
 
-.jobTop{ display:flex; justify-content: space-between; gap: 10px; }
-.jobTitle{ font-weight: 700; font-size: 15px; color: var(--text); }
-.jobCompany{ color: var(--muted); margin-top: 4px; font-size: 12.5px; opacity: 1; }
-
-.jobMetaRight{
-  color: var(--muted);
-  font-size: 12.5px;
-  white-space: nowrap;
-  text-align: right;
-  opacity: 1;
-}
+.jobTop{ display:flex; justify-content: space-between; gap: 12px; }
+.jobTitle{ font-weight: 900; font-size: 16px; }
+.jobCompany{ opacity: .75; margin-top: 3px; font-size: 13px; }
+.jobMetaRight{ opacity: .6; font-size: 13px; white-space: nowrap; }
 
 .jobBadges{ display:flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
 .badge{
   font-size: 12px;
   padding: 6px 10px;
   border-radius: 999px;
-  background: #f3f4f6;
-  border: 1px solid #e5e7eb;
-  color: #374151;
-  opacity: 1;
+  background: rgba(255,255,255,0.45);
+  border: 1px solid rgba(255,255,255,0.65);
+  opacity: .9;
 }
 
-/* actions (if you show a heart icon) */
 .jobActions{ display:flex; justify-content: flex-end; }
-.heart{ font-size: 18px; color: var(--muted); opacity: 1; }
+.heart{ font-size: 18px; opacity: .6; }
 
-/* pagination */
 .pagination{
-  display:flex;
-  justify-content: space-between;
-  align-items:center;
-  margin-top: 14px;
+  display:flex; justify-content: space-between; align-items:center;
+  margin-top: 18px;
   padding: 10px 2px;
 }
 .pageNums{ display:flex; gap: 10px; align-items:center; }
 .pageNum{
-  width: 34px;
-  height: 34px;
-  border-radius: var(--radius-sm);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  color: var(--text);
-  opacity: .9;
+  width: 34px; height: 34px;
+  border-radius: 999px;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.6);
+  opacity: .8;
 }
-.pageNum.active{
-  background: rgba(91,75,216,0.12);
-  border-color: rgba(91,75,216,0.22);
-  font-weight: 800;
-}
+.pageNum.active{ opacity: 1; font-weight: 900; }
 
-/* empty state */
 .emptyState{
-  padding: 22px;
-  border-radius: var(--radius);
-  background: var(--surface);
-  border: 1px dashed var(--line);
+  padding: 26px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.35);
+  border: 1px dashed rgba(255,255,255,0.6);
   text-align: center;
 }
-.emptyTitle{ font-weight: 800; font-size: 16px; color: var(--text); }
-.emptySub{ color: var(--muted); margin-top: 6px; opacity: 1; }
+.emptyTitle{ font-weight: 900; font-size: 18px; }
+.emptySub{ opacity: .7; margin-top: 6px; }
 
-/* responsive */
+/* Responsive */
 @media (max-width: 980px){
   .jobsSearchBar{ grid-template-columns: 1fr; }
   .jobsLayout{ grid-template-columns: 1fr; }
   .filtersPanel{ position: relative; top: 0; }
 }
 
-
-/* ===== Sidebar fill vibe (like inspo) ===== */
-
-/* Give the whole grid a “frame” feeling */
-.jobsLayout{
-  gap: 0; /* sidebar touches content like a layout, not two cards */
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--surface);
-  box-shadow: var(--shadow-sm);
+/* shared page container */
+.container{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 28px;
 }
 
-/* Sidebar becomes full-height & tinted */
-.filtersPanel{
-  height: calc(100vh - 160px); /* fills most of the screen under header */
-  overflow: auto;
-  border: none;                /* remove card border */
-  border-right: 1px solid var(--line);
-  border-radius: 0;
-  box-shadow: none;
-  background: #f7f7ff;         /* airy purple tint (very light) */
-  padding: 18px;
+/* top nav should not push content weirdly */
+.topNav{
+  width: 100%;
+  position: relative;
+  z-index: 3;
 }
 
-/* Right side panel becomes “main area” */
-.resultsPanel{
-  background: var(--surface);
-  padding: 18px;
+/* align header rows properly */
+.topNav .container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-top: 22px;
 }
 
-/* Since resultsPanel now has padding, remove extra card feel on list */
-.jobList{
-  box-shadow: none;
-  border-radius: var(--radius-sm);
-}
-
-/* Make filter headings look cleaner */
-.panelTitle{
-  font-size: 14px;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  color: rgba(17,24,39,0.75);
-}
-
-/* More breathing space between blocks */
-.filterBlock{
-  margin-top: 16px;
-  padding-top: 16px;
-}
-
-/* Nice scrollbar (optional, looks modern) */
-.filtersPanel::-webkit-scrollbar{ width: 10px; }
-.filtersPanel::-webkit-scrollbar-thumb{
-  background: rgba(17,24,39,0.12);
-  border-radius: 999px;
-}
-.filtersPanel::-webkit-scrollbar-track{
-  background: transparent;
-}
-
-/* Mobile: revert to normal stack */
-@media (max-width: 980px){
-  .jobsLayout{
-    border: none;
-    background: transparent;
-    box-shadow: none;
-  }
-  .filtersPanel{
-    height: auto;
-    border-right: none;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    background: var(--surface);
-    margin-bottom: 14px;
-  }
-  .resultsPanel{
-    padding: 0;
-  }
-}
-
-
-/* ===== Make left sidebar FEEL ANCHORED + FILLED (inspo style) ===== */
-
-/* This makes the whole jobs area act like one “app surface” */
-.jobsLayout{
-  position: relative;               /* needed for ::before */
-  gap: 0;
-  margin-top: 16px;
-
-  /* one framed container like the inspo */
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-sm);
-
-  /* gives the layout enough height so the sidebar can visually fill */
-  min-height: calc(100vh - 240px);  /* tweak 240px if your header is taller */
-}
-
-/* THIS is the magic: a full-height tinted sidebar background */
-.jobsLayout::before{
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;               /* top:0; bottom:0; left:0 */
-  width: 300px;                    /* must match sidebar column width */
-  background: #f7f7ff;             /* airy tint */
-  border-right: 1px solid var(--line);
-  pointer-events: none;
-}
-
-/* make sure your grid columns match the ::before width */
-.jobsLayout{
-  grid-template-columns: 300px 1fr;
-}
-
-/* Now the filters panel becomes “content on top of the sidebar”, not a card */
-.filtersPanel{
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-
-  padding: 18px;
-  height: 100%;
-  align-self: stretch;
-
-  position: sticky;
-  top: 18px;
-}
-
-/* Right side gets padding like a proper content area */
-.resultsPanel{
-  padding: 18px;
-  background: transparent;
-}
-
-/* Optional: make the job list feel like it belongs inside the content */
-.jobList{
-  box-shadow: none;
-}
-
-/* Mobile: remove the “app frame” so it stacks nicely */
-@media (max-width: 980px){
-  .jobsLayout{
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    background: transparent;
-    min-height: auto;
-  }
-  .jobsLayout::before{
-    display: none;
-  }
-  .filtersPanel{
-    background: var(--surface) !important;
-    border: 1px solid var(--line) !important;
-    border-radius: var(--radius) !important;
-    box-shadow: var(--shadow-sm) !important;
-    position: relative;
-    top: 0;
-    margin-bottom: 14px;
-  }
-  .resultsPanel{
-    padding: 0;
-  }
+/* stop nav going off-screen on small widths */
+.navLinks{
+  display:flex;
+  gap: 22px;
+  align-items:center;
+  flex-wrap: wrap;
 }
