@@ -8,6 +8,9 @@
 </head>
 
 <body>
+  
+
+<div class="jobList" id="jobList"></div>
 
 <!--The blob wave behind the form-->
 <div class="bgWave">
@@ -220,5 +223,35 @@
       </section>
     </main>
   </div>
+
+
+
+<!-- Script for backend and frontend connection) -->
+<script>
+async function loadJobs(){
+  const jobList = document.getElementById("jobList");
+  jobList.innerHTML = "Loading...";
+
+  const res = await fetch("http://localhost:8080/api/jobs");
+  const jobs = await res.json();
+
+  jobList.innerHTML = jobs.map(job => `
+    <a class="jobCard" href="jobDetails.html?id=${job.id}">
+      <div class="jobIcon">${(job.company || "J")[0].toUpperCase()}</div>
+      <div class="jobMain">
+        <div class="jobTitle">${job.title ?? "Untitled"}</div>
+        <div class="jobCompany">${job.company ?? ""} • ${job.location ?? ""}</div>
+        <div class="jobBadges">
+          ${job.category ? `<span class="badge">${job.category}</span>` : ""}
+          ${job.salary ? `<span class="badge">${job.salary}</span>` : ""}
+        </div>
+      </div>
+    </a>
+  `).join("");
+}
+loadJobs();
+</script>
+
+
 </body>
 </html>

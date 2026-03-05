@@ -38,7 +38,7 @@
       <a href="index.html">Home</a>
       <a href="jobs.html">Jobs</a>
       <a href="login.html">Login</a>
-      <a href="Register.html">Register</a>
+      <a href="register.html">Register</a>
     </div>
   </div>
 
@@ -73,23 +73,22 @@
 
           <div>
             <div class="label">Email</div>
-            <input class="input" type="email" placeholder="Email">
+            <input id="email" class="input" type="email" placeholder="Email">
           </div>
 
           <div>
             <div class="label">Password</div>
-            <input class="input" type="password" placeholder="Password">
+            <input id="password" class="input" type="password" placeholder="Password">
           </div>
 
         </div>
 
-        <div class="formActions">
-          <button class="btn btnWide" type="button">
-            Sign in
-          </button>
+        <button class="btn btnWide" type="button" onclick="login()">
+        Log In
+        </button>
 
           <div class="helperRow">
-            Havent got an account? <a href="Register.html">Register now</a>
+            Havent got an account? <a href="register.html">Register now</a>
           </div>
         </div>
 
@@ -101,5 +100,30 @@
 
 </div>
 
+
+<script>
+async function login() {
+
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const res = await fetch("http://localhost:8080/api/auth/login", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ email, password })
+  });
+
+  const user = await res.json();
+
+  if(user){
+      alert("Login successful");
+      localStorage.setItem("user", JSON.stringify(user));
+      window.location.href = "jobs.html";
+  } else {
+      alert("Invalid login");
+  }
+}
+</script>
 </body>
 </html>
+
