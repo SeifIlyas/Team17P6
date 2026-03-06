@@ -18,7 +18,6 @@ public class DataSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) {
         if (jobRepository.count() == 0) {
-
             jobRepository.save(new Job(
                 "Software Engineer (Placement)",
                 "HireSpace",

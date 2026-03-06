@@ -25,10 +25,9 @@ public class AuthController {
 
     @PostMapping("/login")
     public User login(@RequestBody User loginData) {
-
         Optional<User> user = userRepository.findByEmail(loginData.getEmail());
 
-        if(user.isPresent() && user.get().getPassword().equals(loginData.getPassword())) {
+        if (user.isPresent() && user.get().getPassword().equals(loginData.getPassword())) {
             return user.get();
         }
 
