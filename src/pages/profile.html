@@ -58,17 +58,17 @@
             <img src="../assets/profilePlaceholder.png" alt="Profile photo" style="width:100%; height:100%; object-fit:cover;">
           </div>
 
-          <div style="font-weight:900; font-size:18px;">User</div>
-          <div class="muted" style="font-size:13px;">Software Engineer</div>
+          <div id="profileName" style="font-weight:900; font-size:18px;">User</div>
+          <div id="profileRole" class="muted" style="font-size:13px;">Software Engineer</div>
 
-          <div class="muted" style="font-size:13px; margin-top:2px;">
+          <div id="profileLocation" class="muted" style="font-size:13px; margin-top:2px;">
             📍 Bradford, United Kingdom
           </div>
         </div>
 
         <div style="margin-top:16px; display:grid; gap:10px;">
           <button class="btnPrimary" type="button">Edit Profile</button>
-          <button class="btnGhost" type="button">Upload Resume</button>
+          <button id="resumeButton" class="btnGhost" type="button">Upload Resume</button>
         </div>
 
         <!--quick stats-->
@@ -95,14 +95,14 @@
       <div class="resultsPanel">
 
         <!--TABS (reusing pill style already in CSS)-->
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
+        <div id="tabRow" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
           <span class="pageNum active" style="width:auto; padding:0 14px;">Applications</span>
           <span class="pageNum" style="width:auto; padding:0 14px;">Saved Jobs</span>
           <span class="pageNum" style="width:auto; padding:0 14px;">Resume</span>
           <span class="pageNum" style="width:auto; padding:0 14px;">Settings</span>
         </div>
 
-        <div class="panelTitle" style="margin-bottom:12px;">My Applications</div>
+        <div id="panelHeading" class="panelTitle" style="margin-bottom:12px;">My Applications</div>
 
         <!--APPLICATION LIST (reusing jobCard layout)-->
         <div class="jobList">
@@ -254,7 +254,7 @@
           </div>
 
           <div style="margin-top:14px;">
-            <button class="btnPrimary" type="button">Delete Account</button>
+            <button id="deleteAccountBtn" class="btnPrimary" type="button">Delete Account</button>
           </div>
         </div>
 
@@ -262,6 +262,82 @@
     </section>
 
   </div>
+
+<script>
+const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+if (!loggedInUser) {
+  document.querySelector(".jobsLayout").innerHTML = `
+    <div class="resultsPanel" style="grid-column:1 / -1; text-align:center;">
+      <div class="panelTitle" style="margin-bottom:12px;">You must be logged in to view your profile.</div>
+      <div class="muted" style="margin-bottom:16px;">Please login or register to continue.</div>
+      <div style="display:flex; gap:10px; justify-content:center;">
+        <a class="btnPrimary" href="login.html" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">Login</a>
+        <a class="btnPrimary" href="register.html" style="text-decoration:none; display:inline-flex; align-items:center; justify-content:center;">Register</a>
+      </div>
+    </div>
+  `;
+} else {
+  document.getElementById("profileName").textContent = loggedInUser.name || "User";
+  document.getElementById("profileRole").textContent = loggedInUser.role === "employer" ? "Employer" : "Jobseeker";
+  document.getElementById("profileLocation").textContent = loggedInUser.role === "employer"
+    ? "📍 Company profile"
+    : "📍 Jobseeker profile";
+
+  if (loggedInUser.role === "employer") {
+    document.getElementById("resumeButton").textContent = "Post a Job";
+    document.getElementById("panelHeading").textContent = "My Job Listings";
+    document.getElementById("tabRow").innerHTML = `
+      <span class="pageNum active" style="width:auto; padding:0 14px;">Job Listings</span>
+      <span class="pageNum" style="width:auto; padding:0 14px;">Applications</span>
+      <span class="pageNum" style="width:auto; padding:0 14px;">Company Info</span>
+      <span class="pageNum" style="width:auto; padding:0 14px;">Reviews</span>
+    `;
+  }
+}
+</script>
+
+
+<script>
+
+document.getElementById("deleteAccountBtn").addEventListener("click", async () => {
+
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+
+  if (!user) {
+    alert("No user logged in.");
+    return;
+  }
+
+  const confirmDelete = confirm("Are you sure you want to delete your account? This action cannot be undone.");
+
+  if (!confirmDelete) return;
+
+  try {
+
+    const response = await fetch(`http://localhost:8080/api/users/${user.id}`, {
+      method: "DELETE"
+    });
+
+    if (!response.ok) {
+      alert("Failed to delete account.");
+      return;
+    }
+
+    localStorage.removeItem("loggedInUser");
+
+    alert("Account deleted successfully.");
+
+    window.location.href = "index.html";
+
+  } catch (error) {
+    console.error(error);
+    alert("Server error while deleting account.");
+  }
+
+});
+
+</script>
 
 </body>
 </html>

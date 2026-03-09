@@ -25,7 +25,8 @@ public class DataSeeder implements CommandLineRunner {
                 "Software Engineering",
                 "Full-time",
                 "£24k–£28k",
-                "Help build and improve the HireSpace job portal UI and core features."
+                "Help build and improve the HireSpace job portal UI and core features.",
+                1L
             ));
 
             jobRepository.save(new Job(
@@ -35,7 +36,8 @@ public class DataSeeder implements CommandLineRunner {
                 "Software Engineering",
                 "Part-time",
                 "£15–£20/hr",
-                "Work on modern web UI, responsive layout, and consistent styling."
+                "Work on modern web UI, responsive layout, and consistent styling.",
+                2L
             ));
 
             jobRepository.save(new Job(
@@ -45,7 +47,8 @@ public class DataSeeder implements CommandLineRunner {
                 "Data / AI",
                 "Internship",
                 "£22k",
-                "Support reporting, dashboards, and data cleaning for internal systems."
+                "Support reporting, dashboards, and data cleaning for internal systems.",
+                3L
             ));
         }
     }

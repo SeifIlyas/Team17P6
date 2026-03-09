@@ -38,7 +38,10 @@
       <a href="index.html">Home</a>
       <a href="jobs.html">Jobs</a>
       <a href="login.html">Login</a>
-      <a href="Register.html">Register</a>
+      <a href="register.html">Register</a>
+      <a href="profile.html" style="display:flex; align-items:center; gap:6px;">
+          <img 
+            src="../assets/profilePlaceholder.png" alt="Profile icon"style="width:16px; height:16px; border-radius:50%; object-fit:cover;">Profile</a>
     </div>
   </div>
 
@@ -72,18 +75,31 @@
         <div class="fieldGroup">
 
           <div>
+            <div class="label">Full Name</div>
+            <input id="name" class="input" type="text" placeholder="Full Name">
+          </div>
+
+          <div>
+            <div class="label">Role</div>
+            <select id="role" class="input">
+              <option value="jobseeker">Jobseeker</option>
+              <option value="employer">Employer</option>
+            </select>
+          </div>
+
+          <div>
             <div class="label">Email</div>
-            <input class="input" type="email" placeholder="Email">
+            <input id="email" class="input" type="email" placeholder="Email">
           </div>
 
           <div>
             <div class="label">Password</div>
-            <input class="input" type="password" placeholder="Password">
+            <input id="password" class="input" type="password" placeholder="Password">
           </div>
 
           <div>
             <div class="label">Confirm Password</div>
-            <input class="input" type="password" placeholder="Confirm Password">
+            <input id="confirmPassword" class="input" type="password" placeholder="Confirm Password">
           </div>
 
 
@@ -103,6 +119,55 @@
   </section>
 
 </div>
+
+<script>
+document.querySelector(".btnWide").addEventListener("click", async () => {
+  const name = document.getElementById("name").value.trim();
+  const role = document.getElementById("role").value;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  if (!name || !email || !password || !confirmPassword || !role) {
+    alert("Please complete all fields.");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    alert("Passwords do not match.");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:8080/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password,
+        role: role
+      })
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      alert("Registration failed: " + errorText);
+      return;
+    }
+
+    const user = await response.json();
+    localStorage.setItem("loggedInUser", JSON.stringify(user));
+    alert("Registration successful.");
+    window.location.href = "profile.html";
+  } catch (error) {
+    console.error("Register error:", error);
+    alert("Could not connect to backend. Make sure Spring Boot is running.");
+  }
+});
+</script>
 
 </body>
 </html>
