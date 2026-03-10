@@ -15,6 +15,7 @@ public class Job {
     private String category;
     private String jobType;
     private String salary;
+    private String contactEmail;
     private Long employerUserId;
 
     @Column(length = 4000)
@@ -22,13 +23,14 @@ public class Job {
 
     public Job() {}
 
-    public Job(String title, String company, String location, String category, String jobType, String salary, String description, Long employerUserId) {
+    public Job(String title, String company, String location, String category, String jobType, String salary, String contactEmail, String description, Long employerUserId) {
         this.title = title;
         this.company = company;
         this.location = location;
         this.category = category;
         this.jobType = jobType;
         this.salary = salary;
+        this.contactEmail = contactEmail;
         this.description = description;
         this.employerUserId = employerUserId;
     }
@@ -40,6 +42,7 @@ public class Job {
     public String getCategory() { return category; }
     public String getJobType() { return jobType; }
     public String getSalary() { return salary; }
+    public String getContactEmail() { return contactEmail; }
     public String getDescription() { return description; }
     public Long getEmployerUserId() { return employerUserId;}
 
@@ -51,6 +54,7 @@ public class Job {
     public void setCategory(String category) { this.category = category; }
     public void setJobType(String jobType) { this.jobType = jobType; }
     public void setSalary(String salary) { this.salary = salary; }
+    public void setContactEmail(String contactEmail) { this.contactEmail = contactEmail; }
     public void setDescription(String description) { this.description = description; }
     public void setEmployerUserId(Long employerUserId) { this.employerUserId = employerUserId; }
 }

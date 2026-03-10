@@ -41,8 +41,6 @@
     </div>
   </div>
 
-  /* Form section for posting a job, includes fields for company name, location, job title, category, type, salary, description, qualifications and contact email. */
-
   <div class="container">
       <main class="container">
         <h2 class="title">Post Job</h2>
@@ -99,6 +97,12 @@
           <span class="details">Qualifications</span>
           <textarea id="job-requirements" name="qualifications" rows="5" required></textarea>
         </div>
+
+        
+        <div class="input-box">
+          <span class="details">Deadline Date</span>
+          <textarea id="job-date" name="date" rows="1" required></textarea>
+        </div>
       
         <div class="input-box">
           <span class="details">Contact Email</span>
@@ -109,6 +113,69 @@
       </form>
 
       </div>
+
+<script>
+// handle submission and send to API
+const postForm = document.querySelector('form');
+postForm.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const stored = localStorage.getItem('loggedInUser');
+    if (!stored) {
+        alert('You must be logged in as an employer to post a job.');
+        window.location.href = 'login.html';
+        return;
+    }
+    const user = JSON.parse(stored);
+    if (user.role !== 'employer') {
+        alert('Only employer accounts can post jobs.');
+        return;
+    }
+
+    const job = {
+        title: document.getElementById('job-title').value.trim(),
+        company: document.getElementById('job-company').value.trim(),
+        location: document.getElementById('job-location').value.trim(),
+        category: document.getElementById('job-category').value,
+        jobType: document.getElementById('job-type').value,
+        salary: document.getElementById('job-salary').value.trim(),
+        description: document.getElementById('job-description').value.trim(),
+        requirements: document.getElementById('job-requirements').value.trim(),
+        contactEmail: document.getElementById('job-email').value.trim(),
+        deadlineDate: document.getElementById('job-date').value.trim(),
+        // requirements and contact email not stored in backend model; optionally extend later
+        employerUserId: user.id
+    };
+
+    // basic validation
+    for (let key in job) {
+        if (!job[key] && key !== 'salary') {
+            alert('Please complete all required fields.');
+            return;
+        }
+    }
+
+    try {
+        const resp = await fetch('http://localhost:8080/api/jobs', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(job)
+        });
+        if (!resp.ok) {
+            const txt = await resp.text();
+            alert('Failed to post job: ' + txt);
+            return;
+        }
+        const saved = await resp.json();
+        alert('Job posted successfully.');
+        // optionally redirect to job list or clear form
+        window.location.href = 'jobs.html';
+    } catch (err) {
+        console.error('Post job error', err);
+        alert('Could not reach backend.');
+    }
+});
+</script>
 
 </body>
 </html>

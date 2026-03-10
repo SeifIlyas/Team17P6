@@ -41,8 +41,6 @@
       </div>
     </div>
 
-    /* Annual plan */
-
   <h2 class="title">Select a Plan</h2>
   <main class="container">
       <div class="plans-container">
@@ -62,8 +60,6 @@
         </div>
        </label>
 
-       /* Monthly plan */
-
         <label for="monthly-plan-select" class="plans monthly-plan">
         <input type="radio" 
         name="plan-container" 
@@ -81,24 +77,80 @@
        </label>
       </div>
 
-      /* Checkout section showing the selected plan, billing details and a checkout button. */
-      
       <div class="checkout-container">
         <h3 class="plan-type">
           <span class="plan-type-description">Annual Plan</span>
-          <span class="plan-type-amount">£111.99/year</span>
+          <span class="plan-type-amount">£111.88/year</span>
         </h3>
         <div class="billing">
           <div class="billing-description">
             <h4>Total</h4>
             <small>Billed annually</small>
           </div>
-          <h3 class="billing-amount">£111.99</h3>
+          <h3 class="billing-amount">£111.88</h3>
         </div>
         <button class="btnPrimary">Checkout</button>
       </div>
   </main>
   </div>
+
+<script>
+// Helper to find selected plan
+function getSelectedPlan() {
+    return document.getElementById('annual-plan-select').checked ? 'annual' : 'monthly';
+}
+
+// update UI when radio buttons change (optional)
+document.querySelectorAll('.plan-selector').forEach(el => {
+    el.addEventListener('change', () => {
+        const plan = getSelectedPlan();
+        const description = plan === 'annual' ? 'Annual Plan' : 'Monthly Plan';
+        const amount = plan === 'annual' ? '£111.99/year' : '£11.99/month';
+        document.querySelector('.plan-type-description').textContent = description;
+        document.querySelector('.plan-type-amount').textContent = amount;
+        document.querySelector('.billing-amount').textContent = amount;
+        const billingText = plan === 'annual' ? 'Billed annually' : 'Billed monthly';
+        document.querySelector('.billing small').textContent = billingText;
+    });
+});
+
+// when checkout clicked, ensure user is jobseeker and send subscription to backend
+const checkoutButton = document.querySelector('.btnPrimary');
+checkoutButton.addEventListener('click', async () => {
+    const stored = localStorage.getItem('loggedInUser');
+    if (!stored) {
+        alert('You must be logged in as a jobseeker to purchase a plan.');
+        window.location.href = 'login.html';
+        return;
+    }
+    const user = JSON.parse(stored);
+    if (user.role !== 'jobseeker') {
+        alert('Only jobseeker accounts can purchase subscriptions.');
+        return;
+    }
+
+    const plan = getSelectedPlan();
+    try {
+        const response = await fetch('http://localhost:8080/api/subscriptions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: user.id, plan: plan })
+        });
+        if (!response.ok) {
+            const errText = await response.text();
+            alert('Subscription failed: ' + errText);
+            return;
+        }
+        const subscription = await response.json();
+        alert('Subscription successful. Thank you!');
+        // maybe redirect or update UI
+    } catch (err) {
+        console.error('Checkout error', err);
+        alert('Could not contact server.');
+    }
+});
+
+</script>
 
 </body>
 </html>

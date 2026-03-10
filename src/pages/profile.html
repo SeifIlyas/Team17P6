@@ -285,7 +285,8 @@ if (!loggedInUser) {
     : "📍 Jobseeker profile";
 
   if (loggedInUser.role === "employer") {
-    document.getElementById("resumeButton").textContent = "Post a Job";
+    const resumeBtn = document.getElementById("resumeButton");
+    resumeBtn.outerHTML = '<a href="postJob.html" class="btnPrimary" style="text-decoration:none; display:inline-block; text-align:center;">Post a Job</a>';
     document.getElementById("panelHeading").textContent = "My Job Listings";
     document.getElementById("tabRow").innerHTML = `
       <span class="pageNum active" style="width:auto; padding:0 14px;">Job Listings</span>
@@ -293,6 +294,9 @@ if (!loggedInUser) {
       <span class="pageNum" style="width:auto; padding:0 14px;">Company Info</span>
       <span class="pageNum" style="width:auto; padding:0 14px;">Reviews</span>
     `;
+  } else if (loggedInUser.role === "jobseeker") {
+    const gridDiv = document.querySelector('.filtersPanel div[style*="display:grid"]');
+    gridDiv.insertAdjacentHTML('beforeend', '<a href="checkout.html" class="btnPrimary" style="text-decoration:none; display:inline-block; text-align:center;">Purchase Premium</a>');
   }
 }
 </script>
