@@ -16,17 +16,16 @@ public class JobseekerProfile {
     private String bio;
 
     private String location;
-    private String resumeUrl;
+    private String resumeFileName;
 
     public JobseekerProfile() {
     }
 
-    public JobseekerProfile(Long userId, String headline, String bio, String location, String resumeUrl) {
+    public JobseekerProfile(Long userId, String headline, String bio, String location) {
         this.userId = userId;
         this.headline = headline;
         this.bio = bio;
         this.location = location;
-        this.resumeUrl = resumeUrl;
     }
 
     public Long getId() {
@@ -49,8 +48,8 @@ public class JobseekerProfile {
         return location;
     }
 
-    public String getResumeUrl() {
-        return resumeUrl;
+    public String getResumeFileName() {
+        return resumeFileName;
     }
 
     public void setId(Long id) {
@@ -73,7 +72,7 @@ public class JobseekerProfile {
         this.location = location;
     }
 
-    public void setResumeUrl(String resumeUrl) {
-        this.resumeUrl = resumeUrl;
+    public void setResumeFileName(String resumeFileName) {
+        this.resumeFileName = resumeFileName;
     }
 }

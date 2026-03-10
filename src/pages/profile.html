@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html>  
 <html lang="en">
 <head>
   
@@ -64,27 +64,36 @@
           <div id="profileLocation" class="muted" style="font-size:13px; margin-top:2px;">
             📍 Bradford, United Kingdom
           </div>
+
+          <div id="profileDescription" class="muted" style="font-size:13px; margin-top:2px; text-align:center;">
+            Profile description
+          </div>
+
+          <div id="profileWebsite" class="muted" style="font-size:13px; margin-top:2px; text-align:center; display:none;">
+            Website
+          </div>
+
+          <div id="profileIndustry" class="muted" style="font-size:13px; margin-top:2px; text-align:center; display:none;">
+            Industry
+          </div>
         </div>
 
         <div style="margin-top:16px; display:grid; gap:10px;">
-          <button class="btnPrimary" type="button">Edit Profile</button>
+          <button id="editProfileBtn" class="btnPrimary" type="button">Edit Profile</button>
           <button id="resumeButton" class="btnGhost" type="button">Upload Resume</button>
+          <button id="logoutBtn" class="btnGhost">Sign Out</button>
         </div>
 
         <!--quick stats-->
         <div style="margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.45);">
-          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; text-align:center;">
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; text-align:center;">
             <div>
-              <div style="font-weight:900;">20</div>
+              <div id="applicationsCount" style="font-weight:900;">0</div>
               <div class="muted" style="font-size:12px;">Applications</div>
             </div>
             <div>
-              <div style="font-weight:900;">6</div>
+              <div id="savedCount" style="font-weight:900;">0</div>
               <div class="muted" style="font-size:12px;">Saved</div>
-            </div>
-            <div>
-              <div style="font-weight:900;">1,125</div>
-              <div class="muted" style="font-size:12px;">Views</div>
             </div>
           </div>
         </div>
@@ -96,16 +105,91 @@
 
         <!--TABS (reusing pill style already in CSS)-->
         <div id="tabRow" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
-          <span class="pageNum active" style="width:auto; padding:0 14px;">Applications</span>
-          <span class="pageNum" style="width:auto; padding:0 14px;">Saved Jobs</span>
-          <span class="pageNum" style="width:auto; padding:0 14px;">Resume</span>
-          <span class="pageNum" style="width:auto; padding:0 14px;">Settings</span>
+          <span id="applicationsTab" class="pageNum active" style="width:auto; padding:0 14px;">Applications</span>
+          <span id="savedJobsTab" class="pageNum" style="width:auto; padding:0 14px;">Saved Jobs</span>
+          <span id="resumeTab" class="pageNum" style="width:auto; padding:0 14px;">Resume</span>
+          <span id="settingsTab" class="pageNum" style="width:auto; padding:0 14px;">Settings</span>
         </div>
 
         <div id="panelHeading" class="panelTitle" style="margin-bottom:12px;">My Applications</div>
 
+        <div id="settingsPanel" style="display:none; margin-bottom:18px;">
+
+          <div id="jobseekerSettingsForm" class="jobCard" style="grid-template-columns:1fr; display:none;">
+            <div style="display:grid; gap:12px;">
+              <div>
+                <div class="label">Full Name</div>
+                <input id="settingsName" class="input" type="text" placeholder="Full Name">
+              </div>
+
+              <div>
+                <div class="label">Headline</div>
+                <input id="settingsHeadline" class="input" type="text" placeholder="e.g. Software Engineering Student">
+              </div>
+
+              <div>
+                <div class="label">Bio</div>
+                <textarea id="settingsBio" class="input" placeholder="Tell us a bit about yourself" style="min-height:100px; resize:vertical;"></textarea>
+              </div>
+
+              <div>
+                <div class="label">Location</div>
+                <input id="settingsLocation" class="input" type="text" placeholder="Location">
+              </div>
+
+              <div style="display:flex; gap:10px; justify-content:flex-end;">
+                <button id="saveJobseekerSettingsBtn" class="btnPrimary" type="button">Save Changes</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="employerSettingsForm" class="jobCard" style="grid-template-columns:1fr; display:none;">
+            <div style="display:grid; gap:12px;">
+              <div>
+                <div class="label">Full Name</div>
+                <input id="employerSettingsName" class="input" type="text" placeholder="Full Name">
+              </div>
+
+              <div>
+                <div class="label">Company Name</div>
+                <input id="settingsCompanyName" class="input" type="text" placeholder="Company Name">
+              </div>
+
+              <div>
+                <div class="label">Description</div>
+                <textarea id="settingsCompanyDescription" class="input" placeholder="Company description" style="min-height:100px; resize:vertical;"></textarea>
+              </div>
+
+              <div>
+                <div class="label">Website</div>
+                <input id="settingsWebsite" class="input" type="text" placeholder="Website">
+              </div>
+
+              <div>
+                <div class="label">Industry</div>
+                <input id="settingsIndustry" class="input" type="text" placeholder="Industry">
+              </div>
+
+              <div>
+                <div class="label">Location</div>
+                <input id="employerSettingsLocation" class="input" type="text" placeholder="Location">
+              </div>
+
+              <div>
+                <div class="label">Logo URL</div>
+                <input id="settingsLogoUrl" class="input" type="text" placeholder="Logo URL">
+              </div>
+
+              <div style="display:flex; gap:10px; justify-content:flex-end;">
+                <button id="saveEmployerSettingsBtn" class="btnPrimary" type="button">Save Changes</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
         <!--APPLICATION LIST (reusing jobCard layout)-->
-        <div class="jobList">
+        <div id="applicationsList" class="jobList">
 
           <!--Card 1-->
           <div class="jobCard" style="grid-template-columns: 60px 1fr;">
@@ -220,26 +304,22 @@
 
         </div>
 
-        <!--PAGINATION-->
-        <div class="pagination">
-          <button class="btnGhost" type="button">←</button>
-          <div class="pageNums">
-            <span class="pageNum active">1</span>
-            <span class="pageNum">2</span>
-            <span class="pageNum">3</span>
-            <span class="pageNum">4</span>
-            <span class="pageNum">5</span>
-          </div>
-          <button class="btnGhost" type="button">→</button>
-        </div>
+        <div id="savedJobsList" class="jobList" style="display:none;"></div>
 
-        <!--JOB ALERT CTA-->
-        <div class="jobCard" style="margin-top:18px; grid-template-columns: 1fr auto;">
-          <div>
-            <div style="font-weight:900; font-size:18px;">Can’t find the right job?</div>
-            <div class="muted" style="margin-top:6px;">Create a job alert to get notified about new job matches.</div>
+        <div id="resumePanel" style="display:none;">
+          <div class="jobCard" style="grid-template-columns:1fr; margin-bottom:18px;">
+            <div style="display:grid; gap:12px;">
+              <div>
+                <div class="label">Upload Resume PDF</div>
+                <input id="resumeFileInput" class="input" type="file" accept="application/pdf">
+              </div>
+
+              <div style="display:flex; gap:10px; justify-content:flex-end;">
+                <button id="uploadResumeBtn" class="btnPrimary" type="button">Upload Resume</button>
+                <a id="downloadResumeBtn" class="btnGhost" href="#" style="text-decoration:none; display:none; align-items:center;">Download Resume</a>
+              </div>
+            </div>
           </div>
-          <button class="btnPrimary" type="button">Create Job Alert</button>
         </div>
 
         <!--DELETE ACCOUNT-->
@@ -283,20 +363,26 @@ if (!loggedInUser) {
   document.getElementById("profileLocation").textContent = loggedInUser.role === "employer"
     ? "📍 Company profile"
     : "📍 Jobseeker profile";
+  document.getElementById("profileDescription").textContent = loggedInUser.role === "employer"
+    ? "No company description added yet"
+    : "No bio added yet";
+
+  document.getElementById("profileWebsite").style.display = "none";
+  document.getElementById("profileIndustry").style.display = "none";
+
+  document.getElementById("settingsTab").style.display = "none";
 
   if (loggedInUser.role === "employer") {
-    const resumeBtn = document.getElementById("resumeButton");
-    resumeBtn.outerHTML = '<a href="postJob.html" class="btnPrimary" style="text-decoration:none; display:inline-block; text-align:center;">Post a Job</a>';
+    document.getElementById("resumeButton").textContent = "Post a Job";
+    document.getElementById("resumeButton").style.display = "inline-flex";
     document.getElementById("panelHeading").textContent = "My Job Listings";
     document.getElementById("tabRow").innerHTML = `
       <span class="pageNum active" style="width:auto; padding:0 14px;">Job Listings</span>
       <span class="pageNum" style="width:auto; padding:0 14px;">Applications</span>
-      <span class="pageNum" style="width:auto; padding:0 14px;">Company Info</span>
       <span class="pageNum" style="width:auto; padding:0 14px;">Reviews</span>
     `;
-  } else if (loggedInUser.role === "jobseeker") {
-    const gridDiv = document.querySelector('.filtersPanel div[style*="display:grid"]');
-    gridDiv.insertAdjacentHTML('beforeend', '<a href="checkout.html" class="btnPrimary" style="text-decoration:none; display:inline-block; text-align:center;">Purchase Premium</a>');
+  } else {
+    document.getElementById("resumeButton").style.display = "none";
   }
 }
 </script>
@@ -340,6 +426,688 @@ document.getElementById("deleteAccountBtn").addEventListener("click", async () =
   }
 
 });
+
+// logout functionality
+const logoutBtn = document.getElementById("logoutBtn");
+
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", function () {
+
+        // remove stored login data
+        localStorage.removeItem("loggedInUser");
+
+        // redirect to home page
+        window.location.href = "index.html";
+    });
+}
+
+//LOADINGSUMMARY
+async function loadProfileSummary() {
+  if (!loggedInUser) return;
+
+  document.getElementById("profileName").textContent = loggedInUser.name || "User";
+
+  if (loggedInUser.role === "jobseeker") {
+    document.getElementById("profileRole").textContent = "Jobseeker";
+    document.getElementById("profileWebsite").style.display = "none";
+    document.getElementById("profileIndustry").style.display = "none";
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/jobseeker-profile/${loggedInUser.id}`);
+
+      if (response.ok) {
+        const profile = await response.json();
+
+        document.getElementById("profileRole").textContent =
+          profile.headline && profile.headline.trim() !== ""
+            ? profile.headline
+            : "Jobseeker";
+
+        document.getElementById("profileLocation").textContent =
+          profile.location && profile.location.trim() !== ""
+            ? `📍 ${profile.location}`
+            : "📍 Jobseeker profile";
+
+        document.getElementById("profileDescription").textContent =
+          profile.bio && profile.bio.trim() !== ""
+            ? profile.bio
+            : "No bio added yet";
+
+        document.getElementById("profileWebsite").style.display = "none";
+        document.getElementById("profileIndustry").style.display = "none";
+      } else {
+        document.getElementById("profileLocation").textContent = "📍 Jobseeker profile";
+        document.getElementById("profileDescription").textContent = "No bio added yet";
+        document.getElementById("profileWebsite").style.display = "none";
+        document.getElementById("profileIndustry").style.display = "none";
+      }
+    } catch (error) {
+      console.error("Failed to load jobseeker summary:", error);
+      document.getElementById("profileLocation").textContent = "📍 Jobseeker profile";
+      document.getElementById("profileDescription").textContent = "No bio added yet";
+      document.getElementById("profileWebsite").style.display = "none";
+      document.getElementById("profileIndustry").style.display = "none";
+    }
+  }
+
+  if (loggedInUser.role === "employer") {
+    document.getElementById("profileRole").textContent = "Employer";
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/employer-profile/${loggedInUser.id}`);
+
+      if (response.ok) {
+        const profile = await response.json();
+
+        document.getElementById("profileRole").textContent =
+          profile.companyName && profile.companyName.trim() !== ""
+            ? profile.companyName
+            : "Employer";
+
+        document.getElementById("profileLocation").textContent =
+          profile.location && profile.location.trim() !== ""
+            ? `📍 ${profile.location}`
+            : "📍 Company profile";
+
+        document.getElementById("profileDescription").textContent =
+          profile.description && profile.description.trim() !== ""
+            ? profile.description
+            : "No company description added yet";
+
+        if (profile.website && profile.website.trim() !== "") {
+          document.getElementById("profileWebsite").style.display = "block";
+          document.getElementById("profileWebsite").innerHTML = `<a href="${profile.website}" target="_blank" style="color:inherit; text-decoration:underline;">${profile.website}</a>`;
+        } else {
+          document.getElementById("profileWebsite").style.display = "none";
+        }
+
+        if (profile.industry && profile.industry.trim() !== "") {
+          document.getElementById("profileIndustry").style.display = "block";
+          document.getElementById("profileIndustry").textContent = `Industry: ${profile.industry}`;
+        } else {
+          document.getElementById("profileIndustry").style.display = "none";
+        }
+      } else {
+        document.getElementById("profileLocation").textContent = "📍 Company profile";
+        document.getElementById("profileDescription").textContent = "No company description added yet";
+        document.getElementById("profileWebsite").style.display = "none";
+        document.getElementById("profileIndustry").style.display = "none";
+      }
+    } catch (error) {
+      console.error("Failed to load employer summary:", error);
+      document.getElementById("profileLocation").textContent = "📍 Company profile";
+      document.getElementById("profileDescription").textContent = "No company description added yet";
+      document.getElementById("profileWebsite").style.display = "none";
+      document.getElementById("profileIndustry").style.display = "none";
+    }
+  }
+}
+
+const settingsTab = document.getElementById("settingsTab");
+const applicationsTab = document.getElementById("applicationsTab");
+const savedJobsTab = document.getElementById("savedJobsTab");
+const resumeTab = document.getElementById("resumeTab");
+const editProfileBtn = document.getElementById("editProfileBtn");
+const resumeButton = document.getElementById("resumeButton");
+const settingsPanel = document.getElementById("settingsPanel");
+const applicationsList = document.getElementById("applicationsList");
+const savedJobsList = document.getElementById("savedJobsList");
+const resumePanel = document.getElementById("resumePanel");
+const jobseekerSettingsForm = document.getElementById("jobseekerSettingsForm");
+const employerSettingsForm = document.getElementById("employerSettingsForm");
+const saveJobseekerSettingsBtn = document.getElementById("saveJobseekerSettingsBtn");
+const saveEmployerSettingsBtn = document.getElementById("saveEmployerSettingsBtn");
+const uploadResumeBtn = document.getElementById("uploadResumeBtn");
+const downloadResumeBtn = document.getElementById("downloadResumeBtn");
+const resumeFileInput = document.getElementById("resumeFileInput");
+
+function setActiveTab(tabElement) {
+  if (applicationsTab) applicationsTab.classList.remove("active");
+  if (savedJobsTab) savedJobsTab.classList.remove("active");
+  if (resumeTab) resumeTab.classList.remove("active");
+  if (tabElement) tabElement.classList.add("active");
+}
+
+function showApplicationsSection() {
+  settingsPanel.style.display = "none";
+  applicationsList.style.display = "grid";
+  savedJobsList.style.display = "none";
+  resumePanel.style.display = "none";
+  jobseekerSettingsForm.style.display = "none";
+  employerSettingsForm.style.display = "none";
+  document.getElementById("panelHeading").textContent =
+    loggedInUser.role === "employer" ? "My Job Listings" : "My Applications";
+  setActiveTab(applicationsTab);
+}
+
+function showSavedJobsSection() {
+  settingsPanel.style.display = "none";
+  applicationsList.style.display = "none";
+  savedJobsList.style.display = "grid";
+  resumePanel.style.display = "none";
+  jobseekerSettingsForm.style.display = "none";
+  employerSettingsForm.style.display = "none";
+  document.getElementById("panelHeading").textContent = "Saved Jobs";
+  setActiveTab(savedJobsTab);
+}
+
+function showResumeSection() {
+  settingsPanel.style.display = "none";
+  applicationsList.style.display = "none";
+  savedJobsList.style.display = "none";
+  resumePanel.style.display = "block";
+  jobseekerSettingsForm.style.display = "none";
+  employerSettingsForm.style.display = "none";
+  document.getElementById("panelHeading").textContent = "My Resume";
+  setActiveTab(resumeTab);
+}
+
+async function loadSettingsForm() {
+  if (!loggedInUser) return;
+
+  settingsPanel.style.display = "block";
+  applicationsList.style.display = "none";
+  savedJobsList.style.display = "none";
+  resumePanel.style.display = "none";
+  jobseekerSettingsForm.style.display = "none";
+  employerSettingsForm.style.display = "none";
+  document.getElementById("panelHeading").textContent = "Edit Profile";
+
+  if (applicationsTab) applicationsTab.classList.remove("active");
+  if (savedJobsTab) savedJobsTab.classList.remove("active");
+  if (resumeTab) resumeTab.classList.remove("active");
+
+  if (loggedInUser.role === "jobseeker") {
+    jobseekerSettingsForm.style.display = "grid";
+    employerSettingsForm.style.display = "none";
+
+    document.getElementById("settingsName").value = loggedInUser.name || "";
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/jobseeker-profile/${loggedInUser.id}`);
+
+      if (response.ok) {
+        const profile = await response.json();
+        document.getElementById("settingsHeadline").value = profile.headline || "";
+        document.getElementById("settingsBio").value = profile.bio || "";
+        document.getElementById("settingsLocation").value = profile.location || "";
+      } else {
+        document.getElementById("settingsHeadline").value = "";
+        document.getElementById("settingsBio").value = "";
+        document.getElementById("settingsLocation").value = "";
+      }
+    } catch (error) {
+      console.error("Failed to load jobseeker settings:", error);
+    }
+  }
+
+  if (loggedInUser.role === "employer") {
+    employerSettingsForm.style.display = "grid";
+    jobseekerSettingsForm.style.display = "none";
+
+    document.getElementById("employerSettingsName").value = loggedInUser.name || "";
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/employer-profile/${loggedInUser.id}`);
+
+      if (response.ok) {
+        const profile = await response.json();
+        document.getElementById("settingsCompanyName").value = profile.companyName || "";
+        document.getElementById("settingsCompanyDescription").value = profile.description || "";
+        document.getElementById("settingsWebsite").value = profile.website || "";
+        document.getElementById("settingsIndustry").value = profile.industry || "";
+        document.getElementById("employerSettingsLocation").value = profile.location || "";
+        document.getElementById("settingsLogoUrl").value = profile.logoUrl || "";
+      } else {
+        document.getElementById("settingsCompanyName").value = "";
+        document.getElementById("settingsCompanyDescription").value = "";
+        document.getElementById("settingsWebsite").value = "";
+        document.getElementById("settingsIndustry").value = "";
+        document.getElementById("employerSettingsLocation").value = "";
+        document.getElementById("settingsLogoUrl").value = "";
+      }
+    } catch (error) {
+      console.error("Failed to load employer settings:", error);
+    }
+  }
+}
+
+function showMainProfileSection() {
+  showApplicationsSection();
+}
+
+if (settingsTab) {
+  settingsTab.style.display = "none";
+}
+
+if (applicationsTab) {
+  applicationsTab.addEventListener("click", function () {
+    showApplicationsSection();
+    loadJobseekerApplications();
+  });
+}
+
+if (savedJobsTab) {
+  savedJobsTab.addEventListener("click", function () {
+    showSavedJobsSection();
+    loadSavedJobs();
+  });
+}
+
+if (resumeTab) {
+  resumeTab.addEventListener("click", function () {
+    showResumeSection();
+    loadResumeLink();
+  });
+}
+
+if (resumeButton && loggedInUser && loggedInUser.role === "employer") {
+  resumeButton.addEventListener("click", function () {
+    showResumeSection();
+    loadResumeLink();
+  });
+}
+
+if (editProfileBtn) {
+  editProfileBtn.addEventListener("click", function () {
+    loadSettingsForm();
+  });
+}
+
+if (saveJobseekerSettingsBtn) {
+  saveJobseekerSettingsBtn.addEventListener("click", async function () {
+    const updatedName = document.getElementById("settingsName").value.trim();
+    const updatedHeadline = document.getElementById("settingsHeadline").value.trim();
+    const updatedBio = document.getElementById("settingsBio").value.trim();
+    const updatedLocation = document.getElementById("settingsLocation").value.trim();
+
+    try {
+      const userResponse = await fetch(`http://localhost:8080/api/users/${loggedInUser.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          ...loggedInUser,
+          name: updatedName,
+          email: loggedInUser.email
+        })
+      });
+
+      if (!userResponse.ok) {
+        alert("Failed to update user details.");
+        return;
+      }
+
+      const updatedUser = await userResponse.json();
+
+      const profileResponse = await fetch(`http://localhost:8080/api/jobseeker-profile/${loggedInUser.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          userId: loggedInUser.id,
+          headline: updatedHeadline,
+          bio: updatedBio,
+          location: updatedLocation
+        })
+      });
+
+      if (!profileResponse.ok) {
+        alert("Failed to update jobseeker profile.");
+        return;
+      }
+
+      localStorage.setItem("loggedInUser", JSON.stringify(updatedUser));
+      alert("Profile updated successfully.");
+      loadProfileSummary();
+      showMainProfileSection();
+    } catch (error) {
+      console.error("Failed to save jobseeker settings:", error);
+      alert("Server error while saving settings.");
+    }
+  });
+}
+
+if (saveEmployerSettingsBtn) {
+  saveEmployerSettingsBtn.addEventListener("click", async function () {
+    const updatedName = document.getElementById("employerSettingsName").value.trim();
+    const companyName = document.getElementById("settingsCompanyName").value.trim();
+    const description = document.getElementById("settingsCompanyDescription").value.trim();
+    const website = document.getElementById("settingsWebsite").value.trim();
+    const industry = document.getElementById("settingsIndustry").value.trim();
+    const location = document.getElementById("employerSettingsLocation").value.trim();
+    const logoUrl = document.getElementById("settingsLogoUrl").value.trim();
+
+    try {
+      const userResponse = await fetch(`http://localhost:8080/api/users/${loggedInUser.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          ...loggedInUser,
+          name: updatedName,
+          email: loggedInUser.email
+        })
+      });
+
+      if (!userResponse.ok) {
+        alert("Failed to update user details.");
+        return;
+      }
+
+      const updatedUser = await userResponse.json();
+
+      const profileResponse = await fetch(`http://localhost:8080/api/employer-profile/${loggedInUser.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          userId: loggedInUser.id,
+          companyName: companyName,
+          description: description,
+          website: website,
+          industry: industry,
+          location: location,
+          logoUrl: logoUrl
+        })
+      });
+
+      if (!profileResponse.ok) {
+        alert("Failed to update employer profile.");
+        return;
+      }
+
+      localStorage.setItem("loggedInUser", JSON.stringify(updatedUser));
+      alert("Profile updated successfully.");
+      loadProfileSummary();
+      showMainProfileSection();
+    } catch (error) {
+      console.error("Failed to save employer settings:", error);
+      alert("Server error while saving settings.");
+    }
+  });
+}
+
+async function loadJobseekerCounts() {
+  if (!loggedInUser || loggedInUser.role !== "jobseeker") return;
+
+  try {
+    const [applicationsResponse, savedResponse] = await Promise.all([
+      fetch(`http://localhost:8080/api/applications/user/${loggedInUser.id}/count`),
+      fetch(`http://localhost:8080/api/saved-jobs/user/${loggedInUser.id}/count`)
+    ]);
+
+    const applicationsCount = applicationsResponse.ok ? await applicationsResponse.json() : 0;
+    const savedCount = savedResponse.ok ? await savedResponse.json() : 0;
+
+    document.getElementById("applicationsCount").textContent = applicationsCount ?? 0;
+    document.getElementById("savedCount").textContent = savedCount ?? 0;
+  } catch (error) {
+    console.error("Failed to load jobseeker counts:", error);
+    document.getElementById("applicationsCount").textContent = 0;
+    document.getElementById("savedCount").textContent = 0;
+  }
+}
+
+function getInitials(title) {
+  if (!title || title.trim() === "") return "JB";
+
+  const words = title.trim().split(" ");
+  if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
+
+  return (words[0][0] + words[1][0]).toUpperCase();
+}
+
+function renderApplicationCards(applications) {
+  if (!applicationsList) return;
+
+  if (!applications || applications.length === 0) {
+    applicationsList.innerHTML = `
+      <div class="emptyState" style="text-align:center;">
+        <div class="emptyTitle">No applications yet</div>
+        <div class="emptySub" style="margin-top:8px;">Once you apply for jobs, they will appear here.</div>
+      </div>
+    `;
+    return;
+  }
+
+  applicationsList.innerHTML = applications.map(application => `
+    <div class="jobCard" style="grid-template-columns: 60px 1fr;">
+      <div class="jobIcon" style="width:56px; height:56px;">${getInitials(application.title)}</div>
+
+      <div class="jobMain">
+        <div class="jobTop">
+          <div class="jobTitleRow">
+            <div class="jobTitle">${application.title || "Untitled Job"}</div>
+            <div class="jobCompany">${application.company || "Unknown Company"}${application.location ? ` • ${application.location}` : ""}</div>
+          </div>
+
+          <span class="badge" style="white-space:nowrap;">${application.status || "Applied"}</span>
+        </div>
+
+        <div class="jobBadges">
+          ${application.jobType ? `<span class="badge">${application.jobType}</span>` : ""}
+          ${application.salary ? `<span class="badge">${application.salary}</span>` : ""}
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:10px;">
+          <a class="btnGhost" href="jobDetails.html?id=${application.jobId}" style="text-decoration:none; display:inline-flex; align-items:center;">View Job</a>
+          <button class="btnGhost withdrawBtn" data-id="${application.applicationId}">Withdraw</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+async function loadJobseekerApplications() {
+  if (!loggedInUser || loggedInUser.role !== "jobseeker") return;
+
+  try {
+    const response = await fetch(`http://localhost:8080/api/applications/user/${loggedInUser.id}`);
+
+    if (!response.ok) {
+      renderApplicationCards([]);
+      return;
+    }
+
+    const applications = await response.json();
+    renderApplicationCards(applications);
+  } catch (error) {
+    console.error("Failed to load jobseeker applications:", error);
+    renderApplicationCards([]);
+  }
+}
+
+function renderSavedJobCards(savedJobs) {
+  if (!savedJobsList) return;
+
+  if (!savedJobs || savedJobs.length === 0) {
+    savedJobsList.innerHTML = `
+      <div class="emptyState" style="text-align:center;">
+        <div class="emptyTitle">No saved jobs yet</div>
+        <div class="emptySub" style="margin-top:8px;">Jobs you save will appear here.</div>
+      </div>
+    `;
+    return;
+  }
+
+  savedJobsList.innerHTML = savedJobs.map(job => `
+    <div class="jobCard" style="grid-template-columns: 60px 1fr;">
+      <div class="jobIcon" style="width:56px; height:56px;">${getInitials(job.title)}</div>
+
+      <div class="jobMain">
+        <div class="jobTop">
+          <div class="jobTitleRow">
+            <div class="jobTitle">${job.title || "Untitled Job"}</div>
+            <div class="jobCompany">${job.company || "Unknown Company"}${job.location ? ` • ${job.location}` : ""}</div>
+          </div>
+
+          <span class="badge" style="white-space:nowrap;">Saved</span>
+        </div>
+
+        <div class="jobBadges">
+          ${job.jobType ? `<span class="badge">${job.jobType}</span>` : ""}
+          ${job.salary ? `<span class="badge">${job.salary}</span>` : ""}
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:10px;">
+          <a class="btnGhost" href="jobDetails.html?id=${job.jobId}" style="text-decoration:none; display:inline-flex; align-items:center;">View Job</a>
+          <button class="btnGhost unsaveBtn" data-id="${job.savedJobId}">Unsave</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+async function loadSavedJobs() {
+  if (!loggedInUser || loggedInUser.role !== "jobseeker") return;
+
+  try {
+    const response = await fetch(`http://localhost:8080/api/saved-jobs/user/${loggedInUser.id}`);
+
+    if (!response.ok) {
+      renderSavedJobCards([]);
+      return;
+    }
+
+    const savedJobs = await response.json();
+    renderSavedJobCards(savedJobs);
+  } catch (error) {
+    console.error("Failed to load saved jobs:", error);
+    renderSavedJobCards([]);
+  }
+}
+
+async function loadResumeLink() {
+  if (!loggedInUser || loggedInUser.role !== "jobseeker") return;
+
+  try {
+    const response = await fetch(`http://localhost:8080/api/jobseeker-profile/${loggedInUser.id}`);
+
+    if (!response.ok) {
+      downloadResumeBtn.style.display = "none";
+      downloadResumeBtn.removeAttribute("href");
+      return;
+    }
+
+    const profile = await response.json();
+
+    if (profile.resumeFileName && profile.resumeFileName.trim() !== "") {
+      downloadResumeBtn.href = `http://localhost:8080/api/jobseeker-profile/${loggedInUser.id}/resume`;
+      downloadResumeBtn.style.display = "inline-flex";
+    } else {
+      downloadResumeBtn.style.display = "none";
+      downloadResumeBtn.removeAttribute("href");
+    }
+  } catch (error) {
+    console.error("Failed to load resume link:", error);
+    downloadResumeBtn.style.display = "none";
+    downloadResumeBtn.removeAttribute("href");
+  }
+}
+
+if (uploadResumeBtn) {
+  uploadResumeBtn.addEventListener("click", async function () {
+    if (!loggedInUser || loggedInUser.role !== "jobseeker") return;
+
+    const file = resumeFileInput.files[0];
+
+    if (!file) {
+      alert("Please select a PDF file first.");
+      return;
+    }
+
+    if (file.type !== "application/pdf") {
+      alert("Only PDF files are allowed.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/jobseeker-profile/${loggedInUser.id}/upload-resume`, {
+        method: "POST",
+        body: formData
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        alert(errorText || "Failed to upload resume.");
+        return;
+      }
+
+      alert("Resume uploaded successfully.");
+      resumeFileInput.value = "";
+      loadResumeLink();
+    } catch (error) {
+      console.error("Failed to upload resume:", error);
+      alert("Server error while uploading resume.");
+    }
+  });
+}
+
+document.addEventListener("click", async function(e) {
+
+  if (e.target.classList.contains("withdrawBtn")) {
+    const applicationId = e.target.dataset.id;
+
+    const confirmWithdraw = confirm("Withdraw this application?");
+    if (!confirmWithdraw) return;
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/applications/${applicationId}`, {
+        method: "DELETE"
+      });
+
+      if (!response.ok) {
+        alert("Failed to withdraw application.");
+        return;
+      }
+
+      loadJobseekerApplications();
+      loadJobseekerCounts();
+
+    } catch (error) {
+      console.error("Failed to withdraw application:", error);
+      alert("Server error while withdrawing application.");
+    }
+  }
+
+  if (e.target.classList.contains("unsaveBtn")) {
+    const savedJobId = e.target.dataset.id;
+
+    const confirmRemove = confirm("Remove this saved job?");
+    if (!confirmRemove) return;
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/saved-jobs/${savedJobId}`, {
+        method: "DELETE"
+      });
+
+      if (!response.ok) {
+        alert("Failed to remove saved job.");
+        return;
+      }
+
+      loadSavedJobs();
+      loadJobseekerCounts();
+
+    } catch (error) {
+      console.error("Failed to remove saved job:", error);
+      alert("Server error while removing saved job.");
+    }
+  }
+
+});
+
+loadProfileSummary();
+loadJobseekerCounts();
+loadJobseekerApplications();
 
 </script>
 
