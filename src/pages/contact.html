@@ -168,46 +168,124 @@ HireSpace Assistant
 
 
 <script>
+/* =========================
+   CONTACT FORM
+   ========================= */
+document.getElementById("contactForm").addEventListener("submit", function(e){
+  e.preventDefault();
 
-/* FORM */
-document.getElementById("contactForm")
-.addEventListener("submit", function(e){
+  document.getElementById("formStatus").innerHTML =
+    "✅ Inquiry sent successfully!";
 
-e.preventDefault();
-
-document.getElementById("formStatus").innerHTML =
-"✅ Inquiry sent successfully!";
-
-this.reset();
-
+  this.reset();
 });
 
-/* CHATBOT */
-function sendMessage(){
+/* =========================
+   CHATBOT DATA
+   ========================= */
+const chatbotReplies = [
+  {
+    keywords: ["job", "jobs", "listing", "vacancy", "vacancies"],
+    reply: "You can browse available jobs on the Jobs page. Use the filters to narrow results by category, salary or location."
+  },
+  {
+    keywords: ["apply", "application", "applying"],
+    reply: "To apply for a job, open the listing and follow the application process shown on the page. Make sure your profile details are completed first."
+  },
+  {
+    keywords: ["account", "login", "sign in", "password", "profile"],
+    reply: "For account-related help, try checking your profile details first. If you're still stuck, use the contact form and choose 'Account Help'."
+  },
+  {
+    keywords: ["employer", "business", "company", "post job", "post a job"],
+    reply: "Employers can use HireSpace to post listings and manage applications. For support, choose 'Employer Support' in the contact form."
+  },
+  {
+    keywords: ["subscription", "billing", "payment", "checkout"],
+    reply: "For subscription or payment issues, please select 'Subscription Support' in the contact form and include as much detail as possible."
+  },
+  {
+    keywords: ["email", "contact", "support"],
+    reply: "You can contact HireSpace directly at support@hirespace.com or send an enquiry using the form on this page."
+  },
+  {
+    keywords: ["phone", "call", "number"],
+    reply: "You can call HireSpace on +44 01274 555555 during working hours, Monday to Friday, 9am to 5pm."
+  },
+  {
+    keywords: ["response", "reply", "how long", "wait"],
+    reply: "Our usual response time is within 24 hours."
+  },
+  {
+    keywords: ["hello", "hi", "hey"],
+    reply: "Hi there! I can help with jobs, applications, employer support, subscriptions or contact details."
+  }
+];
 
-const input=document.getElementById("chat-input");
-const box=document.getElementById("chat-messages");
+/* =========================
+   CHATBOT LOGIC
+   ========================= */
+function getBotReply(message) {
+  const lowerMessage = message.toLowerCase().trim();
 
-if(input.value==="") return;
+  for (const item of chatbotReplies) {
+    for (const keyword of item.keywords) {
+      if (lowerMessage.includes(keyword)) {
+        return item.reply;
+      }
+    }
+  }
 
-box.innerHTML+="<p><b>You:</b> "+input.value+"</p>";
-
-setTimeout(()=>{
-box.innerHTML+="<p><b>Assistant:</b> Support will review your request shortly.</p>";
-box.scrollTop=box.scrollHeight;
-},600);
-
-input.value="";
+  return "I’m not fully sure about that yet. Try asking about jobs, applications, employer support, subscriptions, email or phone, or use the contact form for more help.";
 }
 
-/* TOGGLE CHAT */
-document.getElementById("chat-toggle").onclick=()=>{
-const body=document.getElementById("chat-body");
-body.style.display=
-body.style.display==="none"?"block":"none";
-};
+function appendMessage(sender, message) {
+  const box = document.getElementById("chat-messages");
+  const p = document.createElement("p");
+  p.innerHTML = `<b>${sender}:</b> ${message}`;
+  box.appendChild(p);
+  box.scrollTop = box.scrollHeight;
+}
 
+function sendMessage() {
+  const input = document.getElementById("chat-input");
+  const userMessage = input.value.trim();
+
+  if (userMessage === "") return;
+
+  appendMessage("You", userMessage);
+  input.value = "";
+
+  const reply = getBotReply(userMessage);
+
+  setTimeout(() => {
+    appendMessage("Assistant", reply);
+  }, 500);
+}
+
+/* =========================
+   ENTER KEY SUPPORT
+   ========================= */
+document.getElementById("chat-input").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+/* =========================
+   TOGGLE CHAT
+   ========================= */
+document.getElementById("chat-toggle").onclick = () => {
+  const body = document.getElementById("chat-body");
+  body.style.display = body.style.display === "none" ? "block" : "none";
+};
 </script>
+
+
+
+
+
 
 </body>
 </html>
