@@ -1,22 +1,20 @@
 package com.hirespace.hirespace_api.controller;
 
-import java.util.List;
-
-import org.springframework.web.bind.annotation.*;
-
 import com.hirespace.hirespace_api.model.Job;
 import com.hirespace.hirespace_api.repository.JobRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/jobs")
 @CrossOrigin(origins = "*")
 public class JobController {
 
-    private final JobRepository jobRepository;
-
-    public JobController(JobRepository jobRepository) {
-        this.jobRepository = jobRepository;
-    }
+    @Autowired
+    private JobRepository jobRepository;
 
     @GetMapping
     public List<Job> getAllJobs() {
@@ -24,12 +22,9 @@ public class JobController {
     }
 
     @GetMapping("/{id}")
-    public Job getJobById(@PathVariable Long id) {
-        return jobRepository.findById(id).orElse(null);
-    }
-
-    @PostMapping
-    public Job createJob(@RequestBody Job job) {
-        return jobRepository.save(job);
+    public ResponseEntity<Job> getJobById(@PathVariable Long id) {
+        return jobRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }

@@ -1,162 +1,286 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HireSpace | Jobs</title>
+  <title>HireSpace | Job Details</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 
 <body>
-
-<!--The blob wave behind the form-->
-<div class="bgWave">
-  <img src="../assets/wave.svg" alt="">
-</div>
-
-<div class="adminWrap">
-
- <!--navigation bar + top logo part -->
-  <div class="topbar">
-    <div class="brand">
-      <div class="logoDot">
-        <img src="../assets/logo.png">
-      </div>
-
-      <div class="brandText">
-        <div class="name">HireSpace</div>
-        <div class="tag">Job Advertisement Portal</div>
-      </div>
-    </div>
-<!--navigation bar buttons -->
-    <div class="nav">
-      <a href="index.html">Home</a>
-      <a href="jobs.html">Jobs</a>
-      <a href="login.html">Login</a>
-      <a href="Register.html">Register</a>
-    </div>
-  </div>
-    <a class="navProfileBtn" href="profile.html">Profile</a>
-  </div>
-</header>
-
-
-
-<main class="jobDetailsPage">
-  <div class="jobDetailsTop">
-    <a class="backLink" href="jobs.html">← Back to jobs</a>
+  <div class="bgWave">
+    <img src="../assets/wave.svg" alt="">
   </div>
 
-  <section class="jobDetailsHero">
-    <div class="jobDetailsLeft">
-      <div class="jobTitleBlock">
-        <h1 class="jobH1">Software Engineer (Placement)</h1>
-        <div class="jobMetaLine">HireSpace • Bradford • Hybrid</div>
+  <div class="adminWrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logoDot">
+          <img src="../assets/logo.png" alt="HireSpace logo">
+        </div>
+
+        <div class="brandText">
+          <div class="name">HireSpace</div>
+          <div class="tag">Job Advertisement Portal</div>
+        </div>
       </div>
 
-      <div class="jobPills">
-        <span class="pill">Full-time</span>
-        <span class="pill">£24k–£28k</span>
-        <span class="pill">Closing in 21 days</span>
-        <span class="pill">Posted 2 days ago</span>
-      </div>
-
-      <p class="jobIntro">
-        Join our team to help build a modern job advertisement portal. You’ll work across front-end pages,
-        improve UI consistency, and contribute to core features like job listings and applications.
-      </p>
-
-      <div class="jobCtas">
-        <!-- for now, link to login to simulate "must be logged in" -->
-        <a class="btnPrimary" href="login.html">Apply now</a>
-        <a class="btnGhost" href="jobs.html">Save for later</a>
-      </div>
-
-      <div class="loginHint">
-        <strong>Note:</strong> In the final system, only logged-in jobseekers can submit an application.
+      <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="login.html">Login</a>
+        <a href="Register.html">Register</a>
+        <a class="navProfileBtn" href="profile.html">Profile</a>
       </div>
     </div>
 
-    <aside class="jobDetailsRight">
-      <div class="detailsCard">
-        <div class="detailsCardTitle">Job summary</div>
-
-        <div class="kv">
-          <div class="k">Location</div><div class="v">Bradford (Hybrid)</div>
-        </div>
-        <div class="kv">
-          <div class="k">Category</div><div class="v">Software Engineering</div>
-        </div>
-        <div class="kv">
-          <div class="k">Job type</div><div class="v">Full-time</div>
-        </div>
-        <div class="kv">
-          <div class="k">Salary</div><div class="v">£24,000–£28,000</div>
-        </div>
-        <div class="kv">
-          <div class="k">Closing date</div><div class="v">21 days</div>
-        </div>
-
-        <div class="divider"></div>
-
-        <a class="btnPrimary wFull" href="login.html">Apply now</a>
+    <main class="jobDetailsPage">
+      <div class="jobDetailsTop">
+        <a class="backLink" href="jobs.html">← Back to jobs</a>
       </div>
-    </aside>
-  </section>
 
-  <section class="jobDetailsBody">
-    <div class="bodyGrid">
-      <div class="bodyMain">
-        <div class="sectionCard">
-          <h2>Overview</h2>
-          <p>
-            You’ll support the development of a responsive job portal and help implement clean UI patterns,
-            consistent navigation, and accessible components across pages.
+      <section class="jobDetailsHero">
+        <div class="jobDetailsLeft">
+          <div class="jobTitleBlock">
+            <h1 class="jobH1" id="jobTitle">Loading...</h1>
+            <div class="jobMetaLine" id="jobMetaLine">Please wait...</div>
+          </div>
+
+          <div class="jobPills">
+            <span class="pill" id="jobType">-</span>
+            <span class="pill" id="jobSalary">-</span>
+            <span class="pill" id="jobCategory">-</span>
+            <span class="pill" id="jobLocationPill">-</span>
+          </div>
+
+          <p class="jobIntro" id="jobIntro">
+            Loading job description...
           </p>
-        </div>
 
-        <div class="sectionCard">
-          <h2>Responsibilities</h2>
-          <ul>
-            <li>Build and maintain front-end pages using HTML/CSS (prototype stage).</li>
-            <li>Work with the team to align pages with requirements and user roles.</li>
-            <li>Improve usability, layout spacing, and consistent styling.</li>
-          </ul>
-        </div>
+          <div class="jobCtas">
+            <button class="btnPrimary" id="applyBtn" type="button">Apply now</button>
+            <button class="btnGhost" id="saveBtn" type="button">Save for later</button>
+          </div>
 
-        <div class="sectionCard">
-          <h2>Requirements</h2>
-          <ul>
-            <li>Basic knowledge of HTML, CSS, and JavaScript.</li>
-            <li>Attention to detail and willingness to iterate.</li>
-            <li>Teamwork and communication.</li>
-          </ul>
-        </div>
-
-        <div class="sectionCard">
-          <h2>How to apply</h2>
-          <p>
-            Click <strong>Apply now</strong>. In the final system, your application will be stored and the employer will be notified.
-          </p>
-        </div>
-      </div>
-
-      <div class="bodySide">
-        <div class="sectionCard">
-          <h2>Company</h2>
-          <p><strong>HireSpace</strong></p>
-          <p class="muted">Building a simple job advertisement portal for students and local employers.</p>
-        </div>
-
-        <div class="sectionCard">
-          <h2>Share</h2>
-          <div class="shareRow">
-            <button class="btnGhost" type="button">Copy link</button>
-            <button class="btnGhost" type="button">Email</button>
+          <div class="loginHint">
+            <strong>Note:</strong> Applications are currently submitted using a temporary test user ID.
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-</main>
+
+        <aside class="jobDetailsRight">
+          <div class="detailsCard">
+            <div class="detailsCardTitle">Job summary</div>
+
+            <div class="kv">
+              <div class="k">Location</div><div class="v" id="summaryLocation">-</div>
+            </div>
+            <div class="kv">
+              <div class="k">Category</div><div class="v" id="summaryCategory">-</div>
+            </div>
+            <div class="kv">
+              <div class="k">Job type</div><div class="v" id="summaryType">-</div>
+            </div>
+            <div class="kv">
+              <div class="k">Salary</div><div class="v" id="summarySalary">-</div>
+            </div>
+            <div class="kv">
+              <div class="k">Contact email</div><div class="v" id="summaryEmail">-</div>
+            </div>
+
+            <div class="divider"></div>
+
+            <button class="btnPrimary wFull" id="applyBtnSide" type="button">Apply now</button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="jobDetailsBody">
+        <div class="bodyGrid">
+          <div class="bodyMain">
+            <div class="sectionCard">
+              <h2>Overview</h2>
+              <p id="overviewText">Loading...</p>
+            </div>
+
+            <div class="sectionCard">
+              <h2>Responsibilities</h2>
+              <ul id="responsibilitiesList">
+                <li>Reviewing job details...</li>
+              </ul>
+            </div>
+
+            <div class="sectionCard">
+              <h2>Requirements</h2>
+              <ul id="requirementsList">
+                <li>Reviewing job details...</li>
+              </ul>
+            </div>
+
+            <div class="sectionCard">
+              <h2>How to apply</h2>
+              <p>
+                Click <strong>Apply now</strong> and your application will be stored in the system.
+              </p>
+            </div>
+          </div>
+
+          <div class="bodySide">
+            <div class="sectionCard">
+              <h2>Company</h2>
+              <p><strong id="companyName">Loading...</strong></p>
+              <p class="muted" id="companyInfo">Loading company information...</p>
+            </div>
+
+            <div class="sectionCard">
+              <h2>Share</h2>
+              <div class="shareRow">
+                <button class="btnGhost" type="button" onclick="copyJobLink()">Copy link</button>
+                <button class="btnGhost" type="button" onclick="shareByEmail()">Email</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    let currentJobId = null;
+
+    function getJobIdFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get("id");
+    }
+
+    async function loadJobDetails() {
+      const jobId = getJobIdFromUrl();
+
+      if (!jobId) {
+        document.getElementById("jobTitle").textContent = "No job selected";
+        document.getElementById("jobIntro").textContent =
+          "Please return to the jobs page and choose a job.";
+        return;
+      }
+
+      currentJobId = Number(jobId);
+
+      try {
+        const response = await fetch(`http://localhost:8080/api/jobs/${jobId}`);
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch job details");
+        }
+
+        const job = await response.json();
+
+        document.getElementById("jobTitle").textContent = job.title || "Untitled job";
+        document.getElementById("jobMetaLine").textContent =
+          `${job.company || "Unknown company"} • ${job.location || "Unknown location"}`;
+
+        document.getElementById("jobType").textContent = job.jobType || "N/A";
+        document.getElementById("jobSalary").textContent = job.salary || "Salary not listed";
+        document.getElementById("jobCategory").textContent = job.category || "No category";
+        document.getElementById("jobLocationPill").textContent = job.location || "No location";
+
+        document.getElementById("jobIntro").textContent =
+          job.description || "No description available.";
+
+        document.getElementById("summaryLocation").textContent = job.location || "N/A";
+        document.getElementById("summaryCategory").textContent = job.category || "N/A";
+        document.getElementById("summaryType").textContent = job.jobType || "N/A";
+        document.getElementById("summarySalary").textContent = job.salary || "N/A";
+        document.getElementById("summaryEmail").textContent = job.contactEmail || "N/A";
+
+        document.getElementById("overviewText").textContent =
+          job.description || "No overview available.";
+
+        document.getElementById("companyName").textContent = job.company || "Unknown company";
+        document.getElementById("companyInfo").textContent =
+          job.contactEmail
+            ? `Contact email: ${job.contactEmail}`
+            : "No company contact information available.";
+
+        document.getElementById("responsibilitiesList").innerHTML = `
+          <li>Work as part of the ${job.category || "job"} team.</li>
+          <li>Carry out tasks related to the role of ${job.title || "this position"}.</li>
+          <li>Collaborate with the employer and contribute professionally.</li>
+        `;
+
+        document.getElementById("requirementsList").innerHTML = `
+          <li>Interest in ${job.category || "the relevant field"}.</li>
+          <li>Ability to work in a ${job.jobType || "professional"} role.</li>
+          <li>Good communication and willingness to learn.</li>
+        `;
+
+      } catch (error) {
+        console.error(error);
+        document.getElementById("jobTitle").textContent = "Error loading job";
+        document.getElementById("jobIntro").textContent =
+          "There was a problem loading this job.";
+      }
+    }
+
+ async function applyToJob(jobId) {
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+  if (!loggedInUser || !loggedInUser.id) {
+    alert("You must be logged in to apply.");
+    return;
+  }
+
+  const application = {
+    userId: loggedInUser.id,
+    jobId: jobId,
+    status: "PENDING"
+  };
+
+  try {
+    const response = await fetch("http://localhost:8080/api/applications", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(application)
+    });
+
+    const result = await response.text();
+
+    if (!response.ok) {
+      alert(result);
+      return;
+    }
+
+    alert("Application submitted successfully!");
+  } catch (error) {
+    console.error(error);
+    alert("Failed to apply.");
+  }
+}
+
+    function copyJobLink() {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Job link copied!");
+    }
+
+    function shareByEmail() {
+      const subject = encodeURIComponent("Check out this job on HireSpace");
+      const body = encodeURIComponent(`Take a look at this job: ${window.location.href}`);
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    }
+
+    document.getElementById("applyBtn").addEventListener("click", () => {
+      if (currentJobId) applyToJob(currentJobId);
+    });
+
+    document.getElementById("applyBtnSide").addEventListener("click", () => {
+      if (currentJobId) applyToJob(currentJobId);
+    });
+
+    document.getElementById("saveBtn").addEventListener("click", () => {
+      alert("Save for later can be connected next.");
+    });
+
+    loadJobDetails();
+  </script>
+</body>
+</html>

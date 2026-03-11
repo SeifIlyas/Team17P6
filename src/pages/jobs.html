@@ -180,7 +180,7 @@
               </div>
               <div class="jobActions"><span class="heart">♡</span></div>
             </a>
-
+<div class="jobList" id="jobList"></div>
             <a class="jobCard" href="jobDetails.html?id=3">
               <div class="jobIcon">D</div>
               <div class="jobMain">
@@ -223,5 +223,114 @@
       </section>
     </main>
   </div>
+
+
+  <script>
+
+async function applyToJob(jobId) {
+
+  const application = {
+    userId: 1,   // temporary until login system
+    jobId: jobId,
+    status: "PENDING"
+  };
+
+  try {
+
+    const response = await fetch("http://localhost:8080/api/applications", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(application)
+    });
+
+    const result = await response.text();
+
+    if (!response.ok) {
+      alert(result);
+      return;
+    }
+
+    alert("Application submitted successfully!");
+
+  } catch (error) {
+    console.error(error);
+    alert("Failed to apply.");
+  }
+
+}
+
+</script>
+
+<script>
+  async function loadJobs() {
+    const jobList = document.getElementById("jobList");
+
+    if (!jobList) {
+      console.error("No element with id='jobList' found.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:8080/api/jobs");
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch jobs");
+      }
+
+      const jobs = await response.json();
+
+      if (!jobs.length) {
+        jobList.innerHTML = `
+          <div class="emptyState">
+            <div class="emptyTitle">No jobs found</div>
+            <div class="emptySub">There are currently no job listings available.</div>
+          </div>
+        `;
+        return;
+      }
+
+      jobList.innerHTML = jobs.map(job => `
+        <a class="jobCard" href="jobdetails.html?id=${job.id}">
+          <div class="jobIcon">${job.company ? job.company.charAt(0).toUpperCase() : "H"}</div>
+
+          <div>
+            <div class="jobTop">
+              <div>
+                <div class="jobTitle">${job.title || "Untitled job"}</div>
+                <div class="jobCompany">${job.company || "Unknown company"}</div>
+              </div>
+
+              <div class="jobMetaRight">${job.location || "Unknown location"}</div>
+            </div>
+
+            <div class="jobBadges">
+              <span class="badge">${job.category || "No category"}</span>
+              <span class="badge">${job.jobType || "No type"}</span>
+              <span class="badge">${job.salary || "Salary not listed"}</span>
+            </div>
+          </div>
+
+          <div class="jobActions">
+            <span class="heart">♡</span>
+          </div>
+        </a>
+      `).join("");
+
+    } catch (error) {
+      console.error(error);
+      jobList.innerHTML = `
+        <div class="emptyState">
+          <div class="emptyTitle">Error loading jobs</div>
+          <div class="emptySub">Please try again later.</div>
+        </div>
+      `;
+    }
+  }
+
+  loadJobs();
+</script>
+
 </body>
 </html>
