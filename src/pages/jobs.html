@@ -9,55 +9,55 @@
 
 <body>
 
-<!--The blob wave behind the form-->
-<div class="bgWave">
-  <img src="../assets/wave.svg" alt="">
-</div>
+  <div class="bgWave">
+    <img src="../assets/wave.svg" alt="">
+  </div>
 
-<div class="adminWrap">
+  <div class="adminWrap">
 
- <!--navigation bar + top logo part -->
-  <div class="topbar">
-    <div class="brand">
-      <div class="logoDot">
-        <img src="../assets/logo.png">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logoDot">
+          <img src="../assets/logo.png" alt="HireSpace logo">
+        </div>
+
+        <div class="brandText">
+          <div class="name">HireSpace</div>
+          <div class="tag">Job Advertisement Portal</div>
+        </div>
       </div>
 
-      <div class="brandText">
-        <div class="name">HireSpace</div>
-        <div class="tag">Job Advertisement Portal</div>
+      <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="jobs.html">Jobs</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+        <a href="profile.html" style="display:flex; align-items:center; gap:6px;">
+          <img
+            src="../assets/profilePlaceholder.png"
+            alt="Profile icon"
+            style="width:16px; height:16px; border-radius:50%; object-fit:cover;">
+          Profile
+        </a>
       </div>
     </div>
-<!--navigation bar buttons -->
-    <div class="nav">
-      <a href="index.html">Home</a>
-      <a href="jobs.html">Jobs</a>
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
-      <a href="profile.html" style="display:flex; align-items:center; gap:6px;">
-          <img 
-            src="../assets/profilePlaceholder.png" alt="Profile icon"style="width:16px; height:16px; border-radius:50%; object-fit:cover;">Profile</a>
-    </div>
-  </div>
-   
-  </div>
-</header>
 
     <main class="container jobsPage">
       <div class="jobsHeader">
         <h1 class="jobsTitle">Find your next role</h1>
-        <p class="jobsSub">Search by keyword, location and category. Then click a job to view details.</p>
+        <p class="jobsSub">
+          Search by keyword, location and category. Then click a job to view details.
+        </p>
       </div>
 
-      <!-- Search bar row -->
       <section class="jobsSearchBar">
         <div class="searchField">
           <span class="searchIcon">⌕</span>
-          <input type="text" placeholder="Job title or keywords" />
+          <input type="text" id="searchInput" placeholder="Job title or keywords" />
         </div>
 
-        <select>
-          <option>All locations</option>
+        <select id="locationFilter">
+          <option value="">All locations</option>
           <option>Bradford</option>
           <option>Leeds</option>
           <option>Manchester</option>
@@ -65,272 +65,303 @@
           <option>Remote</option>
         </select>
 
-        <select>
-          <option>All categories</option>
+        <select id="categoryFilter">
+          <option value="">All categories</option>
           <option>Software Engineering</option>
           <option>Data / AI</option>
           <option>Cyber Security</option>
           <option>Business / Admin</option>
         </select>
 
-        <button class="btnPrimary">Search</button>
-
-        <button class="btnGhost" type="button">Clear</button>
+        <button class="btnPrimary" type="button" onclick="loadJobs()">Search</button>
+        <button class="btnGhost" type="button" onclick="clearFilters()">Clear</button>
       </section>
 
-      <!-- Body layout -->
       <section class="jobsLayout">
-        <!-- Filters -->
         <aside class="filtersPanel">
           <div class="panelTitle">Filters</div>
 
           <div class="filterBlock">
             <div class="filterLabel">Job type</div>
-            <label class="checkRow"><input type="checkbox" /> Full-time</label>
-            <label class="checkRow"><input type="checkbox" /> Part-time</label>
-            <label class="checkRow"><input type="checkbox" /> Contract</label>
-            <label class="checkRow"><input type="checkbox" /> Internship</label>
-            <label class="checkRow"><input type="checkbox" /> Remote</label>
+            <label class="checkRow"><input type="checkbox" value="Full-time" class="jobTypeFilter" /> Full-time</label>
+            <label class="checkRow"><input type="checkbox" value="Part-time" class="jobTypeFilter" /> Part-time</label>
+            <label class="checkRow"><input type="checkbox" value="Contract" class="jobTypeFilter" /> Contract</label>
+            <label class="checkRow"><input type="checkbox" value="Internship" class="jobTypeFilter" /> Internship</label>
+            <label class="checkRow"><input type="checkbox" value="Remote" class="jobTypeFilter" /> Remote</label>
           </div>
 
           <div class="filterBlock">
             <div class="filterLabel">Salary</div>
             <div class="rangeRow">
-              <input type="number" placeholder="Min" />
-              <input type="number" placeholder="Max" />
+              <input type="number" id="minSalary" placeholder="Min" />
+              <input type="number" id="maxSalary" placeholder="Max" />
             </div>
           </div>
 
-          <div class="filterBlock">
-            <div class="filterLabel">Experience</div>
-            <label class="checkRow"><input type="checkbox" /> Entry / Graduate</label>
-            <label class="checkRow"><input type="checkbox" /> 1–2 years</label>
-            <label class="checkRow"><input type="checkbox" /> 3–5 years</label>
-            <label class="checkRow"><input type="checkbox" /> 6+ years</label>
-          </div>
-
-          <div class="filterBlock">
-            <div class="filterLabel">Posted</div>
-            <select>
-              <option>Any time</option>
-              <option>Last 24 hours</option>
-              <option>Last 7 days</option>
-              <option>Last 30 days</option>
-            </select>
-          </div>
-
-          <button class="btnPrimary wFull">Apply filters</button>
+          <button class="btnPrimary wFull" type="button" onclick="loadJobs()">Apply filters</button>
         </aside>
 
-        <!-- Results -->
         <div class="resultsPanel">
           <div class="resultsTopRow">
-            <div class="resultsCount"><strong>1,251</strong> jobs</div>
+            <div class="resultsCount">
+              <strong id="jobCount">0</strong> jobs
+            </div>
 
             <div class="resultsControls">
               <span class="muted">Sort by</span>
-              <select>
-                <option>Newest</option>
-                <option>Salary: High to Low</option>
-                <option>Salary: Low to High</option>
+              <select id="sortSelect" onchange="loadJobs()">
+                <option value="default">Default</option>
+                <option value="titleAsc">Title A-Z</option>
+                <option value="titleDesc">Title Z-A</option>
               </select>
             </div>
           </div>
 
-          <div class="jobList">
-            <!-- Job card (repeat) -->
-            <a class="jobCard" href="jobDetails.html?id=1">
-              <div class="jobIcon">A</div>
-              <div class="jobMain">
-                <div class="jobTop">
-                  <div class="jobTitleRow">
-                    <div class="jobTitle">Software Engineer (Placement)</div>
-                    <div class="jobCompany">HireSpace • Bradford</div>
-                  </div>
-                  <div class="jobMetaRight">21 days left</div>
-                </div>
+          <div class="jobList" id="jobList"></div>
 
-                <div class="jobBadges">
-                  <span class="badge">Full-time</span>
-                  <span class="badge">On-site</span>
-                  <span class="badge">£24k–£28k</span>
-                </div>
-              </div>
-
-              <div class="jobActions">
-                <span class="heart">♡</span>
-              </div>
-            </a>
-
-            <a class="jobCard" href="jobDetails.html?id=2">
-              <div class="jobIcon">S</div>
-              <div class="jobMain">
-                <div class="jobTop">
-                  <div class="jobTitleRow">
-                    <div class="jobTitle">Front-End Developer</div>
-                    <div class="jobCompany">Hex Games • Remote</div>
-                  </div>
-                  <div class="jobMetaRight">10 days left</div>
-                </div>
-                <div class="jobBadges">
-                  <span class="badge">Part-time</span>
-                  <span class="badge">Remote</span>
-                  <span class="badge">£15–£20/hr</span>
-                </div>
-              </div>
-              <div class="jobActions"><span class="heart">♡</span></div>
-            </a>
-<div class="jobList" id="jobList"></div>
-            <a class="jobCard" href="jobDetails.html?id=3">
-              <div class="jobIcon">D</div>
-              <div class="jobMain">
-                <div class="jobTop">
-                  <div class="jobTitleRow">
-                    <div class="jobTitle">Data Analyst Intern</div>
-                    <div class="jobCompany">JobSphere • Leeds</div>
-                  </div>
-                  <div class="jobMetaRight">7 days left</div>
-                </div>
-                <div class="jobBadges">
-                  <span class="badge">Internship</span>
-                  <span class="badge">Hybrid</span>
-                  <span class="badge">£22k</span>
-                </div>
-              </div>
-              <div class="jobActions"><span class="heart">♡</span></div>
-            </a>
-
-            <!-- Empty state (leave here for later JS toggle) -->
-            <div class="emptyState" style="display:none;">
-              <div class="emptyTitle">No jobs found</div>
-              <div class="emptySub">Try changing your search or clearing filters.</div>
-            </div>
+          <div class="emptyState" id="emptyState" style="display:none;">
+            <div class="emptyTitle">No jobs found</div>
+            <div class="emptySub">Try changing your search or clearing filters.</div>
           </div>
 
-          <!-- Pagination (simple placeholder) -->
           <div class="pagination">
-            <button class="btnGhost">← Prev</button>
+            <button class="btnGhost" type="button">← Prev</button>
             <div class="pageNums">
               <span class="pageNum active">1</span>
-              <span class="pageNum">2</span>
-              <span class="pageNum">3</span>
-              <span class="pageNum">…</span>
-              <span class="pageNum">8</span>
             </div>
-            <button class="btnGhost">Next →</button>
+            <button class="btnGhost" type="button">Next →</button>
           </div>
         </div>
       </section>
     </main>
   </div>
 
-
   <script>
+    function clearFilters() {
+      document.getElementById("searchInput").value = "";
+      document.getElementById("locationFilter").value = "";
+      document.getElementById("categoryFilter").value = "";
+      document.getElementById("minSalary").value = "";
+      document.getElementById("maxSalary").value = "";
+      document.getElementById("sortSelect").value = "default";
 
-async function applyToJob(jobId) {
+      document.querySelectorAll(".jobTypeFilter").forEach(box => {
+        box.checked = false;
+      });
 
-  const application = {
-    userId: 1,   // temporary until login system
-    jobId: jobId,
-    status: "PENDING"
-  };
-
-  try {
-
-    const response = await fetch("http://localhost:8080/api/applications", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(application)
-    });
-
-    const result = await response.text();
-
-    if (!response.ok) {
-      alert(result);
-      return;
+      loadJobs();
     }
 
-    alert("Application submitted successfully!");
-
-  } catch (error) {
-    console.error(error);
-    alert("Failed to apply.");
-  }
-
-}
-
-</script>
-
-<script>
-  async function loadJobs() {
-    const jobList = document.getElementById("jobList");
-
-    if (!jobList) {
-      console.error("No element with id='jobList' found.");
-      return;
+    function goToJobDetails(jobId) {
+      window.location.href = `jobdetails.html?id=${jobId}`;
     }
 
-    try {
-      const response = await fetch("http://localhost:8080/api/jobs");
+    function getSelectedJobTypes() {
+      return Array.from(document.querySelectorAll(".jobTypeFilter:checked"))
+        .map(box => box.value.toLowerCase());
+    }
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch jobs");
-      }
+    function extractSalaryNumber(salaryText) {
+      if (!salaryText) return 0;
+      const numbers = salaryText.replace(/[^0-9\-]/g, "").split("-");
+      return parseInt(numbers[0], 10) || 0;
+    }
 
-      const jobs = await response.json();
+    async function toggleSaveJob(jobId, buttonElement) {
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
-      if (!jobs.length) {
-        jobList.innerHTML = `
-          <div class="emptyState">
-            <div class="emptyTitle">No jobs found</div>
-            <div class="emptySub">There are currently no job listings available.</div>
-          </div>
-        `;
+      if (!loggedInUser || !loggedInUser.id) {
+        alert("You must be logged in to save jobs.");
         return;
       }
 
-      jobList.innerHTML = jobs.map(job => `
-        <a class="jobCard" href="jobdetails.html?id=${job.id}">
-          <div class="jobIcon">${job.company ? job.company.charAt(0).toUpperCase() : "H"}</div>
+      const isSaved = buttonElement.classList.contains("saved");
 
-          <div>
-            <div class="jobTop">
-              <div>
-                <div class="jobTitle">${job.title || "Untitled job"}</div>
-                <div class="jobCompany">${job.company || "Unknown company"}</div>
+      try {
+        if (isSaved) {
+          const response = await fetch(
+            `http://localhost:8080/api/saved-jobs/user/${loggedInUser.id}/job/${jobId}`,
+            { method: "DELETE" }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to remove saved job");
+          }
+
+          buttonElement.classList.remove("saved");
+          buttonElement.textContent = "♡";
+        } else {
+          const response = await fetch("http://localhost:8080/api/saved-jobs", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              userId: loggedInUser.id,
+              jobId: jobId
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to save job");
+          }
+
+          buttonElement.classList.add("saved");
+          buttonElement.textContent = "♥";
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Could not update saved jobs.");
+      }
+    }
+
+    async function loadJobs() {
+      const jobList = document.getElementById("jobList");
+      const emptyState = document.getElementById("emptyState");
+      const jobCount = document.getElementById("jobCount");
+
+      try {
+        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+        const jobsResponse = await fetch("http://localhost:8080/api/jobs");
+        if (!jobsResponse.ok) {
+          throw new Error("Failed to fetch jobs");
+        }
+
+        let jobs = await jobsResponse.json();
+
+        let applications = [];
+        let savedJobs = [];
+
+        if (loggedInUser && loggedInUser.id) {
+          const applicationsResponse = await fetch(
+            `http://localhost:8080/api/applications/user/${loggedInUser.id}`
+          );
+
+          if (applicationsResponse.ok) {
+            applications = await applicationsResponse.json();
+          }
+
+          const savedJobsResponse = await fetch(
+            `http://localhost:8080/api/saved-jobs/user/${loggedInUser.id}`
+          );
+
+          if (savedJobsResponse.ok) {
+            savedJobs = await savedJobsResponse.json();
+          }
+        }
+
+        const applicationMap = {};
+        applications.forEach(app => {
+          applicationMap[app.jobId] = app.status;
+        });
+
+        const savedJobIds = new Set(savedJobs.map(saved => saved.jobId));
+
+        const searchText = document.getElementById("searchInput").value.toLowerCase().trim();
+        const locationFilter = document.getElementById("locationFilter").value.toLowerCase();
+        const categoryFilter = document.getElementById("categoryFilter").value.toLowerCase();
+        const selectedJobTypes = getSelectedJobTypes();
+        const minSalary = parseInt(document.getElementById("minSalary").value, 10) || 0;
+        const maxSalary = parseInt(document.getElementById("maxSalary").value, 10) || Infinity;
+        const sortValue = document.getElementById("sortSelect").value;
+
+        jobs = jobs.filter(job => {
+          const title = (job.title || "").toLowerCase();
+          const company = (job.company || "").toLowerCase();
+          const location = (job.location || "").toLowerCase();
+          const category = (job.category || "").toLowerCase();
+          const jobType = (job.jobType || "").toLowerCase();
+          const salary = extractSalaryNumber(job.salary);
+
+          const matchesSearch =
+            !searchText ||
+            title.includes(searchText) ||
+            company.includes(searchText) ||
+            category.includes(searchText);
+
+          const matchesLocation =
+            !locationFilter || location.includes(locationFilter);
+
+          const matchesCategory =
+            !categoryFilter || category.includes(categoryFilter);
+
+          const matchesJobType =
+            !selectedJobTypes.length || selectedJobTypes.some(type => jobType.includes(type));
+
+          const matchesSalary =
+            salary >= minSalary && salary <= maxSalary;
+
+          return matchesSearch && matchesLocation && matchesCategory && matchesJobType && matchesSalary;
+        });
+
+        if (sortValue === "titleAsc") {
+          jobs.sort((a, b) => (a.title || "").localeCompare(b.title || ""));
+        } else if (sortValue === "titleDesc") {
+          jobs.sort((a, b) => (b.title || "").localeCompare(a.title || ""));
+        }
+
+        jobCount.textContent = jobs.length;
+
+        if (!jobs.length) {
+          jobList.innerHTML = "";
+          emptyState.style.display = "block";
+          return;
+        }
+
+        emptyState.style.display = "none";
+
+        jobList.innerHTML = jobs.map(job => {
+          const status = applicationMap[job.id] || "Apply";
+          const statusClass = status.toLowerCase();
+          const isSaved = savedJobIds.has(job.id);
+
+          return `
+            <div class="jobCard" data-job-id="${job.id}" onclick="goToJobDetails(${job.id})">
+              <div class="jobIcon">${job.company ? job.company.charAt(0).toUpperCase() : "H"}</div>
+
+              <div class="jobMain">
+                <div class="jobTop">
+                  <div class="jobTitleRow">
+                    <div class="jobTitle">${job.title || "Untitled job"}</div>
+                    <div class="jobCompany">${job.company || "Unknown company"} • ${job.location || "Unknown location"}</div>
+                  </div>
+
+                  <div class="jobMetaRight">
+                    <span class="applicationStatusBadge ${statusClass}">${status}</span>
+                  </div>
+                </div>
+
+                <div class="jobBadges">
+                  <span class="badge">${job.category || "No category"}</span>
+                  <span class="badge">${job.jobType || "No type"}</span>
+                  <span class="badge">${job.salary || "Salary not listed"}</span>
+                </div>
               </div>
 
-              <div class="jobMetaRight">${job.location || "Unknown location"}</div>
+              <div class="jobActions">
+                <button
+                  class="heartBtn ${isSaved ? "saved" : ""}"
+                  type="button"
+                  onclick="event.stopPropagation(); toggleSaveJob(${job.id}, this)">
+                  ${isSaved ? "♥" : "♡"}
+                </button>
+              </div>
             </div>
+          `;
+        }).join("");
 
-            <div class="jobBadges">
-              <span class="badge">${job.category || "No category"}</span>
-              <span class="badge">${job.jobType || "No type"}</span>
-              <span class="badge">${job.salary || "Salary not listed"}</span>
-            </div>
-          </div>
-
-          <div class="jobActions">
-            <span class="heart">♡</span>
-          </div>
-        </a>
-      `).join("");
-
-    } catch (error) {
-      console.error(error);
-      jobList.innerHTML = `
-        <div class="emptyState">
-          <div class="emptyTitle">Error loading jobs</div>
-          <div class="emptySub">Please try again later.</div>
-        </div>
-      `;
+      } catch (error) {
+        console.error(error);
+        jobList.innerHTML = "";
+        emptyState.style.display = "block";
+        emptyState.querySelector(".emptyTitle").textContent = "Error loading jobs";
+        emptyState.querySelector(".emptySub").textContent = "Please try again later.";
+      }
     }
-  }
 
-  loadJobs();
-</script>
+    loadJobs();
+  </script>
 
 </body>
 </html>
