@@ -7,6 +7,8 @@ import com.hirespace.hirespace_api.repository.JobRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,6 +25,33 @@ public class ApplicationController {
     public ApplicationController(ApplicationRepository applicationRepository, JobRepository jobRepository) {
         this.applicationRepository = applicationRepository;
         this.jobRepository = jobRepository;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Application>> getAllApplications() {
+        return ResponseEntity.ok(applicationRepository.findAll());
+    }
+
+    @PostMapping
+    public ResponseEntity<?> createApplication(@RequestBody Application application) {
+        boolean alreadyExists = applicationRepository.existsByUserIdAndJobId(
+                application.getUserId(),
+                application.getJobId()
+        );
+
+        if (alreadyExists) {
+            return ResponseEntity.badRequest().body("You have already applied for this job");
+        }
+
+        if (application.getStatus() == null || application.getStatus().isBlank()) {
+            application.setStatus("PENDING");
+        }
+
+        application.setAppliedDate(LocalDate.now());
+        application.setUpdatedAt(LocalDateTime.now());
+
+        Application savedApplication = applicationRepository.save(application);
+        return ResponseEntity.ok(savedApplication);
     }
 
     @GetMapping("/user/{userId}")
@@ -48,7 +77,6 @@ public class ApplicationController {
                 item.put("description", job.getDescription());
                 item.put("jobType", job.getJobType());
                 item.put("salary", job.getSalary());
-               
             } else {
                 item.put("title", "Job not found");
                 item.put("company", "");
@@ -56,7 +84,6 @@ public class ApplicationController {
                 item.put("description", "");
                 item.put("jobType", "");
                 item.put("salary", "");
-              
             }
 
             response.add(item);
@@ -72,12 +99,12 @@ public class ApplicationController {
     }
 
     @DeleteMapping("/{id}")
-public ResponseEntity<?> deleteApplication(@PathVariable Long id) {
-    if (!applicationRepository.existsById(id)) {
-        return ResponseEntity.notFound().build();
-    }
+    public ResponseEntity<?> deleteApplication(@PathVariable Long id) {
+        if (!applicationRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
 
-    applicationRepository.deleteById(id);
-    return ResponseEntity.ok().build();
-}
+        applicationRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
 }
