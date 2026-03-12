@@ -21,7 +21,7 @@
 
 <div class="adminWrap">
 
- <!--navigation bar + top logo part -->
+ <!--navigation bar and the top logo part -->
   <div class="topbar">
     <div class="brand">
       <div class="logoDot">
@@ -53,7 +53,7 @@
     <div class="adminLeft">
 
 
-<!--writing of page -->
+<!--adding text to the page -->
       <div class="heroTitle" style="font-size:52px;">
         Welcome.
       </div>
@@ -65,7 +65,7 @@
     </div>
 
 
-<!--right side- the form (login/registering) -->
+<!--right side that will have the form (login/registering) -->
     <div class="adminRight">
 
       <form class="adminForm">
@@ -122,29 +122,60 @@
 </div>
 
 <script>
+
+/*find the sign up button on the page and run this function when it is clicked*/
 document.querySelector(".btnWide").addEventListener("click", async () => {
+
+/*gets the value entered in the name input field*/
   const name = document.getElementById("name").value.trim();
+
+/*gets the selected role from the dropdown*/
   const role = document.getElementById("role").value;
+
+/*gets the email entered by the user*/
   const email = document.getElementById("email").value.trim();
+
+/*gets the password entered by the user*/
   const password = document.getElementById("password").value;
+
+/*gets the confirm password value to compare*/
   const confirmPassword = document.getElementById("confirmPassword").value;
 
+/*checks if any fields are empty before continuing*/
   if (!name || !email || !password || !confirmPassword || !role) {
+
+/*shows a warning if user did not fill in all fields*/
     alert("Please complete all fields.");
+
+/*stops the function if validation fails*/
     return;
   }
 
+/*checks if password and confirm password match*/
   if (password !== confirmPassword) {
+
+/*shows an error message if passwords are different*/
     alert("Passwords do not match.");
+
+/*stops the registration process*/
     return;
   }
 
+/*trys sending the registration request to the backend*/
   try {
+
+/*sends a request to the spring boot register api endpoint, this is what we use to regster a new account*/
     const response = await fetch("http://localhost:8080/api/auth/register", {
+
+/*using post because we are creating a new user, this will send the user data to the database*/
       method: "POST",
+
+/*tells the backend we are sending json data*/
       headers: {
         "Content-Type": "application/json"
       },
+
+/*converts the user data into json format before sending*/
       body: JSON.stringify({
         name: name,
         email: email,
@@ -153,18 +184,36 @@ document.querySelector(".btnWide").addEventListener("click", async () => {
       })
     });
 
+/*checks if the backend returned an error*/
     if (!response.ok) {
+
+/*gets the error message from the backend*/
       const errorText = await response.text();
+
+/*shows the error message to the user*/
       alert("Registration failed: " + errorText);
+
+/*stops the rest of the code*/
       return;
     }
 
+/*converts the backend response into a user object*/
     const user = await response.json();
+
+/*stores the logged in user in local storage*/
     localStorage.setItem("loggedInUser", JSON.stringify(user));
+
+/*shows success message*/
     alert("Registration successful.");
+
+/*redirects the user to their profile page*/
     window.location.href = "profile.html";
   } catch (error) {
+
+/*this runs if the frontend cannot connect to the backend*/
     console.error("Register error:", error);
+
+/*shows message telling the user the backend might not be running*/
     alert("Could not connect to backend. Make sure Spring Boot is running.");
   }
 });
