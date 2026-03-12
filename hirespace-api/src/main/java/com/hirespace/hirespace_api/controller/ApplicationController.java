@@ -98,6 +98,17 @@ public class ApplicationController {
         return ResponseEntity.ok(count);
     }
 
+    @PutMapping("/{id}")
+public ResponseEntity<Application> updateApplication(@PathVariable Long id, @RequestBody Application updatedApplication) {
+    return applicationRepository.findById(id)
+            .map(application -> {
+                application.setStatus(updatedApplication.getStatus());
+                application.setUpdatedAt(LocalDateTime.now());
+                return ResponseEntity.ok(applicationRepository.save(application));
+            })
+            .orElse(ResponseEntity.notFound().build());
+}
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteApplication(@PathVariable Long id) {
         if (!applicationRepository.existsById(id)) {

@@ -1,15 +1,18 @@
 package com.hirespace.hirespace_api.controller;
 
+
+import org.springframework.http.ResponseEntity;
+import java.util.Optional;
 import com.hirespace.hirespace_api.model.SavedJob;
 import com.hirespace.hirespace_api.repository.SavedJobRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/api/saved-jobs")
+@CrossOrigin(origins = "*")
 public class SavedJobController {
 
     private final SavedJobRepository savedJobRepository;
@@ -18,24 +21,35 @@ public class SavedJobController {
         this.savedJobRepository = savedJobRepository;
     }
 
+    // get saved jobs for user
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<SavedJob>> getSavedJobsByUser(@PathVariable Long userId) {
-        return ResponseEntity.ok(savedJobRepository.findByUserId(userId));
+    public List<SavedJob> getSavedJobs(@PathVariable Long userId) {
+        return savedJobRepository.findByUserId(userId);
     }
 
-    @GetMapping("/user/{userId}/count")
-    public ResponseEntity<Long> countSavedJobsByUser(@PathVariable Long userId) {
-        long count = savedJobRepository.countByUserId(userId);
-        return ResponseEntity.ok(count);
+    // save job
+    @PostMapping
+    public SavedJob saveJob(@RequestBody SavedJob savedJob) {
+
+        Optional<SavedJob> existing =
+                savedJobRepository.findByUserIdAndJobId(savedJob.getUserId(), savedJob.getJobId());
+
+        if (existing.isPresent()) {
+            return existing.get();
+        }
+
+        return savedJobRepository.save(savedJob);
     }
 
-    @DeleteMapping("/{id}")
-public ResponseEntity<?> deleteSavedJob(@PathVariable Long id) {
-    if (!savedJobRepository.existsById(id)) {
+   @DeleteMapping("/user/{userId}/job/{jobId}")
+public ResponseEntity<?> deleteSavedJob(@PathVariable Long userId, @PathVariable Long jobId) {
+    Optional<SavedJob> savedJob = savedJobRepository.findByUserIdAndJobId(userId, jobId);
+
+    if (savedJob.isEmpty()) {
         return ResponseEntity.notFound().build();
     }
 
-    savedJobRepository.deleteById(id);
+    savedJobRepository.delete(savedJob.get());
     return ResponseEntity.ok().build();
 }
 }

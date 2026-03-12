@@ -80,7 +80,10 @@
 
         <div style="margin-top:16px; display:grid; gap:10px;">
           <button id="editProfileBtn" class="btnPrimary" type="button">Edit Profile</button>
-          <button id="resumeButton" class="btnGhost" type="button">Upload Resume</button>
+          <button id="resumeButton" class="btnGhost" type="button"
+  style="width:100%; text-align:center; justify-content:center; align-items:center;">
+  Upload Resume
+</button>
           <button id="logoutBtn" class="btnGhost">Sign Out</button>
         </div>
 
@@ -89,11 +92,11 @@
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; text-align:center;">
             <div>
               <div id="applicationsCount" style="font-weight:900;">0</div>
-              <div class="muted" style="font-size:12px;">Applications</div>
+              <div id="applicationsLabel" class="muted" style="font-size:12px;">Applications</div>
             </div>
             <div>
               <div id="savedCount" style="font-weight:900;">0</div>
-              <div class="muted" style="font-size:12px;">Saved</div>
+              <div id="savedLabel" class="muted" style="font-size:12px;">Saved</div>
             </div>
           </div>
         </div>
@@ -182,6 +185,57 @@
 
               <div style="display:flex; gap:10px; justify-content:flex-end;">
                 <button id="saveEmployerSettingsBtn" class="btnPrimary" type="button">Save Changes</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="employerJobEditForm" class="jobCard" style="grid-template-columns:1fr; display:none;">
+            <div style="display:grid; gap:12px;">
+              <input id="editingJobId" type="hidden">
+
+              <div>
+                <div class="label">Job Title</div>
+                <input id="editJobTitle" class="input" type="text" placeholder="Job Title">
+              </div>
+
+              <div>
+                <div class="label">Company</div>
+                <input id="editJobCompany" class="input" type="text" placeholder="Company">
+              </div>
+
+              <div>
+                <div class="label">Category</div>
+                <input id="editJobCategory" class="input" type="text" placeholder="Category">
+              </div>
+
+              <div>
+                <div class="label">Contact Email</div>
+                <input id="editJobContactEmail" class="input" type="email" placeholder="Contact Email">
+              </div>
+
+              <div>
+                <div class="label">Location</div>
+                <input id="editJobLocation" class="input" type="text" placeholder="Location">
+              </div>
+
+              <div>
+                <div class="label">Salary</div>
+                <input id="editJobSalary" class="input" type="text" placeholder="Salary">
+              </div>
+
+              <div>
+                <div class="label">Job Type</div>
+                <input id="editJobType" class="input" type="text" placeholder="e.g. Full-time">
+              </div>
+
+              <div>
+                <div class="label">Description</div>
+                <textarea id="editJobDescription" class="input" placeholder="Job description" style="min-height:100px; resize:vertical;"></textarea>
+              </div>
+
+              <div style="display:flex; gap:10px; justify-content:flex-end;">
+                <button id="cancelEditJobBtn" class="btnGhost" type="button">Cancel</button>
+                <button id="saveEditedJobBtn" class="btnPrimary" type="button">Save Job Changes</button>
               </div>
             </div>
           </div>
@@ -376,13 +430,15 @@ if (!loggedInUser) {
     document.getElementById("resumeButton").textContent = "Post a Job";
     document.getElementById("resumeButton").style.display = "inline-flex";
     document.getElementById("panelHeading").textContent = "My Job Listings";
-    document.getElementById("tabRow").innerHTML = `
-      <span class="pageNum active" style="width:auto; padding:0 14px;">Job Listings</span>
-      <span class="pageNum" style="width:auto; padding:0 14px;">Applications</span>
-      <span class="pageNum" style="width:auto; padding:0 14px;">Reviews</span>
-    `;
+    document.getElementById("applicationsTab").textContent = "Job Listings";
+    document.getElementById("savedJobsTab").textContent = "Applicants";
+    document.getElementById("resumeTab").textContent = "Reviews";
+    document.getElementById("applicationsLabel").textContent = "Applicants";
+    document.getElementById("savedLabel").textContent = "Jobs Posted";
   } else {
     document.getElementById("resumeButton").style.display = "none";
+    document.getElementById("applicationsLabel").textContent = "Applications";
+    document.getElementById("savedLabel").textContent = "Saved";
   }
 }
 </script>
@@ -555,17 +611,259 @@ const savedJobsList = document.getElementById("savedJobsList");
 const resumePanel = document.getElementById("resumePanel");
 const jobseekerSettingsForm = document.getElementById("jobseekerSettingsForm");
 const employerSettingsForm = document.getElementById("employerSettingsForm");
+const employerJobEditForm = document.getElementById("employerJobEditForm");
 const saveJobseekerSettingsBtn = document.getElementById("saveJobseekerSettingsBtn");
 const saveEmployerSettingsBtn = document.getElementById("saveEmployerSettingsBtn");
+const saveEditedJobBtn = document.getElementById("saveEditedJobBtn");
+const cancelEditJobBtn = document.getElementById("cancelEditJobBtn");
 const uploadResumeBtn = document.getElementById("uploadResumeBtn");
 const downloadResumeBtn = document.getElementById("downloadResumeBtn");
 const resumeFileInput = document.getElementById("resumeFileInput");
+
+let employerJobsCache = [];
+let employerApplicantsCache = [];
 
 function setActiveTab(tabElement) {
   if (applicationsTab) applicationsTab.classList.remove("active");
   if (savedJobsTab) savedJobsTab.classList.remove("active");
   if (resumeTab) resumeTab.classList.remove("active");
   if (tabElement) tabElement.classList.add("active");
+}
+
+function getInitials(title) {
+  if (!title || title.trim() === "") return "JB";
+
+  const words = title.trim().split(" ");
+  if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
+
+  return (words[0][0] + words[1][0]).toUpperCase();
+}
+
+function getApplicantStatusOptions(selectedStatus) {
+  return `
+    <option value="PENDING" ${selectedStatus === "PENDING" ? "selected" : ""}>Pending</option>
+    <option value="REVIEWING" ${selectedStatus === "REVIEWING" ? "selected" : ""}>Reviewing</option>
+    <option value="INTERVIEW" ${selectedStatus === "INTERVIEW" ? "selected" : ""}>Interview</option>
+    <option value="REJECTED" ${selectedStatus === "REJECTED" ? "selected" : ""}>Rejected</option>
+  `;
+}
+
+function formatStatusLabel(status) {
+  if (!status) return "Pending";
+  const lower = status.toLowerCase();
+  return lower.charAt(0).toUpperCase() + lower.slice(1);
+}
+
+async function fetchEmployerJobs() {
+  const response = await fetch(`http://localhost:8080/api/jobs`);
+
+  if (!response.ok) {
+    throw new Error("Failed to load jobs.");
+  }
+
+  const jobs = await response.json();
+
+  return jobs.filter(job => String(job.employerUserId) === String(loggedInUser.id));
+}
+
+async function fetchEmployerApplicants() {
+  const [applicationsResponse, jobsResponse, usersResponse] = await Promise.all([
+    fetch(`http://localhost:8080/api/applications`),
+    fetch(`http://localhost:8080/api/jobs`),
+    fetch(`http://localhost:8080/api/users`)
+  ]);
+
+  if (!applicationsResponse.ok || !jobsResponse.ok || !usersResponse.ok) {
+    throw new Error("Failed to load employer applicants.");
+  }
+
+  const applications = await applicationsResponse.json();
+  const jobs = await jobsResponse.json();
+  const users = await usersResponse.json();
+
+  let jobseekerProfiles = [];
+  try {
+    const jobseekerProfilesResponse = await fetch(`http://localhost:8080/api/jobseeker-profile`);
+    if (jobseekerProfilesResponse.ok) {
+      jobseekerProfiles = await jobseekerProfilesResponse.json();
+    }
+  } catch (error) {
+    console.error("Failed to load all jobseeker profiles:", error);
+  }
+
+  const employerJobs = jobs.filter(job => String(job.employerUserId) === String(loggedInUser.id));
+  const employerJobIds = employerJobs.map(job => String(job.id));
+
+  return applications
+    .filter(application => employerJobIds.includes(String(application.jobId)))
+    .map(application => {
+      const matchingJob = employerJobs.find(job => String(job.id) === String(application.jobId));
+      const matchingUser = users.find(user => String(user.id) === String(application.userId));
+      const matchingProfile = jobseekerProfiles.find(profile => String(profile.userId) === String(application.userId));
+
+      return {
+        id: application.id,
+        appliedDate: application.appliedDate,
+        updatedAt: application.updatedAt,
+        status: application.status || "PENDING",
+        applicantId: application.userId,
+        applicantName: matchingUser?.name || "Jobseeker",
+        applicantEmail: matchingUser?.email || "",
+        applicantHeadline: matchingProfile?.headline || "Jobseeker",
+        applicantBio: matchingProfile?.bio || "No bio added yet.",
+        applicantLocation: matchingProfile?.location || "No location added",
+        applicantResumeFileName: matchingProfile?.resumeFileName || "",
+        jobId: matchingJob?.id,
+        jobTitle: matchingJob?.title || "Untitled Job",
+        jobCompany: matchingJob?.company || "Unknown Company",
+        jobCategory: matchingJob?.category || "",
+        jobType: matchingJob?.jobType || "",
+        jobSalary: matchingJob?.salary || "",
+        jobLocation: matchingJob?.location || "",
+        jobDescription: matchingJob?.description || ""
+      };
+    });
+}
+
+function renderEmployerJobListings(jobs) {
+  if (!applicationsList) return;
+
+  if (!jobs || jobs.length === 0) {
+    applicationsList.innerHTML = `
+      <div class="emptyState" style="text-align:center;">
+        <div class="emptyTitle">No job listings yet</div>
+        <div class="emptySub" style="margin-top:8px;">Jobs you post will appear here.</div>
+      </div>
+    `;
+    return;
+  }
+
+  applicationsList.innerHTML = jobs.map(job => `
+    <div class="jobCard" style="grid-template-columns: 60px 1fr;">
+      <div class="jobIcon" style="width:56px; height:56px;">${getInitials(job.title)}</div>
+
+      <div class="jobMain">
+        <div class="jobTop">
+          <div class="jobTitleRow">
+            <div class="jobTitle">${job.title || "Untitled Job"}</div>
+            <div class="jobCompany">${job.company || "Unknown Company"}${job.location ? ` • ${job.location}` : ""}</div>
+          </div>
+
+          <span class="badge" style="white-space:nowrap;">Posted</span>
+        </div>
+
+        <div class="jobBadges">
+          ${job.category ? `<span class="badge">${job.category}</span>` : ""}
+          ${job.jobType ? `<span class="badge">${job.jobType}</span>` : ""}
+          ${job.salary ? `<span class="badge">${job.salary}</span>` : ""}
+        </div>
+
+        <div class="muted" style="margin-top:10px; font-size:13px;">
+          ${job.description || "No job description added yet."}
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:10px;">
+          <button class="btnGhost employerEditJobBtn" data-id="${job.id}" type="button">Edit Job</button>
+           <button class="btnGhost employerDeleteJobBtn" data-id="${job.id}" type="button">
+    Delete Job
+  </button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderEmployerApplicants(applicants) {
+  if (!savedJobsList) return;
+
+  if (!applicants || applicants.length === 0) {
+    savedJobsList.innerHTML = `
+      <div class="emptyState" style="text-align:center;">
+        <div class="emptyTitle">No applicants yet</div>
+        <div class="emptySub" style="margin-top:8px;">Applicants will appear here when people apply to your jobs.</div>
+      </div>
+    `;
+    return;
+  }
+
+  savedJobsList.innerHTML = applicants.map(applicant => `
+    <div class="jobCard" style="grid-template-columns: 60px 1fr;">
+      <div class="jobIcon" style="width:56px; height:56px;">${getInitials(applicant.applicantName)}</div>
+
+      <div class="jobMain">
+        <div class="jobTop">
+          <div class="jobTitleRow">
+            <div class="jobTitle">${applicant.applicantName}</div>
+            <div class="jobCompany">${applicant.applicantHeadline}${applicant.applicantLocation ? ` • ${applicant.applicantLocation}` : ""}</div>
+          </div>
+
+          <span class="badge" style="white-space:nowrap;">${formatStatusLabel(applicant.status)}</span>
+        </div>
+
+        <div class="muted" style="margin-top:6px; font-size:13px;">
+          ${applicant.applicantBio || "No bio added yet."}
+        </div>
+
+        <div class="jobBadges" style="margin-top:10px;">
+          ${applicant.applicantEmail ? `<span class="badge">${applicant.applicantEmail}</span>` : ""}
+          ${applicant.applicantResumeFileName ? `<span class="badge">Resume uploaded</span>` : ""}
+        </div>
+
+        <div style="margin-top:14px; padding:12px; border:1px solid rgba(255,255,255,0.35); border-radius:16px;">
+          <div style="font-weight:700; margin-bottom:6px;">Applied for: ${applicant.jobTitle}</div>
+          <div class="muted" style="font-size:13px;">
+            ${applicant.jobCompany}${applicant.jobLocation ? ` • ${applicant.jobLocation}` : ""}
+          </div>
+
+          <div class="jobBadges" style="margin-top:10px;">
+            ${applicant.jobCategory ? `<span class="badge">${applicant.jobCategory}</span>` : ""}
+            ${applicant.jobType ? `<span class="badge">${applicant.jobType}</span>` : ""}
+            ${applicant.jobSalary ? `<span class="badge">${applicant.jobSalary}</span>` : ""}
+          </div>
+
+          <div class="muted" style="margin-top:10px; font-size:13px;">
+            ${applicant.jobDescription || "No job description available."}
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; justify-content:flex-end; align-items:center; margin-top:12px; flex-wrap:wrap;">
+          <select class="input applicantStatusSelect" data-id="${applicant.id}" style="max-width:220px;">
+            ${getApplicantStatusOptions(applicant.status)}
+          </select>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderEmployerReviews() {
+  if (!resumePanel) return;
+
+  resumePanel.innerHTML = `
+    <div class="jobCard" style="grid-template-columns:1fr; margin-bottom:18px;">
+      <div style="display:grid; gap:14px;">
+
+        <div style="padding:14px; border:1px solid rgba(255,255,255,0.35); border-radius:16px;">
+          <div style="font-weight:700;">Aisha Rahman</div>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Jobseeker • ★★★★★</div>
+          <div style="margin-top:8px;">Great communication throughout the application process and the job description was very clear.</div>
+        </div>
+
+        <div style="padding:14px; border:1px solid rgba(255,255,255,0.35); border-radius:16px;">
+          <div style="font-weight:700;">James Walker</div>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Jobseeker • ★★★★☆</div>
+          <div style="margin-top:8px;">Professional company profile and fast updates on my application status.</div>
+        </div>
+
+        <div style="padding:14px; border:1px solid rgba(255,255,255,0.35); border-radius:16px;">
+          <div style="font-weight:700;">Maya Ali</div>
+          <div class="muted" style="font-size:13px; margin-top:4px;">Jobseeker • ★★★★★</div>
+          <div style="margin-top:8px;">The employer was responsive and the interview process felt organised and respectful.</div>
+        </div>
+
+      </div>
+    </div>
+  `;
 }
 
 function showApplicationsSection() {
@@ -575,9 +873,15 @@ function showApplicationsSection() {
   resumePanel.style.display = "none";
   jobseekerSettingsForm.style.display = "none";
   employerSettingsForm.style.display = "none";
-  document.getElementById("panelHeading").textContent =
-    loggedInUser.role === "employer" ? "My Job Listings" : "My Applications";
+  employerJobEditForm.style.display = "none";
   setActiveTab(applicationsTab);
+
+  if (loggedInUser.role === "employer") {
+    document.getElementById("panelHeading").textContent = "My Job Listings";
+    loadEmployerJobListings();
+  } else {
+    document.getElementById("panelHeading").textContent = "My Applications";
+  }
 }
 
 function showSavedJobsSection() {
@@ -587,8 +891,15 @@ function showSavedJobsSection() {
   resumePanel.style.display = "none";
   jobseekerSettingsForm.style.display = "none";
   employerSettingsForm.style.display = "none";
-  document.getElementById("panelHeading").textContent = "Saved Jobs";
+  employerJobEditForm.style.display = "none";
   setActiveTab(savedJobsTab);
+
+  if (loggedInUser.role === "employer") {
+    document.getElementById("panelHeading").textContent = "Applicants";
+    loadEmployerApplicants();
+  } else {
+    document.getElementById("panelHeading").textContent = "Saved Jobs";
+  }
 }
 
 function showResumeSection() {
@@ -598,8 +909,15 @@ function showResumeSection() {
   resumePanel.style.display = "block";
   jobseekerSettingsForm.style.display = "none";
   employerSettingsForm.style.display = "none";
-  document.getElementById("panelHeading").textContent = "My Resume";
+  employerJobEditForm.style.display = "none";
   setActiveTab(resumeTab);
+
+  if (loggedInUser.role === "employer") {
+    document.getElementById("panelHeading").textContent = "Reviews";
+    renderEmployerReviews();
+  } else {
+    document.getElementById("panelHeading").textContent = "My Resume";
+  }
 }
 
 async function loadSettingsForm() {
@@ -611,6 +929,7 @@ async function loadSettingsForm() {
   resumePanel.style.display = "none";
   jobseekerSettingsForm.style.display = "none";
   employerSettingsForm.style.display = "none";
+  employerJobEditForm.style.display = "none";
   document.getElementById("panelHeading").textContent = "Edit Profile";
 
   if (applicationsTab) applicationsTab.classList.remove("active");
@@ -672,8 +991,87 @@ async function loadSettingsForm() {
   }
 }
 
+function loadEmployerJobEditForm(jobId) {
+  if (!loggedInUser || loggedInUser.role !== "employer") return;
+
+  const selectedJob = employerJobsCache.find(job => String(job.id) === String(jobId));
+
+  if (!selectedJob) {
+    alert("Job not found.");
+    return;
+  }
+
+  settingsPanel.style.display = "block";
+  applicationsList.style.display = "none";
+  savedJobsList.style.display = "none";
+  resumePanel.style.display = "none";
+  jobseekerSettingsForm.style.display = "none";
+  employerSettingsForm.style.display = "none";
+  employerJobEditForm.style.display = "grid";
+  document.getElementById("panelHeading").textContent = "Edit Job Listing";
+
+  if (applicationsTab) applicationsTab.classList.remove("active");
+  if (savedJobsTab) savedJobsTab.classList.remove("active");
+  if (resumeTab) resumeTab.classList.remove("active");
+
+  document.getElementById("editingJobId").value = selectedJob.id;
+  document.getElementById("editJobTitle").value = selectedJob.title || "";
+  document.getElementById("editJobCompany").value = selectedJob.company || "";
+  document.getElementById("editJobCategory").value = selectedJob.category || "";
+  document.getElementById("editJobContactEmail").value = selectedJob.contactEmail || "";
+  document.getElementById("editJobLocation").value = selectedJob.location || "";
+  document.getElementById("editJobSalary").value = selectedJob.salary || "";
+  document.getElementById("editJobType").value = selectedJob.jobType || "";
+  document.getElementById("editJobDescription").value = selectedJob.description || "";
+}
+
 function showMainProfileSection() {
   showApplicationsSection();
+}
+
+async function loadEmployerJobListings() {
+  if (!loggedInUser || loggedInUser.role !== "employer") return;
+
+  try {
+    employerJobsCache = await fetchEmployerJobs();
+    renderEmployerJobListings(employerJobsCache);
+  } catch (error) {
+    console.error("Failed to load employer job listings:", error);
+    renderEmployerJobListings([]);
+  }
+}
+
+async function loadEmployerApplicants() {
+  if (!loggedInUser || loggedInUser.role !== "employer") return;
+
+  try {
+    employerApplicantsCache = await fetchEmployerApplicants();
+    renderEmployerApplicants(employerApplicantsCache);
+  } catch (error) {
+    console.error("Failed to load employer applicants:", error);
+    renderEmployerApplicants([]);
+  }
+}
+
+async function loadEmployerCounts() {
+  if (!loggedInUser || loggedInUser.role !== "employer") return;
+
+  try {
+    const [jobs, applicants] = await Promise.all([
+      fetchEmployerJobs(),
+      fetchEmployerApplicants()
+    ]);
+
+    employerJobsCache = jobs;
+    employerApplicantsCache = applicants;
+
+    document.getElementById("applicationsCount").textContent = applicants.length;
+    document.getElementById("savedCount").textContent = jobs.length;
+  } catch (error) {
+    console.error("Failed to load employer counts:", error);
+    document.getElementById("applicationsCount").textContent = 0;
+    document.getElementById("savedCount").textContent = 0;
+  }
 }
 
 if (settingsTab) {
@@ -682,35 +1080,101 @@ if (settingsTab) {
 
 if (applicationsTab) {
   applicationsTab.addEventListener("click", function () {
-    showApplicationsSection();
-    loadJobseekerApplications();
+    if (loggedInUser.role === "employer") {
+      showApplicationsSection();
+    } else {
+      showApplicationsSection();
+      loadJobseekerApplications();
+    }
   });
 }
 
 if (savedJobsTab) {
   savedJobsTab.addEventListener("click", function () {
-    showSavedJobsSection();
-    loadSavedJobs();
+    if (loggedInUser.role === "employer") {
+      showSavedJobsSection();
+    } else {
+      showSavedJobsSection();
+      loadSavedJobs();
+    }
   });
 }
 
 if (resumeTab) {
   resumeTab.addEventListener("click", function () {
-    showResumeSection();
-    loadResumeLink();
+    if (loggedInUser.role === "employer") {
+      showResumeSection();
+    } else {
+      showResumeSection();
+      loadResumeLink();
+    }
   });
 }
 
 if (resumeButton && loggedInUser && loggedInUser.role === "employer") {
   resumeButton.addEventListener("click", function () {
-    showResumeSection();
-    loadResumeLink();
+    window.location.href = "postJob.html";
   });
 }
 
 if (editProfileBtn) {
   editProfileBtn.addEventListener("click", function () {
     loadSettingsForm();
+  });
+}
+
+if (cancelEditJobBtn) {
+  cancelEditJobBtn.addEventListener("click", function () {
+    showApplicationsSection();
+  });
+}
+
+if (saveEditedJobBtn) {
+  saveEditedJobBtn.addEventListener("click", async function () {
+    if (!loggedInUser || loggedInUser.role !== "employer") return;
+
+    const jobId = document.getElementById("editingJobId").value;
+    const selectedJob = employerJobsCache.find(job => String(job.id) === String(jobId));
+
+    if (!selectedJob) {
+      alert("Job not found.");
+      return;
+    }
+
+    const updatedJob = {
+      ...selectedJob,
+      title: document.getElementById("editJobTitle").value.trim(),
+      company: document.getElementById("editJobCompany").value.trim(),
+      category: document.getElementById("editJobCategory").value.trim(),
+      contactEmail: document.getElementById("editJobContactEmail").value.trim(),
+      location: document.getElementById("editJobLocation").value.trim(),
+      salary: document.getElementById("editJobSalary").value.trim(),
+      jobType: document.getElementById("editJobType").value.trim(),
+      description: document.getElementById("editJobDescription").value.trim(),
+      employerUserId: loggedInUser.id
+    };
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/jobs/${jobId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updatedJob)
+      });
+
+      if (!response.ok) {
+        alert("Failed to update job listing.");
+        return;
+      }
+
+      alert("Job listing updated successfully.");
+      await loadEmployerCounts();
+      showApplicationsSection();
+    } catch (error) {
+      console.error("Failed to update employer job:", error);
+      alert("Server error while updating job listing.");
+    }
   });
 }
 
@@ -837,29 +1301,20 @@ async function loadJobseekerCounts() {
 
   try {
     const [applicationsResponse, savedResponse] = await Promise.all([
-      fetch(`http://localhost:8080/api/applications/user/${loggedInUser.id}/count`),
-      fetch(`http://localhost:8080/api/saved-jobs/user/${loggedInUser.id}/count`)
+      fetch(`http://localhost:8080/api/applications/user/${loggedInUser.id}`),
+      fetch(`http://localhost:8080/api/saved-jobs/user/${loggedInUser.id}`)
     ]);
 
-    const applicationsCount = applicationsResponse.ok ? await applicationsResponse.json() : 0;
-    const savedCount = savedResponse.ok ? await savedResponse.json() : 0;
+    const applications = applicationsResponse.ok ? await applicationsResponse.json() : [];
+    const savedJobs = savedResponse.ok ? await savedResponse.json() : [];
 
-    document.getElementById("applicationsCount").textContent = applicationsCount ?? 0;
-    document.getElementById("savedCount").textContent = savedCount ?? 0;
+    document.getElementById("applicationsCount").textContent = applications.length;
+    document.getElementById("savedCount").textContent = savedJobs.length;
   } catch (error) {
     console.error("Failed to load jobseeker counts:", error);
     document.getElementById("applicationsCount").textContent = 0;
     document.getElementById("savedCount").textContent = 0;
   }
-}
-
-function getInitials(title) {
-  if (!title || title.trim() === "") return "JB";
-
-  const words = title.trim().split(" ");
-  if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
-
-  return (words[0][0] + words[1][0]).toUpperCase();
 }
 
 function renderApplicationCards(applications) {
@@ -937,27 +1392,42 @@ function renderSavedJobCards(savedJobs) {
 
   savedJobsList.innerHTML = savedJobs.map(job => `
     <div class="jobCard" style="grid-template-columns: 60px 1fr;">
-      <div class="jobIcon" style="width:56px; height:56px;">${getInitials(job.title)}</div>
+      
+      <div class="jobIcon" style="width:56px; height:56px;">
+        ${getInitials(job.title)}
+      </div>
 
       <div class="jobMain">
+
         <div class="jobTop">
           <div class="jobTitleRow">
-            <div class="jobTitle">${job.title || "Untitled Job"}</div>
-            <div class="jobCompany">${job.company || "Unknown Company"}${job.location ? ` • ${job.location}` : ""}</div>
+            <div class="jobTitle">${job.title}</div>
+            <div class="jobCompany">
+              ${job.company} • ${job.location}
+            </div>
           </div>
 
           <span class="badge" style="white-space:nowrap;">Saved</span>
         </div>
 
         <div class="jobBadges">
-          ${job.jobType ? `<span class="badge">${job.jobType}</span>` : ""}
-          ${job.salary ? `<span class="badge">${job.salary}</span>` : ""}
+          <span class="badge">${job.category}</span>
+          <span class="badge">${job.jobType}</span>
+          <span class="badge">${job.salary}</span>
         </div>
 
         <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:10px;">
-          <a class="btnGhost" href="jobDetails.html?id=${job.jobId}" style="text-decoration:none; display:inline-flex; align-items:center;">View Job</a>
-          <button class="btnGhost unsaveBtn" data-id="${job.savedJobId}">Unsave</button>
+          <a class="btnGhost"
+             href="jobDetails.html?id=${job.id}"
+             style="text-decoration:none; display:inline-flex; align-items:center;">
+             View Job
+          </a>
+
+          <button class="btnGhost unsaveBtn" data-id="${job.id}">
+            Unsave
+          </button>
         </div>
+
       </div>
     </div>
   `).join("");
@@ -967,15 +1437,30 @@ async function loadSavedJobs() {
   if (!loggedInUser || loggedInUser.role !== "jobseeker") return;
 
   try {
-    const response = await fetch(`http://localhost:8080/api/saved-jobs/user/${loggedInUser.id}`);
+    const [savedResponse, jobsResponse] = await Promise.all([
+      fetch(`http://localhost:8080/api/saved-jobs/user/${loggedInUser.id}`),
+      fetch(`http://localhost:8080/api/jobs`)
+    ]);
 
-    if (!response.ok) {
+    if (!savedResponse.ok || !jobsResponse.ok) {
       renderSavedJobCards([]);
       return;
     }
 
-    const savedJobs = await response.json();
-    renderSavedJobCards(savedJobs);
+    const savedJobs = await savedResponse.json();
+    const allJobs = await jobsResponse.json();
+
+    const fullSavedJobs = savedJobs.map(savedJob => {
+      const matchingJob = allJobs.find(job => job.id === savedJob.jobId);
+
+      if (!matchingJob) return null;
+
+      return {
+        ...matchingJob
+      };
+    }).filter(job => job !== null);
+
+    renderSavedJobCards(fullSavedJobs);
   } catch (error) {
     console.error("Failed to load saved jobs:", error);
     renderSavedJobCards([]);
@@ -1079,13 +1564,13 @@ document.addEventListener("click", async function(e) {
   }
 
   if (e.target.classList.contains("unsaveBtn")) {
-    const savedJobId = e.target.dataset.id;
+    const jobId = e.target.dataset.id;
 
     const confirmRemove = confirm("Remove this saved job?");
     if (!confirmRemove) return;
 
     try {
-      const response = await fetch(`http://localhost:8080/api/saved-jobs/${savedJobId}`, {
+      const response = await fetch(`http://localhost:8080/api/saved-jobs/user/${loggedInUser.id}/job/${jobId}`, {
         method: "DELETE"
       });
 
@@ -1103,11 +1588,92 @@ document.addEventListener("click", async function(e) {
     }
   }
 
+  if (e.target.classList.contains("employerEditJobBtn")) {
+    const jobId = e.target.dataset.id;
+    loadEmployerJobEditForm(jobId);
+  }
+
+  if (e.target.classList.contains("employerDeleteJobBtn")) {
+    const jobId = e.target.dataset.id;
+
+    const confirmDelete = confirm("Are you sure you want to delete this job?");
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/jobs/${jobId}`, {
+        method: "DELETE"
+      });
+
+      if (!response.ok) {
+        alert("Failed to delete job.");
+        return;
+      }
+
+      alert("Job deleted successfully.");
+      await loadEmployerCounts();
+      showApplicationsSection();
+
+    } catch (error) {
+      console.error("Failed to delete job:", error);
+      alert("Server error while deleting job.");
+    }
+  }
+
+});
+
+document.addEventListener("change", async function(e) {
+  if (e.target.classList.contains("applicantStatusSelect")) {
+    const applicationId = e.target.dataset.id;
+    const newStatus = e.target.value;
+    const existingApplication = employerApplicantsCache.find(applicant => String(applicant.id) === String(applicationId));
+
+    if (!existingApplication) {
+      alert("Application not found.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8080/api/applications/${applicationId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          id: existingApplication.id,
+          userId: existingApplication.applicantId,
+          jobId: existingApplication.jobId,
+          appliedDate: existingApplication.appliedDate,
+          updatedAt: new Date().toISOString(),
+          status: newStatus
+        })
+      });
+
+      if (!response.ok) {
+        alert("Failed to update application status.");
+        await loadEmployerApplicants();
+        return;
+      }
+
+      await loadEmployerCounts();
+      await loadEmployerApplicants();
+    } catch (error) {
+      console.error("Failed to update application status:", error);
+      alert("Server error while updating application status.");
+      await loadEmployerApplicants();
+    }
+  }
 });
 
 loadProfileSummary();
-loadJobseekerCounts();
-loadJobseekerApplications();
+
+if (loggedInUser && loggedInUser.role === "employer") {
+  loadEmployerCounts();
+  showApplicationsSection();
+} else {
+  loadJobseekerCounts();
+  loadJobseekerApplications();
+  loadSavedJobs();
+}
 
 </script>
 

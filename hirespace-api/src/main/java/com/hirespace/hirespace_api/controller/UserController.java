@@ -1,5 +1,6 @@
 package com.hirespace.hirespace_api.controller;
 
+import java.util.List;
 import com.hirespace.hirespace_api.model.User;
 import com.hirespace.hirespace_api.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,11 @@ public class UserController {
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
+
+@GetMapping
+public ResponseEntity<List<User>> getAllUsers() {
+    return ResponseEntity.ok(userRepository.findAll());
+}
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {

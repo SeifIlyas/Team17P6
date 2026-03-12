@@ -27,4 +27,36 @@ public class JobController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Job> updateJob(@PathVariable Long id, @RequestBody Job updatedJob) {
+        return jobRepository.findById(id)
+                .map(existingJob -> {
+                    existingJob.setTitle(updatedJob.getTitle());
+                    existingJob.setCompany(updatedJob.getCompany());
+                    existingJob.setCategory(updatedJob.getCategory());
+                    existingJob.setContactEmail(updatedJob.getContactEmail());
+                    existingJob.setDescription(updatedJob.getDescription());
+                    existingJob.setEmployerUserId(updatedJob.getEmployerUserId());
+                    existingJob.setJobType(updatedJob.getJobType());
+                    existingJob.setLocation(updatedJob.getLocation());
+                    existingJob.setSalary(updatedJob.getSalary());
+
+                    Job savedJob = jobRepository.save(existingJob);
+                    return ResponseEntity.ok(savedJob);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+
+@DeleteMapping("/{id}")
+public ResponseEntity<Void> deleteJob(@PathVariable Long id) {
+    if (!jobRepository.existsById(id)) {
+        return ResponseEntity.notFound().build();
+    }
+
+    jobRepository.deleteById(id);
+    return ResponseEntity.noContent().build();
 }
+}
+

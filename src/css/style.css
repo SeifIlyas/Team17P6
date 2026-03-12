@@ -714,3 +714,18 @@ body{
 .heartBtn.saved{
   color:#dc2626;
 }
+
+/* heart button styling */
+.heartBtn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #bbb;
+  transition: color 0.2s ease;
+}
+
+/* when job is saved */
+.heartBtn.saved {
+  color: red;
+}
