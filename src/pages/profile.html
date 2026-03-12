@@ -6,14 +6,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <!--link to style.css also dont touch just change style.css-->
 <link rel="stylesheet" href="../css/style.css">
 
-
-  <title>HireSpace - Profile</title>
+<!--profile page title shown in browser tab-->
+<title>HireSpace - Profile</title>
 </head>
 <body>
 
+  <!--main wrapper for the profile page-->
   <div class="wrap">
 
     <!--top bar and logo section with navbar below-->
@@ -39,46 +41,58 @@
         <a href="profile.html" style="display:flex; align-items:center; gap:6px;">
           <img 
             src="../assets/profilePlaceholder.png" alt="Profile icon"style="width:16px; height:16px; border-radius:50%; object-fit:cover;">Profile</a>
-          
       </div>
     </div>
 
-    <!--breadcrumb-->
+    <!--small breadcrumb to show where the user is on the site-->
     <div style="margin-top:18px; opacity:.65; font-size:14px;">
       Home &nbsp;›&nbsp; My Profile
     </div>
 
-    <!--PROFILE PAGE LAYOUT (uses same grid style as jobs page)-->
+    <!--profile page layout using the same jobs page layout style-->
     <section class="jobsLayout" style="margin-top:16px;">
 
-      <!--LEFT SIDEBAR: USER CARD-->
+      <!--left sidebar area for the profile card-->
       <aside class="filtersPanel">
 
+        <!--container that stacks the profile image and text vertically-->
         <div style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:10px;">
+
+          <!--circle wrapper for the profile image-->
           <div style="width:92px; height:92px; border-radius:999px; overflow:hidden; border:1px solid rgba(255,255,255,0.7); background:rgba(255,255,255,0.35);">
+
+            <!--default profile image shown in the sidebar-->
             <img src="../assets/profilePlaceholder.png" alt="Profile photo" style="width:100%; height:100%; object-fit:cover;">
           </div>
 
+          <!--shows the logged in user's name-->
           <div id="profileName" style="font-weight:900; font-size:18px;">User</div>
+
+          <!--shows the user's role or headline-->
           <div id="profileRole" class="muted" style="font-size:13px;">Software Engineer</div>
 
+          <!--shows the user's or company's location-->
           <div id="profileLocation" class="muted" style="font-size:13px; margin-top:2px;">
             📍 Bradford, United Kingdom
           </div>
 
+          <!--shows profile bio or company description-->
           <div id="profileDescription" class="muted" style="font-size:13px; margin-top:2px; text-align:center;">
             Profile description
           </div>
 
+          <!--shows employer website if one exists-->
           <div id="profileWebsite" class="muted" style="font-size:13px; margin-top:2px; text-align:center; display:none;">
             Website
           </div>
 
+          <!--shows employer industry if one exists-->
           <div id="profileIndustry" class="muted" style="font-size:13px; margin-top:2px; text-align:center; display:none;">
             Industry
           </div>
         </div>
 
+        <!--buttons for edit profile, upload resume/post job and sign out-->
         <div style="margin-top:16px; display:grid; gap:10px;">
           <button id="editProfileBtn" class="btnPrimary" type="button">Edit Profile</button>
           <button id="resumeButton" class="btnGhost" type="button"
@@ -88,7 +102,7 @@
           <button id="logoutBtn" class="btnGhost">Sign Out</button>
         </div>
 
-        <!--quick stats-->
+        <!--quick stats section for applications and saved jobs-->
         <div style="margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.45);">
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; text-align:center;">
             <div>
@@ -104,10 +118,10 @@
 
       </aside>
 
-      <!--RIGHT CONTENT-->
+      <!--right side area where the main profile content is shown-->
       <div class="resultsPanel">
 
-        <!--TABS (reusing pill style already in CSS)-->
+        <!--tab row used to switch between sections-->
         <div id="tabRow" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px;">
           <span id="applicationsTab" class="pageNum active" style="width:auto; padding:0 14px;">Applications</span>
           <span id="savedJobsTab" class="pageNum" style="width:auto; padding:0 14px;">Saved Jobs</span>
@@ -115,125 +129,210 @@
           <span id="settingsTab" class="pageNum" style="width:auto; padding:0 14px;">Settings</span>
         </div>
 
+        <!--heading that changes depending on which section is open-->
         <div id="panelHeading" class="panelTitle" style="margin-bottom:12px;">My Applications</div>
 
+        <!--settings panel hidden by default until edit profile is clicked-->
         <div id="settingsPanel" style="display:none; margin-bottom:18px;">
 
+          <!--jobseeker settings form hidden until needed-->
           <div id="jobseekerSettingsForm" class="jobCard" style="grid-template-columns:1fr; display:none;">
+
+            <!--grid layout to space out the form fields-->
             <div style="display:grid; gap:12px;">
+
+              <!--wrapper for full name input-->
               <div>
+
+                <!--label for the full name field-->
                 <div class="label">Full Name</div>
+
+                <!--input where the jobseeker can edit their full name-->
                 <input id="settingsName" class="input" type="text" placeholder="Full Name">
               </div>
 
+              <!--wrapper for headline input-->
               <div>
+
+                <!--label for the headline field-->
                 <div class="label">Headline</div>
+
+                <!--input for the user's headline like student/job title-->
                 <input id="settingsHeadline" class="input" type="text" placeholder="e.g. Software Engineering Student">
               </div>
 
+              <!--wrapper for bio input-->
               <div>
+
+                <!--label for the bio field-->
                 <div class="label">Bio</div>
+
+                <!--text area where the user can type a profile bio-->
                 <textarea id="settingsBio" class="input" placeholder="Tell us a bit about yourself" style="min-height:100px; resize:vertical;"></textarea>
               </div>
 
+              <!--wrapper for location input-->
               <div>
+
+                <!--label for the location field-->
                 <div class="label">Location</div>
+
+                <!--input where the user can type their location-->
                 <input id="settingsLocation" class="input" type="text" placeholder="Location">
               </div>
 
+              <!--container for the save button-->
               <div style="display:flex; gap:10px; justify-content:flex-end;">
+
+                <!--button used to save the jobseeker profile changes-->
                 <button id="saveJobseekerSettingsBtn" class="btnPrimary" type="button">Save Changes</button>
               </div>
             </div>
           </div>
 
+          <!--employer settings form hidden until needed-->
           <div id="employerSettingsForm" class="jobCard" style="grid-template-columns:1fr; display:none;">
+
+            <!--grid layout to stack all employer fields-->
             <div style="display:grid; gap:12px;">
+
+              <!--wrapper for employer full name input-->
               <div>
+
+                <!--label for full name-->
                 <div class="label">Full Name</div>
+
+                <!--input where the employer can edit their full name-->
                 <input id="employerSettingsName" class="input" type="text" placeholder="Full Name">
               </div>
 
+              <!--wrapper for company name input-->
               <div>
+
+                <!--label for company name-->
                 <div class="label">Company Name</div>
+
+                <!--input where the employer can add or edit company name-->
                 <input id="settingsCompanyName" class="input" type="text" placeholder="Company Name">
               </div>
 
+              <!--wrapper for company description input-->
               <div>
+
+                <!--label for company description-->
                 <div class="label">Description</div>
+
+                <!--text area for company description-->
                 <textarea id="settingsCompanyDescription" class="input" placeholder="Company description" style="min-height:100px; resize:vertical;"></textarea>
               </div>
 
+              <!--wrapper for website input-->
               <div>
+
+                <!--label for website-->
                 <div class="label">Website</div>
+
+                <!--input for website url-->
                 <input id="settingsWebsite" class="input" type="text" placeholder="Website">
               </div>
 
+              <!--wrapper for industry input-->
               <div>
+
+                <!--label for industry-->
                 <div class="label">Industry</div>
+
+                <!--input for industry type-->
                 <input id="settingsIndustry" class="input" type="text" placeholder="Industry">
               </div>
 
+              <!--wrapper for employer location input-->
               <div>
+
+                <!--label for location-->
                 <div class="label">Location</div>
+
+                <!--input for company location-->
                 <input id="employerSettingsLocation" class="input" type="text" placeholder="Location">
               </div>
 
+              <!--wrapper for logo url input-->
               <div>
+
+                <!--label for logo url-->
                 <div class="label">Logo URL</div>
+
+                <!--input for company logo url-->
                 <input id="settingsLogoUrl" class="input" type="text" placeholder="Logo URL">
               </div>
 
+              <!--container for the employer save button-->
               <div style="display:flex; gap:10px; justify-content:flex-end;">
+
+                <!--button used to save employer profile changes-->
                 <button id="saveEmployerSettingsBtn" class="btnPrimary" type="button">Save Changes</button>
               </div>
             </div>
           </div>
 
+          <!--form used when employer edits one of their job listings-->
           <div id="employerJobEditForm" class="jobCard" style="grid-template-columns:1fr; display:none;">
+
+            <!--grid layout for the edit job form-->
             <div style="display:grid; gap:12px;">
+
+              <!--hidden input used to store the id of the job being edited-->
               <input id="editingJobId" type="hidden">
 
+              <!--wrapper for job title input-->
               <div>
                 <div class="label">Job Title</div>
                 <input id="editJobTitle" class="input" type="text" placeholder="Job Title">
               </div>
 
+              <!--wrapper for company input-->
               <div>
                 <div class="label">Company</div>
                 <input id="editJobCompany" class="input" type="text" placeholder="Company">
               </div>
 
+              <!--wrapper for category input-->
               <div>
                 <div class="label">Category</div>
                 <input id="editJobCategory" class="input" type="text" placeholder="Category">
               </div>
 
+              <!--wrapper for contact email input-->
               <div>
                 <div class="label">Contact Email</div>
                 <input id="editJobContactEmail" class="input" type="email" placeholder="Contact Email">
               </div>
 
+              <!--wrapper for location input-->
               <div>
                 <div class="label">Location</div>
                 <input id="editJobLocation" class="input" type="text" placeholder="Location">
               </div>
 
+              <!--wrapper for salary input-->
               <div>
                 <div class="label">Salary</div>
                 <input id="editJobSalary" class="input" type="text" placeholder="Salary">
               </div>
 
+              <!--wrapper for job type input-->
               <div>
                 <div class="label">Job Type</div>
                 <input id="editJobType" class="input" type="text" placeholder="e.g. Full-time">
               </div>
 
+              <!--wrapper for description input-->
               <div>
                 <div class="label">Description</div>
                 <textarea id="editJobDescription" class="input" placeholder="Job description" style="min-height:100px; resize:vertical;"></textarea>
               </div>
 
+              <!--buttons used for cancel and save-->
               <div style="display:flex; gap:10px; justify-content:flex-end;">
                 <button id="cancelEditJobBtn" class="btnGhost" type="button">Cancel</button>
                 <button id="saveEditedJobBtn" class="btnPrimary" type="button">Save Job Changes</button>
@@ -243,124 +342,14 @@
 
         </div>
 
-        <!--APPLICATION LIST (reusing jobCard layout)-->
-        <div id="applicationsList" class="jobList">
+        <!--applications list section-->
+        <div id="applicationsList" class="jobList"> </div>
 
-          <!--Card 1-->
-          <div class="jobCard" style="grid-template-columns: 60px 1fr;">
-            <div class="jobIcon" style="width:56px; height:56px;">TS</div>
 
-            <div class="jobMain">
-              <div class="jobTop">
-                <div class="jobTitleRow">
-                  <div class="jobTitle">Senior Software Engineer</div>
-                  <div class="jobCompany">TechWave Solutions • New York, NY</div>
-                </div>
-
-                <span class="badge" style="white-space:nowrap;">Applied</span>
-              </div>
-
-              <div class="jobBadges">
-                <span class="badge">React</span>
-                <span class="badge">Node.js</span>
-                <span class="badge">AWS</span>
-                <span class="badge">+2</span>
-              </div>
-
-              <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:10px;">
-                <a class="btnGhost" href="jobDetails.html?id=1" style="text-decoration:none; display:inline-flex; align-items:center;">View Job</a>
-                <button class="btnGhost" type="button">Withdraw</button>
-              </div>
-            </div>
-          </div>
-
-          <!--Card 2-->
-          <div class="jobCard" style="grid-template-columns: 60px 1fr;">
-            <div class="jobIcon" style="width:56px; height:56px;">IL</div>
-
-            <div class="jobMain">
-              <div class="jobTop">
-                <div class="jobTitleRow">
-                  <div class="jobTitle">Product Designer</div>
-                  <div class="jobCompany">Innovatech Ltd. • Remote</div>
-                </div>
-
-                <span class="badge" style="white-space:nowrap;">Interview</span>
-              </div>
-
-              <div class="jobBadges">
-                <span class="badge">Figma</span>
-                <span class="badge">UI/UX</span>
-                <span class="badge">Design Systems</span>
-                <span class="badge">+1</span>
-              </div>
-
-              <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:10px;">
-                <a class="btnGhost" href="jobDetails.html?id=2" style="text-decoration:none; display:inline-flex; align-items:center;">View Job</a>
-                <button class="btnGhost" type="button">Withdraw</button>
-              </div>
-            </div>
-          </div>
-
-          <!--Card 3-->
-          <div class="jobCard" style="grid-template-columns: 60px 1fr;">
-            <div class="jobIcon" style="width:56px; height:56px;">SE</div>
-
-            <div class="jobMain">
-              <div class="jobTop">
-                <div class="jobTitleRow">
-                  <div class="jobTitle">Project Manager</div>
-                  <div class="jobCompany">Skyline Enterprises • Austin, TX</div>
-                </div>
-
-                <span class="badge" style="white-space:nowrap;">Offer</span>
-              </div>
-
-              <div class="jobBadges">
-                <span class="badge">Agile</span>
-                <span class="badge">Scrum</span>
-                <span class="badge">Leadership</span>
-                <span class="badge">+1</span>
-              </div>
-
-              <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:10px;">
-                <a class="btnGhost" href="jobDetails.html?id=3" style="text-decoration:none; display:inline-flex; align-items:center;">View Job</a>
-                <button class="btnGhost" type="button">Withdraw</button>
-              </div>
-            </div>
-          </div>
-
-          <!--Card 4-->
-          <div class="jobCard" style="grid-template-columns: 60px 1fr;">
-            <div class="jobIcon" style="width:56px; height:56px;">CH</div>
-
-            <div class="jobMain">
-              <div class="jobTop">
-                <div class="jobTitleRow">
-                  <div class="jobTitle">Marketing Specialist</div>
-                  <div class="jobCompany">CreativeHub Agency • San Francisco</div>
-                </div>
-
-                <span class="badge" style="white-space:nowrap;">Rejected</span>
-              </div>
-
-              <div class="jobBadges">
-                <span class="badge">SEO</span>
-                <span class="badge">Content</span>
-                <span class="badge">Analytics</span>
-                <span class="badge">+1</span>
-              </div>
-
-              <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:10px;">
-                <button class="btnGhost" type="button">Remove</button>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
+        <!--saved jobs list hidden until that tab is opened-->
         <div id="savedJobsList" class="jobList" style="display:none;"></div>
 
+        <!--resume panel hidden until resume tab is opened-->
         <div id="resumePanel" style="display:none;">
           <div class="jobCard" style="grid-template-columns:1fr; margin-bottom:18px;">
             <div style="display:grid; gap:12px;">
@@ -377,7 +366,7 @@
           </div>
         </div>
 
-        <!--DELETE ACCOUNT-->
+        <!--delete account section at the bottom of the page-->
         <div class="emptyState" style="margin-top:18px; text-align:left;">
           <div style="display:flex; align-items:center; gap:10px;">
             <span style="font-size:20px;">⚠️</span>
@@ -399,9 +388,14 @@
   </div>
 
 <script>
+
+/*gets the logged in user from local storage and turns it back into a javascript object*/
 const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
+/*checks if there is no logged in user*/
 if (!loggedInUser) {
+
+/*replaces the profile section with a message telling the user to log in first*/
   document.querySelector(".jobsLayout").innerHTML = `
     <div class="resultsPanel" style="grid-column:1 / -1; text-align:center;">
       <div class="panelTitle" style="margin-bottom:12px;">You must be logged in to view your profile.</div>
@@ -413,20 +407,33 @@ if (!loggedInUser) {
     </div>
   `;
 } else {
+
+/*shows the current user's name in the profile card*/
   document.getElementById("profileName").textContent = loggedInUser.name || "User";
+
+/*shows employer or jobseeker depending on the user's role*/
   document.getElementById("profileRole").textContent = loggedInUser.role === "employer" ? "Employer" : "Jobseeker";
+
+/*sets the default location text depending on role*/
   document.getElementById("profileLocation").textContent = loggedInUser.role === "employer"
     ? "📍 Company profile"
     : "📍 Jobseeker profile";
+
+/*sets the default description text depending on role*/
   document.getElementById("profileDescription").textContent = loggedInUser.role === "employer"
     ? "No company description added yet"
     : "No bio added yet";
 
+/*hides website until employer data gets loaded*/
   document.getElementById("profileWebsite").style.display = "none";
+
+/*hides industry until employer data gets loaded*/
   document.getElementById("profileIndustry").style.display = "none";
 
+/*hides the settings tab because edit profile button is used instead*/
   document.getElementById("settingsTab").style.display = "none";
 
+/*if the user is an employer then update the labels and button text to employer versions*/
   if (loggedInUser.role === "employer") {
     document.getElementById("resumeButton").textContent = "Post a Job";
     document.getElementById("resumeButton").style.display = "inline-flex";
@@ -437,6 +444,8 @@ if (!loggedInUser) {
     document.getElementById("applicationsLabel").textContent = "Applicants";
     document.getElementById("savedLabel").textContent = "Jobs Posted";
   } else {
+
+/*if the user is a jobseeker then hide the resume button until needed*/
     document.getElementById("resumeButton").style.display = "none";
     document.getElementById("applicationsLabel").textContent = "Applications";
     document.getElementById("savedLabel").textContent = "Saved";
@@ -447,99 +456,137 @@ if (!loggedInUser) {
 
 <script>
 
+/*adds a click event to the delete account button*/
 document.getElementById("deleteAccountBtn").addEventListener("click", async () => {
 
+/*gets the logged in user from local storage*/
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
 
+/*checks if no user is logged in*/
   if (!user) {
+
+/*shows message if no user is found*/
     alert("No user logged in.");
+
+/*stops the function*/
     return;
   }
 
+/*asks the user to confirm before deleting the account*/
   const confirmDelete = confirm("Are you sure you want to delete your account? This action cannot be undone.");
 
+/*stops if the user clicks cancel*/
   if (!confirmDelete) return;
 
+/*tries sending the delete request to the backend*/
   try {
 
+/*sends delete request to the backend using the user's id*/
     const response = await fetch(`http://localhost:8080/api/users/${user.id}`, {
       method: "DELETE"
     });
 
+/*checks if the delete request failed*/
     if (!response.ok) {
       alert("Failed to delete account.");
       return;
     }
 
+/*removes the user from local storage after account is deleted*/
     localStorage.removeItem("loggedInUser");
 
+/*shows success message*/
     alert("Account deleted successfully.");
 
+/*redirects back to the home page*/
     window.location.href = "index.html";
 
   } catch (error) {
+
+/*shows the error in the console*/
     console.error(error);
+
+/*shows message if there was a server error*/
     alert("Server error while deleting account.");
   }
 
 });
 
-// logout functionality
+/*logout functionality*/
 const logoutBtn = document.getElementById("logoutBtn");
 
+/*checks if logout button exists before using it*/
 if (logoutBtn) {
     logoutBtn.addEventListener("click", function () {
 
-        // remove stored login data
+/*removes stored login data*/
         localStorage.removeItem("loggedInUser");
 
-        // redirect to home page
+/*redirects the user to the home page*/
         window.location.href = "index.html";
     });
 }
 
-//LOADINGSUMMARY
+/*loads the profile summary shown in the left sidebar*/
 async function loadProfileSummary() {
+
+/*stops if no user is logged in*/
   if (!loggedInUser) return;
 
+/*shows the current user's name*/
   document.getElementById("profileName").textContent = loggedInUser.name || "User";
 
+/*handles the jobseeker profile summary section*/
   if (loggedInUser.role === "jobseeker") {
     document.getElementById("profileRole").textContent = "Jobseeker";
     document.getElementById("profileWebsite").style.display = "none";
     document.getElementById("profileIndustry").style.display = "none";
 
+/*tries to load the jobseeker profile from the backend*/
     try {
       const response = await fetch(`http://localhost:8080/api/jobseeker-profile/${loggedInUser.id}`);
 
+/*checks if the response was successful*/
       if (response.ok) {
         const profile = await response.json();
 
+/*shows the headline if one exists otherwise shows jobseeker*/
         document.getElementById("profileRole").textContent =
           profile.headline && profile.headline.trim() !== ""
             ? profile.headline
             : "Jobseeker";
 
+/*shows the location if one exists otherwise default text*/
         document.getElementById("profileLocation").textContent =
           profile.location && profile.location.trim() !== ""
             ? `📍 ${profile.location}`
             : "📍 Jobseeker profile";
 
+/*shows the bio if one exists otherwise default text*/
         document.getElementById("profileDescription").textContent =
           profile.bio && profile.bio.trim() !== ""
             ? profile.bio
             : "No bio added yet";
 
+/*hides website for jobseeker profiles*/
         document.getElementById("profileWebsite").style.display = "none";
+
+/*hides industry for jobseeker profiles*/
         document.getElementById("profileIndustry").style.display = "none";
       } else {
+
+/*uses default text if no jobseeker profile exists yet*/
         document.getElementById("profileLocation").textContent = "📍 Jobseeker profile";
         document.getElementById("profileDescription").textContent = "No bio added yet";
         document.getElementById("profileWebsite").style.display = "none";
         document.getElementById("profileIndustry").style.display = "none";
       }
     } catch (error) {
+
+/*logs error if jobseeker summary fails to load*/
       console.error("Failed to load jobseeker summary:", error);
+
+/*shows default values if there is an error*/
       document.getElementById("profileLocation").textContent = "📍 Jobseeker profile";
       document.getElementById("profileDescription").textContent = "No bio added yet";
       document.getElementById("profileWebsite").style.display = "none";
@@ -547,51 +594,73 @@ async function loadProfileSummary() {
     }
   }
 
+/*handles the employer profile summary section*/
   if (loggedInUser.role === "employer") {
     document.getElementById("profileRole").textContent = "Employer";
 
+/*tries to load the employer profile from the backend*/
     try {
       const response = await fetch(`http://localhost:8080/api/employer-profile/${loggedInUser.id}`);
 
+/*checks if the response was successful*/
       if (response.ok) {
         const profile = await response.json();
 
+/*shows company name if one exists otherwise employer*/
         document.getElementById("profileRole").textContent =
           profile.companyName && profile.companyName.trim() !== ""
             ? profile.companyName
             : "Employer";
 
+/*shows company location if one exists otherwise default text*/
         document.getElementById("profileLocation").textContent =
           profile.location && profile.location.trim() !== ""
             ? `📍 ${profile.location}`
             : "📍 Company profile";
 
+/*shows company description if one exists otherwise default text*/
         document.getElementById("profileDescription").textContent =
           profile.description && profile.description.trim() !== ""
             ? profile.description
             : "No company description added yet";
 
+/*checks if employer has added a website*/
         if (profile.website && profile.website.trim() !== "") {
+
+/*shows the website and makes it clickable*/
           document.getElementById("profileWebsite").style.display = "block";
           document.getElementById("profileWebsite").innerHTML = `<a href="${profile.website}" target="_blank" style="color:inherit; text-decoration:underline;">${profile.website}</a>`;
         } else {
+
+/*hides website if none exists*/
           document.getElementById("profileWebsite").style.display = "none";
         }
 
+/*checks if employer has added an industry*/
         if (profile.industry && profile.industry.trim() !== "") {
+
+/*shows the industry text*/
           document.getElementById("profileIndustry").style.display = "block";
           document.getElementById("profileIndustry").textContent = `Industry: ${profile.industry}`;
         } else {
+
+/*hides industry if none exists*/
           document.getElementById("profileIndustry").style.display = "none";
         }
       } else {
+
+/*uses default employer values if profile data does not exist*/
         document.getElementById("profileLocation").textContent = "📍 Company profile";
         document.getElementById("profileDescription").textContent = "No company description added yet";
         document.getElementById("profileWebsite").style.display = "none";
         document.getElementById("profileIndustry").style.display = "none";
       }
     } catch (error) {
+
+/*logs error if employer summary fails to load*/
       console.error("Failed to load employer summary:", error);
+
+/*shows default values if there is an error*/
       document.getElementById("profileLocation").textContent = "📍 Company profile";
       document.getElementById("profileDescription").textContent = "No company description added yet";
       document.getElementById("profileWebsite").style.display = "none";
@@ -600,6 +669,7 @@ async function loadProfileSummary() {
   }
 }
 
+/*gets all the main elements used later in the script*/
 const settingsTab = document.getElementById("settingsTab");
 const applicationsTab = document.getElementById("applicationsTab");
 const savedJobsTab = document.getElementById("savedJobsTab");
@@ -621,9 +691,11 @@ const uploadResumeBtn = document.getElementById("uploadResumeBtn");
 const downloadResumeBtn = document.getElementById("downloadResumeBtn");
 const resumeFileInput = document.getElementById("resumeFileInput");
 
+/*stores employer jobs and applicants so they can be reused later*/
 let employerJobsCache = [];
 let employerApplicantsCache = [];
 
+/*sets which tab should look active*/
 function setActiveTab(tabElement) {
   if (applicationsTab) applicationsTab.classList.remove("active");
   if (savedJobsTab) savedJobsTab.classList.remove("active");
@@ -631,6 +703,7 @@ function setActiveTab(tabElement) {
   if (tabElement) tabElement.classList.add("active");
 }
 
+/*gets initials from a title or name to show inside the icon circle*/
 function getInitials(title) {
   if (!title || title.trim() === "") return "JB";
 
@@ -640,6 +713,7 @@ function getInitials(title) {
   return (words[0][0] + words[1][0]).toUpperCase();
 }
 
+/*builds the dropdown options for employer applicant status updates*/
 function getApplicantStatusOptions(selectedStatus) {
   return `
     <option value="PENDING" ${selectedStatus === "PENDING" ? "selected" : ""}>Pending</option>
@@ -649,12 +723,14 @@ function getApplicantStatusOptions(selectedStatus) {
   `;
 }
 
+/*formats the status text nicely with first letter capitalised*/
 function formatStatusLabel(status) {
   if (!status) return "Pending";
   const lower = status.toLowerCase();
   return lower.charAt(0).toUpperCase() + lower.slice(1);
 }
 
+/*loads all jobs from the backend and only keeps the ones posted by this employer*/
 async function fetchEmployerJobs() {
   const response = await fetch(`http://localhost:8080/api/jobs`);
 
@@ -667,6 +743,7 @@ async function fetchEmployerJobs() {
   return jobs.filter(job => String(job.employerUserId) === String(loggedInUser.id));
 }
 
+/*loads employer applicants by getting applications, jobs and users together*/
 async function fetchEmployerApplicants() {
   const [applicationsResponse, jobsResponse, usersResponse] = await Promise.all([
     fetch(`http://localhost:8080/api/applications`),
@@ -726,6 +803,7 @@ async function fetchEmployerApplicants() {
     });
 }
 
+/*renders the employer's job listings into the applications area*/
 function renderEmployerJobListings(jobs) {
   if (!applicationsList) return;
 
@@ -774,6 +852,7 @@ function renderEmployerJobListings(jobs) {
   `).join("");
 }
 
+/*renders the list of applicants for employer view*/
 function renderEmployerApplicants(applicants) {
   if (!savedJobsList) return;
 
@@ -837,6 +916,7 @@ function renderEmployerApplicants(applicants) {
   `).join("");
 }
 
+/*renders example reviews for employer view*/
 function renderEmployerReviews() {
   if (!resumePanel) return;
 
@@ -867,6 +947,7 @@ function renderEmployerReviews() {
   `;
 }
 
+/*shows the applications or employer job listings section*/
 function showApplicationsSection() {
   settingsPanel.style.display = "none";
   applicationsList.style.display = "grid";
@@ -885,6 +966,7 @@ function showApplicationsSection() {
   }
 }
 
+/*shows the saved jobs or employer applicants section*/
 function showSavedJobsSection() {
   settingsPanel.style.display = "none";
   applicationsList.style.display = "none";
@@ -903,6 +985,7 @@ function showSavedJobsSection() {
   }
 }
 
+/*shows the resume panel for jobseeker or reviews for employer*/
 function showResumeSection() {
   settingsPanel.style.display = "none";
   applicationsList.style.display = "none";
@@ -921,6 +1004,7 @@ function showResumeSection() {
   }
 }
 
+/*loads the edit profile form based on whether the user is a jobseeker or employer*/
 async function loadSettingsForm() {
   if (!loggedInUser) return;
 
@@ -992,6 +1076,7 @@ async function loadSettingsForm() {
   }
 }
 
+/*loads the edit job form with the selected job's current data*/
 function loadEmployerJobEditForm(jobId) {
   if (!loggedInUser || loggedInUser.role !== "employer") return;
 
@@ -1026,10 +1111,12 @@ function loadEmployerJobEditForm(jobId) {
   document.getElementById("editJobDescription").value = selectedJob.description || "";
 }
 
+/*shows the main profile area again*/
 function showMainProfileSection() {
   showApplicationsSection();
 }
 
+/*loads the employer's job listings*/
 async function loadEmployerJobListings() {
   if (!loggedInUser || loggedInUser.role !== "employer") return;
 
@@ -1042,6 +1129,7 @@ async function loadEmployerJobListings() {
   }
 }
 
+/*loads the employer's applicants*/
 async function loadEmployerApplicants() {
   if (!loggedInUser || loggedInUser.role !== "employer") return;
 
@@ -1054,6 +1142,7 @@ async function loadEmployerApplicants() {
   }
 }
 
+/*loads employer counts for applicants and jobs posted*/
 async function loadEmployerCounts() {
   if (!loggedInUser || loggedInUser.role !== "employer") return;
 
@@ -1075,10 +1164,12 @@ async function loadEmployerCounts() {
   }
 }
 
+/*hides settings tab if it exists because edit profile button is used instead*/
 if (settingsTab) {
   settingsTab.style.display = "none";
 }
 
+/*handles clicks on the applications tab*/
 if (applicationsTab) {
   applicationsTab.addEventListener("click", function () {
     if (loggedInUser.role === "employer") {
@@ -1090,6 +1181,7 @@ if (applicationsTab) {
   });
 }
 
+/*handles clicks on the saved jobs/applicants tab*/
 if (savedJobsTab) {
   savedJobsTab.addEventListener("click", function () {
     if (loggedInUser.role === "employer") {
@@ -1101,6 +1193,7 @@ if (savedJobsTab) {
   });
 }
 
+/*handles clicks on the resume/reviews tab*/
 if (resumeTab) {
   resumeTab.addEventListener("click", function () {
     if (loggedInUser.role === "employer") {
@@ -1112,24 +1205,28 @@ if (resumeTab) {
   });
 }
 
+/*if employer clicks the button then send them to post job page*/
 if (resumeButton && loggedInUser && loggedInUser.role === "employer") {
   resumeButton.addEventListener("click", function () {
     window.location.href = "postJob.html";
   });
 }
 
+/*opens the edit profile form when edit profile button is clicked*/
 if (editProfileBtn) {
   editProfileBtn.addEventListener("click", function () {
     loadSettingsForm();
   });
 }
 
+/*cancels employer job editing and goes back to main section*/
 if (cancelEditJobBtn) {
   cancelEditJobBtn.addEventListener("click", function () {
     showApplicationsSection();
   });
 }
 
+/*saves the employer's edited job data*/
 if (saveEditedJobBtn) {
   saveEditedJobBtn.addEventListener("click", async function () {
     if (!loggedInUser || loggedInUser.role !== "employer") return;
@@ -1179,6 +1276,7 @@ if (saveEditedJobBtn) {
   });
 }
 
+/*saves the jobseeker profile settings*/
 if (saveJobseekerSettingsBtn) {
   saveJobseekerSettingsBtn.addEventListener("click", async function () {
     const updatedName = document.getElementById("settingsName").value.trim();
@@ -1235,6 +1333,7 @@ if (saveJobseekerSettingsBtn) {
   });
 }
 
+/*saves the employer profile settings*/
 if (saveEmployerSettingsBtn) {
   saveEmployerSettingsBtn.addEventListener("click", async function () {
     const updatedName = document.getElementById("employerSettingsName").value.trim();
@@ -1297,6 +1396,7 @@ if (saveEmployerSettingsBtn) {
   });
 }
 
+/*loads the jobseeker counts for applications and saved jobs*/
 async function loadJobseekerCounts() {
   if (!loggedInUser || loggedInUser.role !== "jobseeker") return;
 
@@ -1318,6 +1418,7 @@ async function loadJobseekerCounts() {
   }
 }
 
+/*renders the jobseeker application cards*/
 function renderApplicationCards(applications) {
   if (!applicationsList) return;
 
@@ -1359,6 +1460,7 @@ function renderApplicationCards(applications) {
   `).join("");
 }
 
+/*loads the current user's applications from the backend*/
 async function loadJobseekerApplications() {
   if (!loggedInUser || loggedInUser.role !== "jobseeker") return;
 
@@ -1378,6 +1480,7 @@ async function loadJobseekerApplications() {
   }
 }
 
+/*renders the saved jobs cards*/
 function renderSavedJobCards(savedJobs) {
   if (!savedJobsList) return;
 
@@ -1434,6 +1537,7 @@ function renderSavedJobCards(savedJobs) {
   `).join("");
 }
 
+/*loads saved jobs for the current jobseeker*/
 async function loadSavedJobs() {
   if (!loggedInUser || loggedInUser.role !== "jobseeker") return;
 
@@ -1468,6 +1572,7 @@ async function loadSavedJobs() {
   }
 }
 
+/*loads the resume download link for the current jobseeker*/
 async function loadResumeLink() {
   if (!loggedInUser || loggedInUser.role !== "jobseeker") return;
 
@@ -1496,6 +1601,7 @@ async function loadResumeLink() {
   }
 }
 
+/*handles resume uploads for jobseekers*/
 if (uploadResumeBtn) {
   uploadResumeBtn.addEventListener("click", async function () {
     if (!loggedInUser || loggedInUser.role !== "jobseeker") return;
@@ -1537,8 +1643,10 @@ if (uploadResumeBtn) {
   });
 }
 
+/*handles clicks on dynamically created buttons like withdraw, unsave and employer job actions*/
 document.addEventListener("click", async function(e) {
 
+/*handles withdrawing an application*/
   if (e.target.classList.contains("withdrawBtn")) {
     const applicationId = e.target.dataset.id;
 
@@ -1564,6 +1672,7 @@ document.addEventListener("click", async function(e) {
     }
   }
 
+/*handles removing a saved job*/
   if (e.target.classList.contains("unsaveBtn")) {
     const jobId = e.target.dataset.id;
 
@@ -1589,11 +1698,13 @@ document.addEventListener("click", async function(e) {
     }
   }
 
+/*handles employer edit job button*/
   if (e.target.classList.contains("employerEditJobBtn")) {
     const jobId = e.target.dataset.id;
     loadEmployerJobEditForm(jobId);
   }
 
+/*handles employer delete job button*/
   if (e.target.classList.contains("employerDeleteJobBtn")) {
     const jobId = e.target.dataset.id;
 
@@ -1622,6 +1733,7 @@ document.addEventListener("click", async function(e) {
 
 });
 
+/*handles changing applicant status from the employer dropdown*/
 document.addEventListener("change", async function(e) {
   if (e.target.classList.contains("applicantStatusSelect")) {
     const applicationId = e.target.dataset.id;
@@ -1665,8 +1777,10 @@ document.addEventListener("change", async function(e) {
   }
 });
 
+/*loads the sidebar profile summary when the page first opens*/
 loadProfileSummary();
 
+/*checks which type of user is logged in and loads the correct default sections*/
 if (loggedInUser && loggedInUser.role === "employer") {
   loadEmployerCounts();
   showApplicationsSection();
