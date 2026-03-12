@@ -25,8 +25,9 @@ public class DataSeeder implements CommandLineRunner {
                 "Software Engineering",
                 "Full-time",
                 "£24k–£28k",
-                "Help build and improve the HireSpace job portal UI and core features.",
                 "2026-03-10",
+                "contact@hirespace.com",
+                "Help build and improve the HireSpace job portal UI and core features.",
                 1L
             ));
 
@@ -37,8 +38,9 @@ public class DataSeeder implements CommandLineRunner {
                 "Software Engineering",
                 "Part-time",
                 "£15–£20/hr",
-                "Work on modern web UI, responsive layout, and consistent styling.",
                 "2026-03-10",
+                "jobs@seifdigital.com",
+                "Work on modern web UI, responsive layout, and consistent styling.",
                 2L
             ));
 
@@ -49,8 +51,9 @@ public class DataSeeder implements CommandLineRunner {
                 "Data / AI",
                 "Internship",
                 "£22k",
-                "Support reporting, dashboards, and data cleaning for internal systems.",
                 "2026-03-10",
+                "hr@jobsphere.com",
+                "Support reporting, dashboards, and data cleaning for internal systems.",
                 3L
             ));
         }

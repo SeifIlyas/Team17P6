@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/jobs")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS})
 public class JobController {
 
     @Autowired
@@ -60,3 +60,8 @@ public ResponseEntity<Void> deleteJob(@PathVariable Long id) {
 }
 }
 
+    @PostMapping
+    public Job createJob(@RequestBody Job job) {
+        return jobRepository.save(job);
+    }
+}
