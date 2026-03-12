@@ -13,7 +13,6 @@
   </div>
 
   <div class="adminWrap">
-    <div class="topbar">
       <div class="brand">
         <div class="logoDot">
           <img src="../assets/logo.png" alt="HireSpace logo">
@@ -70,7 +69,7 @@
           </div>
 
           <div class="loginHint">
-            <strong>Note:</strong> Applications are currently submitted using a temporary test user ID.
+            <strong>Note:</strong> You must be logged in to apply for a job.
           </div>
         </div>
 
@@ -110,16 +109,16 @@
             </div>
 
             <div class="sectionCard">
-              <h2>Responsibilities</h2>
+              <h2>Role Details</h2>
               <ul id="responsibilitiesList">
-                <li>Reviewing job details...</li>
+                <li>Loading...</li>
               </ul>
             </div>
 
             <div class="sectionCard">
-              <h2>Requirements</h2>
+              <h2>Additional Information</h2>
               <ul id="requirementsList">
-                <li>Reviewing job details...</li>
+                <li>Loading...</li>
               </ul>
             </div>
 
@@ -157,6 +156,23 @@
     function getJobIdFromUrl() {
       const params = new URLSearchParams(window.location.search);
       return params.get("id");
+    }
+
+    function formatDescriptionAsList(description, emptyMessage) {
+      if (!description || description.trim() === "") {
+        return `<li>${emptyMessage}</li>`;
+      }
+
+      const lines = description
+        .split("\n")
+        .map(line => line.trim())
+        .filter(line => line !== "");
+
+      if (!lines.length) {
+        return `<li>${emptyMessage}</li>`;
+      }
+
+      return lines.map(line => `<li>${line}</li>`).join("");
     }
 
     async function loadJobDetails() {
@@ -207,62 +223,62 @@
             ? `Contact email: ${job.contactEmail}`
             : "No company contact information available.";
 
-        document.getElementById("responsibilitiesList").innerHTML = `
-          <li>Work as part of the ${job.category || "job"} team.</li>
-          <li>Carry out tasks related to the role of ${job.title || "this position"}.</li>
-          <li>Collaborate with the employer and contribute professionally.</li>
-        `;
+        document.getElementById("responsibilitiesList").innerHTML =
+          formatDescriptionAsList(job.description, "No role details available.");
 
-        document.getElementById("requirementsList").innerHTML = `
-          <li>Interest in ${job.category || "the relevant field"}.</li>
-          <li>Ability to work in a ${job.jobType || "professional"} role.</li>
-          <li>Good communication and willingness to learn.</li>
-        `;
+        document.getElementById("requirementsList").innerHTML =
+          formatDescriptionAsList(job.description, "No additional information available.");
 
       } catch (error) {
         console.error(error);
         document.getElementById("jobTitle").textContent = "Error loading job";
         document.getElementById("jobIntro").textContent =
           "There was a problem loading this job.";
+        document.getElementById("overviewText").textContent =
+          "There was a problem loading this job.";
+        document.getElementById("responsibilitiesList").innerHTML =
+          "<li>Could not load role details.</li>";
+        document.getElementById("requirementsList").innerHTML =
+          "<li>Could not load additional information.</li>";
       }
     }
 
- async function applyToJob(jobId) {
-  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    async function applyToJob(jobId) {
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
-  if (!loggedInUser || !loggedInUser.id) {
-    alert("You must be logged in to apply.");
-    return;
-  }
+      if (!loggedInUser || !loggedInUser.id) {
+        alert("You must be logged in to apply.");
+        return;
+      }
 
-  const application = {
-    userId: loggedInUser.id,
-    jobId: jobId,
-    status: "PENDING"
-  };
+      const application = {
+        userId: loggedInUser.id,
+        jobId: jobId,
+        status: "PENDING"
+      };
 
-  try {
-    const response = await fetch("http://localhost:8080/api/applications", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(application)
-    });
+      try {
+        const response = await fetch("http://localhost:8080/api/applications", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(application)
+        });
 
-    const result = await response.text();
+        const result = await response.text();
 
-    if (!response.ok) {
-      alert(result);
-      return;
+        if (!response.ok) {
+          alert(result);
+          return;
+        }
+
+        alert("Application submitted successfully!");
+      } catch (error) {
+        console.error(error);
+        alert("Failed to apply.");
+      }
     }
-
-    alert("Application submitted successfully!");
-  } catch (error) {
-    console.error(error);
-    alert("Failed to apply.");
-  }
-}
 
     function copyJobLink() {
       navigator.clipboard.writeText(window.location.href);
