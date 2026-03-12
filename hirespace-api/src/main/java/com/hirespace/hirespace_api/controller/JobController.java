@@ -28,6 +28,11 @@ public class JobController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PostMapping
+    public Job createJob(@RequestBody Job job) {
+        return jobRepository.save(job);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Job> updateJob(@PathVariable Long id, @RequestBody Job updatedJob) {
         return jobRepository.findById(id)
@@ -48,20 +53,13 @@ public class JobController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteJob(@PathVariable Long id) {
+        if (!jobRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
 
-@DeleteMapping("/{id}")
-public ResponseEntity<Void> deleteJob(@PathVariable Long id) {
-    if (!jobRepository.existsById(id)) {
-        return ResponseEntity.notFound().build();
-    }
-
-    jobRepository.deleteById(id);
-    return ResponseEntity.noContent().build();
-}
-}
-
-    @PostMapping
-    public Job createJob(@RequestBody Job job) {
-        return jobRepository.save(job);
+        jobRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
